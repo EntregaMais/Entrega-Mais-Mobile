@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "levamais-front",
-    "slug": "levamais-front",
+    "name": "Entrega-Mais",
+    "slug": "Entrega-Mais",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#56cbf2"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

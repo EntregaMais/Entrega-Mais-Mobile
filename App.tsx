@@ -25,7 +25,7 @@ function HomeScreen({navigation}: any) {
         <Image 
           resizeMode={'contain'}
           style={styles.image}
-          source={require('./assets/logo.png')}
+          source={require('./assets/logo_new.png')}
         />
       </View>
       <Separator />
@@ -51,7 +51,7 @@ function Form({navigation}: any) {
       <Image 
         resizeMode={'contain'}
         style={styles.image}
-        source={require('./assets/logo.png')}
+        source={require('./assets/logo_new.png')}
       />
     </View>
   );
