@@ -1,11 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, SafeAreaView} from 'react-native';
+import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import 'react-native-gesture-handler';
 import { Button, color } from '@rneui/base';
-import React from 'react';
+import Checkbox from 'expo-checkbox';
+import React, { useState } from 'react';
+import { TextInput } from 'react-native-gesture-handler';
 
 const Separator = () => (
   <View style={styles.separator} />
@@ -14,6 +16,8 @@ const Separator = () => (
 const Stack = createStackNavigator()
 
 function HomeScreen({navigation}: any) {
+  const [isChecked, setChecked] = useState(false);
+  
   return(
     <SafeAreaView style={styles.container}>
       <LinearGradient
@@ -21,21 +25,55 @@ function HomeScreen({navigation}: any) {
           style={styles.background}
        />
       <StatusBar style="auto" />
-      <View>
-        <Image 
-          resizeMode={'contain'}
-          style={styles.image}
-          source={require('./assets/logo_new.png')}
-        />
-      </View>
-      <Separator />
-      <View>
-        <Button
-          style={styles.Button}
-          title="Cadastro"
-          onPress={() => navigation.navigate('Cadastro')}
-        />  
-      </View>
+
+      <KeyboardAvoidingView>
+        <View>
+          <Image 
+            resizeMode={'contain'}
+            style={styles.image}
+            source={require('./assets/logo_new.png')}
+          />
+        </View>
+        <View>
+          <TextInput
+            style={styles.input}
+            placeholder='Email'
+            placeholderTextColor={'white'}
+            autoCorrect={false}
+            onChangeText={()=> {}}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder='Senha'
+            placeholderTextColor={'white'}
+            autoCorrect={false}
+            onChangeText={()=> {}}
+          />
+          <View style={{ flexDirection: "row" }}>
+            <Checkbox 
+            style={styles.checkbox} 
+            value={isChecked} 
+            onValueChange={setChecked}
+            color={isChecked ? '#00BFFF' : undefined} 
+            />
+            <Text style={styles.textEsqueceu}>Lembrar senha</Text>
+            <TouchableOpacity style={styles.btnEsqueceu}>
+              <Text style={styles.textEsqueceu}>Esqueceu a senha?</Text>
+            </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity style={styles.btnEntrar}>
+            <Text style={styles.textEntrar}>Entrar</Text>
+          </TouchableOpacity>
+        </View>        
+        <Separator />
+        <View>
+          <TouchableOpacity style={styles.btnCadastro} onPress={() => navigation.navigate('Cadastro')}>
+            <Text style={styles.textCadastro}>Cadastre-se</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>     
+       
     </SafeAreaView>
   );
 }
@@ -65,8 +103,7 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen}
         options={{
           headerTransparent: true,
-          headerTitleAlign: 'center',
-          headerTitleStyle: {color: 'white'}
+          headerShown: false
         }} />
         <Stack.Screen name='Cadastro' component={Form}
         options={{
@@ -90,7 +127,8 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 300,
-    height: 80
+    height: 80,
+    marginBottom: 40
   },
   background: {
     position: 'absolute',
@@ -99,14 +137,57 @@ const styles = StyleSheet.create({
     top: 0,
     height: 300
   },
-  Button: {
-    // flexDirection: "row",
-    // justifyContent: "space-between"
+  input: {
+    color: '#FFF',
+    fontSize: 15,
+    borderBottomWidth: 1,
+    backgroundColor: 'transparent',
+    borderBottomColor: '#FFF',
+    marginBottom: 15,
+  },
+  btnEsqueceu:{
+    height: 40,
+    marginBottom: 10,
+    marginLeft: 90
+  },
+  textEsqueceu:{
+    color: '#FFF',
+    fontSize: 12
+  },
+  btnEntrar:{
+    backgroundColor: '#FFF',
+    width: '100%',
+    height: 40,
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textEntrar: {
+    color: '#00BFFF',
+  },
+  btnCadastro: {
+    backgroundColor: 'transparent',
+    width: '100%',
+    height: 40,
+    borderRadius: 50,
+    borderWidth: 1,
+    borderColor: '#FFF',
+    alignItems: 'center',
+    justifyContent: "center",
+  },
+  textCadastro: {
+    color: '#FFF'
   },
   separator: {
-    marginVertical: 50,
-    borderBottomColor: '#737373',
+    marginVertical: 20,
+    borderBottomColor: '#FFF',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
-
+  checkbox: {
+    borderColor: '#00BFFF',
+    backgroundColor: '#FFF',
+    marginRight: 5,
+    width: 16,
+    height: 16,
+  },
 });
