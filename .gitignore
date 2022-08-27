@@ -10,6 +10,11 @@ dist/
 *.orig.*
 web-build/
 
+# Visual studio
+#
+.vscode
+.vs
+
 # macOS
 #
 .DS_Store
@@ -50,8 +55,10 @@ local.properties
 # node.js
 #
 node_modules/
+.nvm
 npm-debug.*
 yarn-error.log
+package-lock.json
 
 # BUCK
 buck-out/
