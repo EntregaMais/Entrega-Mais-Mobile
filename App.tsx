@@ -1,11 +1,15 @@
-import { Image} from 'react-native';
+import { Image, TouchableOpacity} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import 'react-native-gesture-handler';
 import React, { useState } from 'react';
+import { Ionicons as Icon} from '@expo/vector-icons';
+import AppLoading from 'expo-app-loading';
+import { useFonts } from 'expo-font';
 import Cadastro from './telas/CadastroTransportador';
 import Login from './telas/Login';
 import FinalizarCadastro from './telas/FinalizarCadastro';
+import Home from './telas/Home';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +24,14 @@ function LogoTitle(any: any) {
 }
 
 export default function App() {
+  let [fontsLoaded] = useFonts({
+    'Insanibu': require('./assets/fonts/Insanibu.ttf'),
+  });
+  
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
