@@ -32,7 +32,7 @@ export default function Login({navigation}: any) {
             <Image 
                 resizeMode={'contain'}
                 style={styles.image}
-                source={require('../assets/logo_new.png')}
+                source={require('../assets/nova_logo.png')}
             />
             </View>
             <View>
@@ -77,11 +77,16 @@ export default function Login({navigation}: any) {
                 </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.btnEntrar}>
+            <TouchableOpacity style={styles.btnEntrar} onPress={() => navigation.navigate('Home')}>
                 <Text style={styles.textEntrar}>Entrar</Text>
             </TouchableOpacity>
-            </View>        
-            <Separator />
+            </View>
+
+            <View style={{ flexDirection: "row", marginTop: 15 }}>
+                <Separator />
+                <Text style={styles.textSeparator}>ou</Text>
+                <Separator />
+            </View>          
             <View>
             <TouchableOpacity style={styles.btnCadastro} onPress={() => navigation.navigate('Cadastro')}>
                 <Text style={styles.textCadastro}>Cadastre-se</Text>
@@ -124,7 +129,7 @@ const styles = StyleSheet.create({
     },
     btnEsqueceu:{
       height: 40,
-      marginBottom: 10,
+      marginBottom: 2,
       marginLeft: 90
     },
     textEsqueceu:{
@@ -140,6 +145,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       elevation: 4,
       shadowColor: '#52006A',
+      //marginBottom: 12
     },
     textEntrar: {
       color: '#00BFFF',
@@ -158,7 +164,10 @@ const styles = StyleSheet.create({
       color: '#FFF'
     },
     separator: {
+      flexDirection: "row",
       marginVertical: 20,
+      width: 125,
+      marginLeft: 10,
       borderBottomColor: '#FFF',
       borderBottomWidth: StyleSheet.hairlineWidth,
     },
@@ -172,5 +181,12 @@ const styles = StyleSheet.create({
     icon: {
       height: 20,
       marginLeft: -18,       
+    },
+    textSeparator: {
+      fontSize: 12,
+      color: '#FFF',
+      marginTop: 10,
+      marginLeft: 9,
+      //marginRight: 1,
   }
-  });
+});

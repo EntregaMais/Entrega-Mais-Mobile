@@ -27,18 +27,20 @@ export default function FinalizarCadastro({navigation}: any){
             <StatusBar style="auto" />
             <ScrollView
                 contentContainerStyle={{
-                    paddingTop: 120,
+                    paddingTop: 50,
                     alignItems: "center",
                     justifyContent: "center"
                 }}>
-                <Text style={styles.textHeader}>
-                    Finalizar Cadastro
-                </Text>
-                <View style={{ flexDirection: "row" }}>
+
+                <View style={{ flexDirection: "row", marginTop: 50 }}>
                     <Icon style={styles.iconStep} name={"checkmark-circle"} size={15} color="#eae900" />
                     <Separator />
                     <Icon style={styles.iconStep} name={"caret-down-circle"} size={15} color="#FFF" />
-                </View>    
+                </View>
+
+                <Text style={styles.textHeader}>
+                    Finalizar Cadastro
+                </Text>
                 <View>
                     <TextInput
                         style={styles.input}
@@ -107,11 +109,6 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       backgroundColor: 'rgba(86, 203, 242, 1)'
     },
-    image: {
-      width: 200,
-      height: 80,
-      marginBottom: 40
-    },
     background: {
       position: 'absolute',
       left: 0,
@@ -122,8 +119,9 @@ const styles = StyleSheet.create({
     textHeader: {
         textAlign: 'left',
         color: '#FFF',
-        fontSize: 30,
-        fontWeight: 'bold',
+        fontSize: 25,
+        fontFamily: 'Insanibu',
+        marginTop: 10,
         marginBottom: 30
     },
     textStyle: {

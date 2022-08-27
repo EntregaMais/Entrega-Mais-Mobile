@@ -11,10 +11,8 @@ const Separator = () => (
     </View>
 );
 
-
 export default function Cadastro({navigation}: any) {
 
-    const [currentPosition, setCurrentPosition] = useState(1);
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [ConfirmSenha, setSenhaConfirm] = useState('');
@@ -30,19 +28,19 @@ export default function Cadastro({navigation}: any) {
             <StatusBar style="auto" />
             <ScrollView
                 contentContainerStyle={{
-                    paddingTop: 120,
+                    paddingTop: 50,
                     alignItems: "center",
                     justifyContent: "center"
                 }}>
                     
+                <View style={{ flexDirection: "row", marginTop: 50 }}>
+                    <Icon style={styles.iconStep} name={"caret-down-circle"} size={15} color="#FFF" />
+                    <Separator />
+                    <Icon style={styles.iconStep} name={"radio-button-off-outline"} size={15} color="#c4c4c4" />
+                </View>   
                 <Text style={styles.textHeader}>
                     TRANSPORTADOR
                 </Text>
-                <View style={{ flexDirection: "row" }}>
-                    <Icon style={styles.iconStep} name={"caret-down-circle"} size={15} color="#FFF" />
-                    <Separator />
-                    <Icon style={styles.iconStep} name={"radio-button-off-outline"} size={15} color="#dcdedc" />
-                </View>   
                 <View >
                     <TextInput
                         style={styles.input}
@@ -118,11 +116,6 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       backgroundColor: 'rgba(86, 203, 242, 1)'
     },
-    image: {
-      width: 200,
-      height: 80,
-      marginBottom: 40
-    },
     background: {
       position: 'absolute',
       left: 0,
@@ -133,13 +126,13 @@ const styles = StyleSheet.create({
     textHeader: {
         color: '#FFF',
         fontSize: 25,
-        fontWeight: 'bold',
-        marginBottom: 30
+        marginBottom: 35,
+        fontFamily: 'Insanibu'
     },
     textStyle: {
         color: '#FFF',
         fontSize: 15,
-        fontWeight: 'bold',
+        fontWeight: 'bold'
     },
     inputContainer: {
         flexDirection: 'row',
@@ -179,14 +172,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginVertical: 20,
         width: 150,
-        borderBottomColor: '#FFF',
-        borderBottomWidth: StyleSheet.hairlineWidth,
-    },
-    separator2: {
-        flexDirection: "row",
-        marginVertical: 20,
-        width: 80,
-        borderBottomColor: '#dcdedc',
+        borderBottomColor: '#c4c4c4',
         borderBottomWidth: StyleSheet.hairlineWidth,
     },
     iconStep: {

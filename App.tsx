@@ -54,6 +54,18 @@ export default function App() {
           headerTintColor: '#ffffff',
           headerTitle: (props) => <LogoTitle {...props} />
         }} />
+        <Stack.Screen name='Home' component={Home}
+        options={{
+          headerTransparent: true,
+          headerTitleAlign: 'center',
+          headerTintColor: '#ffffff',
+          headerLeft: ()=> (
+            <TouchableOpacity style={{marginLeft: 10}}>
+              <Icon name="menu-sharp" size={35} color="#FFF"></Icon>
+            </TouchableOpacity>
+          ),
+          headerTitle: (props) => <LogoTitle {...props} />
+        }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
