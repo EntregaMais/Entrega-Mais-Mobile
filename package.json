@@ -12,6 +12,7 @@
     "@react-navigation/stack": "5.11.0",
     "@rneui/base": "^4.0.0-rc.4",
     "@rneui/themed": "^4.0.0-rc.4",
+    "@types/styled-components": "^5.1.26",
     "expo": "~44.0.0",
     "expo-checkbox": "~2.0.0",
     "expo-linear-gradient": "~11.0.3",
@@ -23,7 +24,8 @@
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "~2.1.0",
     "react-native-step-indicator": "^1.0.3",
-    "react-native-web": "0.17.1"
+    "react-native-web": "0.17.1",
+    "styled-components": "^5.3.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
