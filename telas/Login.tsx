@@ -92,6 +92,11 @@ export default function Login({navigation}: any) {
                 <Text style={styles.textCadastro}>Cadastre-se</Text>
             </TouchableOpacity>
             </View>
+            <View style={{ marginTop: 15 }}>
+            <TouchableOpacity style={styles.btnCadastro} onPress={() => navigation.navigate('AdicionarPacoteStep1')}>
+                <Text style={styles.textCadastro}>Adicionar Pacotes</Text>
+            </TouchableOpacity>
+            </View>
         </KeyboardAvoidingView>     
         
         </SafeAreaView>
