@@ -25,6 +25,12 @@
 
 ---
 
+### Expo - Picker
+
+> https://github.com/react-native-picker/picker#readme
+
+---
+
 ### React Native Paper
 > https://callstack.github.io/react-native-paper/index.html
 

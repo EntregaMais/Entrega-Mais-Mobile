@@ -10,6 +10,7 @@ import Cadastro from './telas/CadastroTransportador';
 import Login from './telas/Login';
 import FinalizarCadastro from './telas/FinalizarCadastro';
 import Home from './telas/Home';
+import AdicionarPacote from './telas/AdicionarPacote';
 
 const Stack = createStackNavigator();
 
@@ -65,6 +66,15 @@ export default function App() {
             </TouchableOpacity>
           ),
           headerTitle: (props) => <LogoTitle {...props} />
+        }} />
+        <Stack.Screen name="AdicionarPacote" component={AdicionarPacote}
+        options={{
+          headerTransparent: true,
+          headerTitleAlign: 'center',
+          headerTintColor: '#ffffff',
+          headerTitle: '',
+          //headerTitle: 'NOVO PACOTE'
+          //headerTitle: (props) => <LogoTitle {...props} />
         }} />
       </Stack.Navigator>
     </NavigationContainer>
