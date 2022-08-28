@@ -31,6 +31,14 @@
 
 ---
 
+### Numeric Input
+
+> https://github.com/himelbrand/react-native-numeric-input#readme
+
+> https://github.com/himelbrand/react-native-numeric-input/blob/master/Example/App.js
+
+---
+
 ### React Native Paper
 > https://callstack.github.io/react-native-paper/index.html
 
