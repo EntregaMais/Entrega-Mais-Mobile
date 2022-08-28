@@ -10,7 +10,9 @@ import Cadastro from './telas/CadastroTransportador';
 import Login from './telas/Login';
 import FinalizarCadastro from './telas/FinalizarCadastro';
 import Home from './telas/Home';
-import AdicionarPacote from './telas/AdicionarPacote';
+import { AdicionarPacoteStep1, 
+          AdicionarPacoteStep2, 
+            AdicionarPacoteStep3 } from './telas/AdicionarPacotes/AdicionarPacoteExport';
 
 const Stack = createStackNavigator();
 
@@ -67,14 +69,29 @@ export default function App() {
           ),
           headerTitle: (props) => <LogoTitle {...props} />
         }} />
-        <Stack.Screen name="AdicionarPacote" component={AdicionarPacote}
+        <Stack.Screen name="AdicionarPacoteStep1" component={AdicionarPacoteStep1}
         options={{
-          headerTransparent: true,
-          headerTitleAlign: 'center',
-          headerTintColor: '#ffffff',
-          headerTitle: '',
-          //headerTitle: 'NOVO PACOTE'
-          //headerTitle: (props) => <LogoTitle {...props} />
+        headerTransparent: true,
+        headerTitleAlign: 'center',
+        headerTintColor: '#ffffff',
+        headerTitle: (props) => <LogoTitle {...props} />
+        
+        }} />
+        <Stack.Screen name="AdicionarPacoteStep2" component={AdicionarPacoteStep2}
+        options={{
+        headerTransparent: true,
+        headerTitleAlign: 'center',
+        headerTintColor: '#ffffff',
+        headerTitle: (props) => <LogoTitle {...props} />
+
+        }} />
+        <Stack.Screen name="AdicionarPacoteStep3" component={AdicionarPacoteStep3}
+        options={{
+        headerTransparent: true,
+        headerTitleAlign: 'center',
+        headerTintColor: '#ffffff',
+        headerTitle: (props) => <LogoTitle {...props} />
+
         }} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -93,7 +93,7 @@ export default function Login({navigation}: any) {
             </TouchableOpacity>
             </View>
             <View style={{ marginTop: 15 }}>
-            <TouchableOpacity style={styles.btnCadastro} onPress={() => navigation.navigate('AdicionarPacote')}>
+            <TouchableOpacity style={styles.btnCadastro} onPress={() => navigation.navigate('AdicionarPacoteStep1')}>
                 <Text style={styles.textCadastro}>Adicionar Pacotes</Text>
             </TouchableOpacity>
             </View>
