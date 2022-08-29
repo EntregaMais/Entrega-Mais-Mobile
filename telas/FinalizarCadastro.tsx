@@ -4,14 +4,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, TextInput, Pressable} from 'react-native';
 import { ScrollView } from "react-native-gesture-handler";
 import { Ionicons as Icon} from '@expo/vector-icons';
-import Button from "../componentes/Button";
 
 const Separator = () => (
     <View style={styles.separator}>
     </View>
 );
 
-export default function FinalizarCadastro({navigation}: any){
+export default function FinalizarCadastro({route}: any){
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [ConfirmSenha, setSenhaConfirm] = useState('');
@@ -24,10 +23,10 @@ export default function FinalizarCadastro({navigation}: any){
                 colors={['rgba(31, 125, 188, 1)', 'transparent']}
                 style={styles.background}
             />
-            <StatusBar style="auto" />
+            <StatusBar style="light" />
             <ScrollView
                 contentContainerStyle={{
-                    paddingTop: 50,
+                    paddingTop: 80,
                     alignItems: "center",
                     justifyContent: "center"
                 }}>
@@ -121,7 +120,7 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 25,
         fontFamily: 'Insanibu',
-        marginTop: 10,
+        //marginTop: 10,
         marginBottom: 30
     },
     textStyle: {
