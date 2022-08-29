@@ -30,11 +30,11 @@ export default function FinalizarCadastro({route}: any){
                     alignItems: "center",
                     justifyContent: "center"
                 }}>
-
+                
                 <View style={{ flexDirection: "row", marginTop: 50 }}>
-                    <Icon style={styles.iconStep} name={"checkmark-circle"} size={15} color="#eae900" />
+                    <Icon style={styles.iconStep} name={"checkmark-circle"} size={15} color="#ffff00" />
                     <Separator />
-                    <Icon style={styles.iconStep} name={"caret-down-circle"} size={15} color="#FFF" />
+                    <Icon style={styles.iconStep} name={"caret-down-circle"} size={15} color="#dcdedc" />
                 </View>
 
                 <Text style={styles.textHeader}>
