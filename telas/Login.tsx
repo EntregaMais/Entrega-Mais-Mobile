@@ -7,6 +7,7 @@ import Checkbox from 'expo-checkbox';
 import React, { useState } from 'react';
 import { TextInput } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons as Icon} from '@expo/vector-icons';
+import * as Animatable from 'react-native-animatable';
 
 const Separator = () => (
     <View style={styles.separator} />
@@ -25,11 +26,13 @@ export default function Login({navigation}: any) {
             colors={['rgba(31, 125, 188, 1)', 'transparent']}
             style={styles.background}
         />
-        <StatusBar style="auto" />
+        <StatusBar style="light" />
 
         <KeyboardAvoidingView>
             <View>
-            <Image 
+            <Animatable.Image 
+                animation='flipInY'
+                delay={300}
                 resizeMode={'contain'}
                 style={styles.image}
                 source={require('../assets/nova_logo.png')}
@@ -77,7 +80,7 @@ export default function Login({navigation}: any) {
                 </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.btnEntrar} onPress={() => navigation.navigate('Home')}>
+            <TouchableOpacity style={styles.btnEntrar} onPress={() => navigation.navigate('Home', {paramKey: email})}>
                 <Text style={styles.textEntrar}>Entrar</Text>
             </TouchableOpacity>
             </View>

@@ -1,23 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
-import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, TextInput, Pressable} from 'react-native';
+import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, TextInput, Pressable, Animated} from 'react-native';
 import { ScrollView } from "react-native-gesture-handler";
 import { Ionicons as Icon} from '@expo/vector-icons';
+import { useHeaderHeight } from "@react-navigation/stack";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Button from "../componentes/Button";
+import NavegationHideOnScroll from "../componentes/NavegationHideOnScroll";
 
 const Separator = () => (
-    <View style={styles.separator}>
-    </View>
+    <View style={styles.separator}/>
 );
 
 export default function Cadastro({navigation}: any) {
 
-    const [email, setEmail] = useState('');
+
+    const [empresa, setEmpresa] = useState('');
     const [senha, setSenha] = useState('');
-    const [ConfirmSenha, setSenhaConfirm] = useState('');
-    const [hidePassword, setHidePassword] = useState(true);
-    const [hidePassword2, setHidePassword2] = useState(true);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -25,15 +25,11 @@ export default function Cadastro({navigation}: any) {
                 colors={['rgba(31, 125, 188, 1)', 'transparent']}
                 style={styles.background}
             />
-            <StatusBar style="auto" />
-            <ScrollView
-                contentContainerStyle={{
-                    paddingTop: 50,
-                    alignItems: "center",
-                    justifyContent: "center"
-                }}>
+            <StatusBar style="light" />
+
+            <NavegationHideOnScroll>
                     
-                <View style={{ flexDirection: "row", marginTop: 50 }}>
+                <View style={{ flexDirection: "row", marginTop: 25 }}>
                     <Icon style={styles.iconStep} name={"caret-down-circle"} size={15} color="#FFF" />
                     <Separator />
                     <Icon style={styles.iconStep} name={"radio-button-off-outline"} size={15} color="#c4c4c4" />
@@ -47,8 +43,8 @@ export default function Cadastro({navigation}: any) {
                         placeholder='Empresa'
                         placeholderTextColor={'white'}
                         autoCorrect={false}
-                        //value={}
-                        onChangeText={ (text) => (text)}
+                        value={empresa}
+                        onChangeText={ (text) => setEmpresa(text)}
                     />
                     <TextInput
                         style={styles.input}
@@ -96,15 +92,13 @@ export default function Cadastro({navigation}: any) {
                     />
 
                     <View>
-                        <TouchableOpacity style={styles.btnProsseguir}  onPress={() => navigation.navigate('FinalizarCadastro')}>
+                        <TouchableOpacity style={styles.btnProsseguir}  onPress={() => navigation.navigate('FinalizarCadastro', {paramKey: empresa})}>
                             <Text style={styles.textProsseguir}>Prosseguir <Icon name={"chevron-forward-outline"} size={14} color="#00BFFF" /></Text>
                         </TouchableOpacity>
                     </View>
 
-                    
                 </View>    
-            </ScrollView>
-        
+            </NavegationHideOnScroll>   
       </SafeAreaView>
     );
 }
@@ -114,7 +108,8 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: 'rgba(86, 203, 242, 1)'
+      backgroundColor: 'rgba(86, 203, 242, 1)',
+      paddingTop: 35
     },
     background: {
       position: 'absolute',
@@ -133,10 +128,6 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 15,
         fontWeight: 'bold'
-    },
-    inputContainer: {
-        flexDirection: 'row',
-        //alignItems: 'center'
     },
     input: {
         color: '#FFF',

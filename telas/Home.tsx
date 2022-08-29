@@ -4,8 +4,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, TextInput, Pressable} from 'react-native';
 import { ScrollView } from "react-native-gesture-handler";
 import { FontAwesome5 as Icon} from '@expo/vector-icons';
+import { color } from "@rneui/base";
 
-export default function Home({navigation}: any){
+export default function Home({route}: any){
 
     return (
         <SafeAreaView style={styles.container}>
@@ -13,10 +14,12 @@ export default function Home({navigation}: any){
             colors={['rgba(31, 125, 188, 1)', 'transparent']}
             style={styles.background}
         />
+        <Text style={{fontSize: 15, color: '#FFF', marginBottom: 10}}>Bem Vindo {route.params.paramKey}</Text>
         <View style={{flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-evenly'}}>
+
             <TouchableOpacity style={styles.bnt}>
                 <Text style={styles.textStyleBtn}>Envios</Text>
-                <Icon name="box" size={20} color="#FFF" />
+                <Icon name="dolly" size={20} color="#FFF" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.bnt}>
                 <Text style={styles.textStyleBtn}>Entregas</Text>
@@ -24,7 +27,7 @@ export default function Home({navigation}: any){
             </TouchableOpacity>
             <TouchableOpacity style={styles.bnt}>
                 <Text style={styles.textStyleBtn}>Relatorios</Text>
-                <Icon name="signal" size={20} color="#FFF" />
+                <Icon name="chart-bar" size={20} color="#FFF" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.bnt}>
                 <Text style={styles.textStyleBtn}>Histórico</Text>
@@ -46,6 +49,7 @@ export default function Home({navigation}: any){
                 <Text style={styles.textStyleBtn}>Usuários</Text>
                 <Icon name="users" size={20} color="#FFF" />
             </TouchableOpacity>
+
         </View >
 
         </SafeAreaView>
