@@ -9,22 +9,24 @@ import { useFonts } from 'expo-font';
 import Cadastro from './telas/CadastroTransportador';
 import Login from './telas/Login';
 import FinalizarCadastro from './telas/FinalizarCadastro';
+import LogoTitle from './componentes/LogoTitle';
 import Home from './telas/Home';
 import { AdicionarPacoteStep1, 
           AdicionarPacoteStep2, 
             AdicionarPacoteStep3 } from './telas/AdicionarPacotes/AdicionarPacoteExport';
+import TabNavigator from './componentes/RoutesBottomNavigator';
 
 const Stack = createStackNavigator();
 
-function LogoTitle(any: any) {
-    return (
-        <Image 
-        resizeMode={'contain'}
-        style={{width: 150, height: 80, marginLeft: 8, marginTop: 2}}
-        source={require('./assets/logo_new.png')}
-      />
-    );
-}
+// function LogoTitle(any: any) {
+//     return (
+//         <Image 
+//         resizeMode={'contain'}
+//         style={{width: 150, height: 80, marginLeft: 8, marginTop: 2}}
+//         source={require('./assets/logo_new.png')}
+//       />
+//     );
+// }
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -57,8 +59,9 @@ export default function App() {
           headerTintColor: '#ffffff',
           headerTitle: (props) => <LogoTitle {...props} />
         }} />
-        <Stack.Screen name='Home' component={Home}
+        <Stack.Screen name='Home' component={TabNavigator}
         options={{
+          headerShown: false,
           headerTransparent: true,
           headerTitleAlign: 'center',
           headerTintColor: '#ffffff',

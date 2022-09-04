@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { useHeaderHeight } from "@react-navigation/stack";
+import { useHeaderHeight } from "@react-navigation/elements";
 import { useEffect, useRef } from "react";
 import { Animated, StyleSheet } from "react-native";
 

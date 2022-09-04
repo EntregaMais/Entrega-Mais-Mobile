@@ -4,7 +4,10 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, TextInput, Pressable} from 'react-native';
 import { ScrollView } from "react-native-gesture-handler";
 import { FontAwesome5 as Icon} from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { color } from "@rneui/base";
+
+const Tab = createBottomTabNavigator();
 
 export default function Home({route}: any){
 
@@ -14,7 +17,7 @@ export default function Home({route}: any){
             colors={['rgba(31, 125, 188, 1)', 'transparent']}
             style={styles.background}
         />
-        <Text style={{fontSize: 15, color: '#FFF', marginBottom: 10}}>Bem Vindo {route.params.paramKey}</Text>
+        {/* <Text style={{fontSize: 15, color: '#FFF', marginBottom: 10}}>Bem Vindo {route.params.paramKey}</Text> */}
         <View style={{flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-evenly'}}>
 
             <TouchableOpacity style={styles.bnt}>

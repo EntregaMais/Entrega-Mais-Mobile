@@ -80,12 +80,12 @@ export default function Login({navigation}: any) {
                 </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.btnEntrar} onPress={() => navigation.navigate('Home', {paramKey: email})}>
+            <TouchableOpacity style={styles.btnEntrar} onPress={() => navigation.navigate('Home')}>
                 <Text style={styles.textEntrar}>Entrar</Text>
             </TouchableOpacity>
             </View>
 
-            <View style={{ flexDirection: "row", marginTop: 15 }}>
+            <View style={{ flexDirection: "row", marginTop: 20 }}>
                 <Separator />
                 <Text style={styles.textSeparator}>ou</Text>
                 <Separator />

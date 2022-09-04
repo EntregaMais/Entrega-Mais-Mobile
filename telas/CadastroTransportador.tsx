@@ -4,8 +4,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, TextInput, Pressable, Animated} from 'react-native';
 import { ScrollView } from "react-native-gesture-handler";
 import { Ionicons as Icon} from '@expo/vector-icons';
-import { useHeaderHeight } from "@react-navigation/stack";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Button from "../componentes/Button";
 import NavegationHideOnScroll from "../componentes/NavegationHideOnScroll";
 
