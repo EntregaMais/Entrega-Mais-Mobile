@@ -9,6 +9,9 @@ import { TextInput } from 'react-native-gesture-handler';
 import { MaterialCommunityIcons as Icon} from '@expo/vector-icons';
 import * as Animatable from 'react-native-animatable';
 
+import { ScreenContainer } from '../styled'
+import LinearGradientBackground from '../componentes/LinearGradient';
+
 const Separator = () => (
 	<View style={styles.separator} />
 );
@@ -21,104 +24,100 @@ export default function Login({navigation}: any) {
 	const [isChecked, setChecked] = useState(false);
 
 	return (
-		<SafeAreaView style={styles.container}>
-		<LinearGradient
-			colors={['rgba(31, 125, 188, 1)', 'transparent']}
-			style={styles.background}
-		/>
-		<StatusBar style="light" />
+		<ScreenContainer>
+			<LinearGradientBackground/>
+			<StatusBar style="light" />
 
-		<KeyboardAvoidingView>
-			<View>
-			<Animatable.Image
-				animation='flipInY'
-				delay={300}
-				resizeMode={'contain'}
-				style={styles.image}
-				source={require('../../assets/nova_logo.png')}
-			/>
-			</View>
-			<View>
-			<TextInput
-				style={styles.input}
-				placeholder='Email'
-				placeholderTextColor={'white'}
-				autoCorrect={false}
-				value={email}
-				onChangeText={ (text) => setEmail(text)}
-				autoCapitalize="none"
-			/>
-			<View style={{ flexDirection: "row" }}>
-				<TextInput
-					style={styles.input}
-					placeholder='Senha'
-					secureTextEntry={hidePassword}
-					placeholderTextColor={'white'}
-					autoCorrect={false}
-					value={senha}
-					onChangeText={ (text) => setSenha(text)}
-					autoCapitalize="none"
-				/>
-				<TouchableOpacity style={styles.icon} onPress={ () => setHidePassword(!hidePassword)}>
-					{ hidePassword ?
-						<Icon name={"eye"} size={20} color="#FFF" />
-						:
-						<Icon name={"eye-off"} size={20} color="#FFF" />
-					}
+			<KeyboardAvoidingView>
+				<View>
+					<Animatable.Image
+						animation='flipInY'
+						delay={300}
+						resizeMode={'contain'}
+						style={styles.image}
+						source={require('../../assets/nova_logo.png')}
+					/>
+				</View>
+				<View>
+					<TextInput
+						style={styles.input}
+						placeholder='Email'
+						placeholderTextColor={'white'}
+						autoCorrect={false}
+						value={email}
+						onChangeText={ (text) => setEmail(text)}
+						autoCapitalize="none"
+					/>
+					<View style={{ flexDirection: "row" }}>
+						<TextInput
+							style={styles.input}
+							placeholder='Senha'
+							secureTextEntry={hidePassword}
+							placeholderTextColor={'white'}
+							autoCorrect={false}
+							value={senha}
+							onChangeText={ (text) => setSenha(text)}
+							autoCapitalize="none"
+						/>
+						<TouchableOpacity style={styles.icon} onPress={ () => setHidePassword(!hidePassword)}>
+							{ hidePassword ?
+								<Icon name={"eye"} size={20} color="#FFF" />
+								:
+								<Icon name={"eye-off"} size={20} color="#FFF" />
+							}
+						</TouchableOpacity>
+					</View>
+					<View style={{ flexDirection: "row" }}>
+						<Checkbox
+						style={styles.checkbox}
+						value={isChecked}
+						onValueChange={setChecked}
+						color={isChecked ? '#00BFFF' : undefined}
+						/>
+						<Text style={styles.textEsqueceu}>Lembrar senha</Text>
+						<TouchableOpacity style={styles.btnEsqueceu}>
+						<Text style={styles.textEsqueceu}>Esqueceu a senha?</Text>
+						</TouchableOpacity>
+					</View>
+
+					<TouchableOpacity style={styles.btnEntrar} onPress={() => navigation.navigate('Home')}>
+						<Text style={styles.textEntrar}>Entrar</Text>
+					</TouchableOpacity>
+				</View>
+
+				<View style={{ flexDirection: "row", marginTop: 20 }}>
+					<Separator />
+					<Text style={styles.textSeparator}>ou</Text>
+					<Separator />
+				</View>
+				<View>
+				<TouchableOpacity style={styles.btnCadastro} onPress={() => navigation.navigate('CadastroTransportadorStep1')}>
+					<Text style={styles.textCadastro}>Cadastre-se</Text>
 				</TouchableOpacity>
-			</View>
-			<View style={{ flexDirection: "row" }}>
-				<Checkbox
-				style={styles.checkbox}
-				value={isChecked}
-				onValueChange={setChecked}
-				color={isChecked ? '#00BFFF' : undefined}
-				/>
-				<Text style={styles.textEsqueceu}>Lembrar senha</Text>
-				<TouchableOpacity style={styles.btnEsqueceu}>
-				<Text style={styles.textEsqueceu}>Esqueceu a senha?</Text>
-				</TouchableOpacity>
-			</View>
-
-			<TouchableOpacity style={styles.btnEntrar} onPress={() => navigation.navigate('Home')}>
-				<Text style={styles.textEntrar}>Entrar</Text>
-			</TouchableOpacity>
-			</View>
-
-			<View style={{ flexDirection: "row", marginTop: 20 }}>
-				<Separator />
-				<Text style={styles.textSeparator}>ou</Text>
-				<Separator />
-			</View>
-			<View>
-			<TouchableOpacity style={styles.btnCadastro} onPress={() => navigation.navigate('CadastroTransportadorStep1')}>
-				<Text style={styles.textCadastro}>Cadastre-se</Text>
-			</TouchableOpacity>
-			</View>
-		</KeyboardAvoidingView>
-
-		</SafeAreaView>
+				</View>
+			</KeyboardAvoidingView>
+		</ScreenContainer>
 	);
 }
 
 const styles = StyleSheet.create({
+	linearGradient: {
+		alignItems: 'center',
+		justifyContent: 'center',
+		borderRadius: 5,
+		height: 200,
+		width: 350,
+	  },
 	container: {
-	  flex: 1,
-	  alignItems: 'center',
-	  justifyContent: 'center',
-	  backgroundColor: 'rgba(86, 203, 242, 1)'
+	//   flex: 1,
+	//   alignItems: 'center',
+	//   justifyContent: 'center',
+	//   backgroundColor: 'rgba(86, 203, 242, 1)'
 	},
 	image: {
 	  width: 300,
 	  height: 80,
 	  marginBottom: 40
-	},
-	background: {
-	  position: 'absolute',
-	  left: 0,
-	  right: 0,
-	  top: 0,
-	  height: 300
 	},
 	input: {
 	  color: '#FFF',

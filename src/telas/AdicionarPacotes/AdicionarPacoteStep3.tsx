@@ -6,6 +6,8 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Ionicons as Icon} from '@expo/vector-icons';
 import Button from "../../componentes/Button";
 import NumericInput from 'react-native-numeric-input'
+import LinearGradientBackground from "../../componentes/LinearGradient";
+import { HeaderText, ScreenContainer } from "../../styled";
 
 
 const Separator = () => (
@@ -19,11 +21,8 @@ export default function AdicionarPacoteStep3({navigation}: any) {
 	const [cidadeSelecionado, setCidadeSelecionado] = useState();
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<LinearGradient
-				colors={['rgba(31, 125, 188, 1)', 'transparent']}
-				style={styles.background}
-			/>
+		<ScreenContainer>
+			<LinearGradientBackground/>
 			<StatusBar style="auto" />
 			<ScrollView
 				contentContainerStyle={{
@@ -40,9 +39,7 @@ export default function AdicionarPacoteStep3({navigation}: any) {
 					<Icon style={styles.iconStep} name={"caret-down-circle"} size={15} color="#dcdedc" />
 				</View>
 
-				<Text style={styles.textHeader}>
-					NOVO PACOTE
-				</Text>
+				<HeaderText > NOVO PACOTE </HeaderText>
 				<View>
 
 					<Text style={styles.textStyle}>Quantidade de Pacotes</Text>
@@ -98,7 +95,7 @@ export default function AdicionarPacoteStep3({navigation}: any) {
 					</View>
 				</View>
 			</ScrollView>
-		</SafeAreaView>
+		</ScreenContainer>
 	);
 }
 

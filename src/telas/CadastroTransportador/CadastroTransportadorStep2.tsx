@@ -4,6 +4,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, TextInput, Pressable} from 'react-native';
 import { ScrollView } from "react-native-gesture-handler";
 import { Ionicons as Icon} from '@expo/vector-icons';
+import LinearGradientBackground from "../../componentes/LinearGradient";
+import { HeaderText, ScreenContainer } from "../../styled";
 
 const Separator = () => (
 	<View style={styles.separator}>
@@ -18,12 +20,10 @@ export default function CadastroTransportadorStep2({route, navigation}: any){
 	const [hidePassword2, setHidePassword2] = useState(true);
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<LinearGradient
-				colors={['rgba(31, 125, 188, 1)', 'transparent']}
-				style={styles.background}
-			/>
+		<ScreenContainer>
+			<LinearGradientBackground/>
 			<StatusBar style="light" />
+
 			<ScrollView
 				contentContainerStyle={{
 					paddingTop: 80,
@@ -37,9 +37,8 @@ export default function CadastroTransportadorStep2({route, navigation}: any){
 					<Icon style={styles.iconStep} name={"caret-down-circle"} size={15} color="#dcdedc" />
 				</View>
 
-				<Text style={styles.textHeader}>
-					Finalizar Cadastro
-				</Text>
+				<HeaderText>Finalizar Cadastro</HeaderText>
+
 				<View>
 					<TextInput
 						style={styles.input}
@@ -97,7 +96,7 @@ export default function CadastroTransportadorStep2({route, navigation}: any){
 				</View>
 			</ScrollView>
 
-	  </SafeAreaView>
+	  </ScreenContainer>
 	);
 }
 

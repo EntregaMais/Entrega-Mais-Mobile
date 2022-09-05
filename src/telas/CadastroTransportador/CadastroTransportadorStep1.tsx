@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { StatusBar } from 'expo-status-bar';
-import { LinearGradient } from 'expo-linear-gradient';
-import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, TextInput, Pressable, Animated} from 'react-native';
+import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Pressable, Animated} from 'react-native';
 import { ScrollView } from "react-native-gesture-handler";
 import { Ionicons as Icon} from '@expo/vector-icons';
 import Button from "../../componentes/Button";
 import NavegationHideOnScroll from "../../componentes/NavegationHideOnScroll";
+import LinearGradientBackground from "../../componentes/LinearGradient";
+import {ScreenContainer, BodyText, TextInput, HeaderText } from "../../styled";
 
 const Separator = () => (
 	<View style={styles.separator}/>
@@ -18,11 +19,8 @@ export default function CadastroTransportadorStep1({navigation}: any) {
 	const [senha, setSenha] = useState('');
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<LinearGradient
-				colors={['rgba(31, 125, 188, 1)', 'transparent']}
-				style={styles.background}
-			/>
+		<ScreenContainer>
+			<LinearGradientBackground/>
 			<StatusBar style="light" />
 
 			<NavegationHideOnScroll>
@@ -32,61 +30,55 @@ export default function CadastroTransportadorStep1({navigation}: any) {
 					<Separator />
 					<Icon style={styles.iconStep} name={"radio-button-off-outline"} size={15} color="#c4c4c4" />
 				</View>
-				<Text style={styles.textHeader}>
-					TRANSPORTADOR
-				</Text>
+
+				<HeaderText>Transportador</HeaderText>
+
 				<View >
 					<TextInput
-						style={styles.input}
 						placeholder='Empresa'
 						placeholderTextColor={'white'}
 						autoCorrect={false}
 						value={empresa}
-						onChangeText={ (text) => setEmpresa(text)}
+						onChangeText={ (text: string) => setEmpresa(text)}
 					/>
 					<TextInput
-						style={styles.input}
 						placeholder='Nome do Responsável'
 						placeholderTextColor={'white'}
 						autoCorrect={false}
 						//value={}
-						onChangeText={ (text) => (text)}
+						onChangeText={ (text: string) => (text)}
 					/>
 					<TextInput
-						style={styles.input}
 						placeholder='CPF/CNPJ'
 						placeholderTextColor={'white'}
 						autoCorrect={false}
 						//value={}
-						onChangeText={ (text) => (text)}
+						onChangeText={ (text: string) => (text)}
 					/>
 					<TextInput
-						style={styles.input}
 						placeholder='Setor'
 						placeholderTextColor={'white'}
 						autoCorrect={false}
 						//value={}
-						onChangeText={ (text) => (text)}
+						onChangeText={ (text: string) => (text)}
 					/>
 					<TextInput
-						style={styles.input}
 						placeholder='Vaga'
 						placeholderTextColor={'white'}
 						autoCorrect={false}
 						//value={}
-						onChangeText={ (text) => (text)}
+						onChangeText={ (text: string) => (text)}
 					/>
 
-					<Text style={styles.textStyle}>Cobra taxa de embarque?</Text>
+					<BodyText>Cobra taxa de embarque?</BodyText>
 					<Button></Button>
 
 					<TextInput
-						style={styles.input}
 						placeholder='Chave do Pix'
 						placeholderTextColor={'white'}
 						autoCorrect={false}
 						//value={}
-						onChangeText={ (text) => (text)}
+						onChangeText={ (text: string) => (text)}
 					/>
 
 					<View>
@@ -97,7 +89,7 @@ export default function CadastroTransportadorStep1({navigation}: any) {
 
 				</View>
 			</NavegationHideOnScroll>
-		</SafeAreaView>
+		</ScreenContainer>
 	);
 }
 
@@ -126,17 +118,6 @@ const styles = StyleSheet.create({
 		color: '#FFF',
 		fontSize: 15,
 		fontWeight: 'bold'
-	},
-	input: {
-		color: '#FFF',
-		fontWeight: 'bold',
-		fontSize: 15,
-		width: 300,
-		borderBottomWidth: 1,
-		backgroundColor: 'transparent',
-		borderBottomColor: '#FFF',
-		marginBottom: 30,
-		padding: 2,
 	},
 	icon: {
 		height: 20,

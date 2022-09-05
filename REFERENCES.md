@@ -3,6 +3,7 @@
 ### React Native Docs - 
 > https://reactnative.dev/docs/ 
 
+> https://reactnative.dev/docs/usewindowdimensions
 ---
 
 ### React Navigation

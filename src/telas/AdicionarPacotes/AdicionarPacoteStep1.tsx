@@ -9,6 +9,8 @@ import { Picker } from '@react-native-picker/picker';
 import { estadosJSON } from '../../mocks/Estados';
 import { cidadesJSON} from '../../mocks/Cidades';
 import { color } from "@rneui/base";
+import LinearGradientBackground from "../../componentes/LinearGradient";
+import { HeaderText, ScreenContainer } from "../../styled";
 
 const Separator = () => (
 	<View style={styles.separator}>
@@ -21,11 +23,8 @@ export default function AdicionarPacoteStep1({navigation}: any) {
 	const [cidadeSelecionado, setCidadeSelecionado] = useState();
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<LinearGradient
-				colors={['rgba(31, 125, 188, 1)', 'transparent']}
-				style={styles.background}
-			/>
+		<ScreenContainer>
+			<LinearGradientBackground/>
 			<StatusBar style="auto" />
 			<ScrollView
 				contentContainerStyle={{
@@ -41,9 +40,7 @@ export default function AdicionarPacoteStep1({navigation}: any) {
 					<Separator />
 					<Icon style={styles.iconStep} name={"radio-button-off-outline"} size={15} color="#dcdedc" />
 				</View>
-				<Text style={styles.textHeader}>
-					NOVO PEDIDO
-				</Text>
+				<HeaderText> NOVO PEDIDO </HeaderText>
 
 				<View >
 					<TextInput
@@ -119,7 +116,7 @@ export default function AdicionarPacoteStep1({navigation}: any) {
 					</View>
 				</View>
 			</ScrollView>
-		</SafeAreaView>
+		</ScreenContainer>
 	);
 }
 
