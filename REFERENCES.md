@@ -23,6 +23,8 @@
 
 > https://docs.expo.dev/guides/using-styled-components/
 
+> https://dev.to/ednilsoncs/uma-introducao-a-react-native-typescript-styled-component-4kpd
+
 ---
 
 ### Expo - Picker
