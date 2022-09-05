@@ -1,6 +1,6 @@
 import { Image, TouchableOpacity} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import 'react-native-gesture-handler';
 import React, { useState } from 'react';
 import { Ionicons as Icon} from '@expo/vector-icons';
@@ -17,7 +17,7 @@ import {AdicionarPacoteStep1,
 import {CadastroTransportadorStep1,
 			CadastroTransportadorStep2} from './src/telas/CadastroTransportador/CadastroTransportadorExport';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 // function LogoTitle(any: any) {
 //     return (
