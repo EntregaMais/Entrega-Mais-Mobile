@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
-import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, TextInput, Pressable} from 'react-native';
+import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Pressable} from 'react-native';
 import { ScrollView } from "react-native-gesture-handler";
 import { Ionicons as Icon} from '@expo/vector-icons';
-import Button from "../../componentes/Button";
+import ButtonEscolha from "../../componentes/ButtonEscolha";
 import { Picker } from '@react-native-picker/picker';
 import { estadosJSON } from '../../mocks/Estados';
 import { cidadesJSON} from '../../mocks/Cidades';
 import { color } from "@rneui/base";
+import LinearGradientBackground from "../../componentes/LinearGradient";
+import { HeaderText, Input } from "../../styled";
+import Container from '../../componentes/Container';
 
 const Separator = () => (
 	<View style={styles.separator}>
@@ -21,12 +24,7 @@ export default function AdicionarPacoteStep1({navigation}: any) {
 	const [cidadeSelecionado, setCidadeSelecionado] = useState();
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<LinearGradient
-				colors={['rgba(31, 125, 188, 1)', 'transparent']}
-				style={styles.background}
-			/>
-			<StatusBar style="auto" />
+		<Container>
 			<ScrollView
 				contentContainerStyle={{
 					paddingTop: 50,
@@ -41,42 +39,41 @@ export default function AdicionarPacoteStep1({navigation}: any) {
 					<Separator />
 					<Icon style={styles.iconStep} name={"radio-button-off-outline"} size={15} color="#dcdedc" />
 				</View>
-				<Text style={styles.textHeader}>
-					NOVO PEDIDO
-				</Text>
+
+				<HeaderText> NOVO PEDIDO </HeaderText>
 
 				<View >
-					<TextInput
+					<Input
 						style={styles.input}
 						placeholder='Fornecedor'
 						placeholderTextColor={'white'}
 						autoCorrect={false}
 						//value={}
-						onChangeText={ (text) => (text)}
+						onChangeText={ (text: any) => (text)}
 					/>
-					<TextInput
+					<Input
 						style={styles.input}
 						placeholder='Tel Fornecedor (DDD)'
 						placeholderTextColor={'white'}
 						autoCorrect={false}
 						//value={}
-						onChangeText={ (text) => (text)}
+						onChangeText={ (text: any) => (text)}
 					/>
-					<TextInput
+					<Input
 						style={styles.input}
 						placeholder='Cliente'
 						placeholderTextColor={'white'}
 						autoCorrect={false}
 						//value={}
-						onChangeText={ (text) => (text)}
+						onChangeText={ (text: any) => (text)}
 					/>
-					<TextInput
+					<Input
 						style={styles.input}
 						placeholder='Tel Cliente (DDD)'
 						placeholderTextColor={'white'}
 						autoCorrect={false}
 						//value={}
-						onChangeText={ (text) => (text)}
+						onChangeText={ (text: any) => (text)}
 					/>
 
 					<Text style={styles.textStyle}>ESTADO</Text>
@@ -119,17 +116,11 @@ export default function AdicionarPacoteStep1({navigation}: any) {
 					</View>
 				</View>
 			</ScrollView>
-		</SafeAreaView>
+		</Container>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {
-	  flex: 1,
-	  alignItems: 'center',
-	  justifyContent: 'center',
-	  backgroundColor: 'rgba(86, 203, 242, 1)'
-	},
 	image: {
 	  width: 200,
 	  height: 80,

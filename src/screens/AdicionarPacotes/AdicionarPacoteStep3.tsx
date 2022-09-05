@@ -1,30 +1,27 @@
 import React, { useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
-import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, TextInput, Pressable} from 'react-native';
+import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Pressable} from 'react-native';
 import { ScrollView } from "react-native-gesture-handler";
 import { Ionicons as Icon} from '@expo/vector-icons';
-import Button from "../../componentes/Button";
+import ButtonEscolha from "../../componentes/ButtonEscolha";
 import NumericInput from 'react-native-numeric-input'
-
+import LinearGradientBackground from "../../componentes/LinearGradient";
+import { HeaderText, Input } from "../../styled";
+import Container from '../../componentes/Container';
 
 const Separator = () => (
 	<View style={styles.separator}>
 	</View>
 );
 
-export default function AdicionarPacoteStep2({navigation}: any) {
+export default function AdicionarPacoteStep3({navigation}: any) {
 
 	const [estadoSelecionado, setEstadoSelecionado] = useState();
 	const [cidadeSelecionado, setCidadeSelecionado] = useState();
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<LinearGradient
-				colors={['rgba(31, 125, 188, 1)', 'transparent']}
-				style={styles.background}
-			/>
-			<StatusBar style="auto" />
+		<Container>
 			<ScrollView
 				contentContainerStyle={{
 					paddingTop: 50,
@@ -35,49 +32,68 @@ export default function AdicionarPacoteStep2({navigation}: any) {
 				<View style={{ flexDirection: "row", marginTop: 50}}>
 					<Icon style={styles.iconStep} name={"checkmark-circle"} size={15} color="#ffff00" />
 					<Separator />
-					<Icon style={styles.iconStep} name={"caret-down-circle"} size={15} color="#dcdedc" />
+					<Icon style={styles.iconStep} name={"checkmark-circle"} size={15} color="#ffff00" />
 					<Separator />
-					<Icon style={styles.iconStep} name={"radio-button-off-outline"} size={15} color="#dcdedc" />
+					<Icon style={styles.iconStep} name={"caret-down-circle"} size={15} color="#dcdedc" />
 				</View>
 
-				<Text style={styles.textHeader}>
-					NOVO PACOTE
-				</Text>
-				<View >
+				<HeaderText > NOVO PACOTE </HeaderText>
+				<View>
 
-					<Text style={styles.textStyle}>Quem paga a taxa?</Text>
+					<Text style={styles.textStyle}>Quantidade de Pacotes</Text>
+
+					<View style={styles.contadorPacotes}>
+						<NumericInput
+							rounded
+							minValue={0}
+							onChange={value => console.log(value)}
+							totalWidth={200}
+							totalHeight={60}
+							textColor='#FFF'
+							iconStyle={{color: '#FFF', fontSize: 30} as any}
+							borderColor={'#FFF'}
+							rightButtonBackgroundColor='#8CFCA4'
+							leftButtonBackgroundColor='#FF6961' />
+					</View>
+
 					<View style={{flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-evenly'}}>
-						<TouchableOpacity style={styles.btnTaxa}>
-							<Text style={styles.textTaxa}>Fornecedor</Text>
+						<TouchableOpacity style={styles.bnt}>
+							<Text style={styles.textStyleBtn}>PP</Text>
+							<Text style={styles.textStyleBtn}>R$10</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.btnTaxa}>
-							<Text style={styles.textTaxa}>Cliente</Text>
+						<TouchableOpacity style={styles.bnt}>
+							<Text style={styles.textStyleBtn}>P</Text>
+							<Text style={styles.textStyleBtn}>R$15</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.btnTaxa}>
-							<Text style={styles.textTaxa}>Não Paga</Text>
+						<TouchableOpacity style={styles.bnt}>
+							<Text style={styles.textStyleBtn}>M</Text>
+							<Text style={styles.textStyleBtn}>R$20</Text>
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.bnt}>
+							<Text style={styles.textStyleBtn}>G</Text>
+							<Text style={styles.textStyleBtn}>R$30</Text>
 						</TouchableOpacity>
 					</View >
 
-					<Text style={styles.textStyle}>Fornecedor pagou frete?</Text>
-					<Button />
+					<View style={{flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-evenly'}}>
+						<TouchableOpacity style={styles.bnt}>
+							<Text style={styles.textStyleBtn}>FARDO</Text>
+							<Text style={styles.textStyleBtn}>R$80</Text>
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.bnt}>
+							<Text style={styles.textStyleBtn}>OUTRO</Text>
+							<Text style={styles.textStyleBtn}>VALOR</Text>
+						</TouchableOpacity>
+					</View >
 
-					<TextInput
-						style={styles.input}
-						placeholder='Observações'
-						placeholderTextColor={'white'}
-						autoCorrect={false}
-						//value={}
-						onChangeText={ (text) => (text)}
-					/>
-
-					<View>
-						<TouchableOpacity style={styles.btnProsseguir}  onPress={() => navigation.navigate('AdicionarPacoteStep3')}>
+					<View style={{marginTop: 20}}>
+						<TouchableOpacity style={styles.btnProsseguir}  onPress={() => navigation.navigate('Login')}>
 							<Text style={styles.textProsseguir}>Prosseguir <Icon name={"chevron-forward-outline"} size={14} color="#00BFFF" /></Text>
 						</TouchableOpacity>
 					</View>
 				</View>
 			</ScrollView>
-		</SafeAreaView>
+		</Container>
 	);
 }
 
@@ -89,10 +105,14 @@ const styles = StyleSheet.create({
 	  backgroundColor: 'rgba(86, 203, 242, 1)'
 	},
 	contadorPacotes: {
+		color: '#FFF', fontSize: 30,
 	  flexDirection: "row",
 	  margin: 20,
 	  alignItems: 'center',
 	  justifyContent: 'center',
+	},
+	contadorStyle:{
+		color: '#FFF',
 	},
 	image: {
 	  width: 200,
@@ -157,7 +177,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		elevation: 4,
 		shadowColor: '#52006A',
-		marginBottom: 10
+		marginBottom: 100
 	},
 	textProsseguir: {
 		fontWeight: 'bold',
@@ -182,18 +202,16 @@ const styles = StyleSheet.create({
 		marginLeft: 1,
 		marginRight: 1,
 	},
-	btnTaxa:{
-		backgroundColor: '#FFF',
-		borderRadius: 50,
-		alignItems: 'center',
-		justifyContent: 'space-evenly',
-		elevation: 4,
-		shadowColor: '#52006A',
-		minWidth: '25%',
-		minHeight: 30,
-		marginVertical: 20,
-
-		/*
+	textStyleBtn: {
+		fontFamily: 'Insanibu',
+		fontSize: 25,
+		color: '#FFF',
+		textShadowColor: '#8a8a8a',
+		textShadowOffset: { width: 0, height: 1 },
+		textShadowRadius: 1,
+		paddingHorizontal: 10
+	},
+	bnt: {
 		marginLeft: 5,
 		marginRight: 5,
 		minWidth: 50,
@@ -207,11 +225,5 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		//elevation: 1,
 		shadowColor: '#52006A',
-		*/
-	},
-	textTaxa: {
-		fontWeight: 'bold',
-		color: '#00BFFF',
-		padding: 10
 	},
 });

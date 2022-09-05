@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Home from "../telas/Home";
-import AdicionarPacoteStep1 from "../telas/AdicionarPacotes/AdicionarPacoteStep1";
+import Home from "../screens/Home";
+import AdicionarPacoteStep1 from "../screens/AdicionarPacotes/AdicionarPacoteStep1";
 import Feather from 'react-native-vector-icons/Feather';
 import LogoTitle from "../componentes/LogoTitle";
 import { TouchableOpacity } from "react-native";

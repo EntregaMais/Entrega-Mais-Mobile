@@ -37,21 +37,14 @@ export default function NavegationHideOnScroll(props: NavegationHideProps) {
 
 	return (
 		<Animated.ScrollView
-			contentContainerStyle={{
-				paddingTop: 50,
-				alignItems: "center",
-				justifyContent: "center"
-			}}
 			onScroll={Animated.event(
-				[
-				{
+				[{
 					nativeEvent: {
 						contentOffset: {
 							y: yOffset,
 						},
 					},
-				},
-				],
+				},],
 				{ useNativeDriver: true }
 			)}
 			scrollEventThrottle={1}

@@ -14,6 +14,8 @@
     "@react-navigation/stack": "^6.2.3",
     "@rneui/base": "^4.0.0-rc.4",
     "@rneui/themed": "^4.0.0-rc.4",
+    "@types/amqplib": "^0.8.2",
+    "amqplib": "^0.10.3",
     "expo": "^46.0.0",
     "expo-app-loading": "~2.1.0",
     "expo-checkbox": "~2.2.0",
