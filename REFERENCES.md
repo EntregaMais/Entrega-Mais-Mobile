@@ -3,11 +3,14 @@
 ### React Native Docs - 
 > https://reactnative.dev/docs/ 
 
+> https://reactnative.dev/docs/usewindowdimensions
 ---
 
 ### React Navigation
 
 > https://reactnavigation.org/docs/
+
+> https://benjaminwoojang.medium.com/react-navigation-with-typescript-270dfa8d5cad
 
 ---
 
@@ -22,6 +25,8 @@
 > https://styled-components.com/docs
 
 > https://docs.expo.dev/guides/using-styled-components/
+
+> https://dev.to/ednilsoncs/uma-introducao-a-react-native-typescript-styled-component-4kpd
 
 ---
 
