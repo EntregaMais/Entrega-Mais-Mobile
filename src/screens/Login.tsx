@@ -1,12 +1,11 @@
+import { Ionicons as Icon } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { StyleSheet, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
-import Checkbox from 'expo-checkbox';
-import { MaterialCommunityIcons as Icon} from '@expo/vector-icons';
-import * as Animatable from 'react-native-animatable';
-import { Row, Column, Input, Text, HidePassword, Separator, CheckboxExpo, Label } from '../styled'
-import Button from '../componentes/Button'
+import { KeyboardAvoidingView, StyleSheet } from 'react-native';
+
+import Button from '../componentes/Button';
 import Container from '../componentes/Container';
 import Logo from '../componentes/Logo';
+import { CheckboxExpo, Column, HidePassword, Input, Label, Row, Separator } from '../styled';
 
 
 export default function Login({navigation}: any) {
@@ -20,32 +19,28 @@ export default function Login({navigation}: any) {
 		<Container>
 			<KeyboardAvoidingView>
 				<Row>
-					<Column
-						alignItensCenter
-						>
+					<Column alignItensCenter>
 						<Logo size={'large'}/>
 						<Input
 							placeholder='Email'
 							placeholderTextColor={'white'}
 							autoCorrect={false}
 							value={email}
-							onChangeText={ (text: any) => setEmail(text)}
+							onChangeText={(text: any) => setEmail(text)}
 							autoCapitalize="none"
 							/>
-						<Row 
-							nowrap
-							>
+						<Row nowrap>
 							<Input
 								placeholder='Senha'
 								secureTextEntry={hidePassword}
 								placeholderTextColor={'white'}
 								autoCorrect={false}
 								value={senha}
-								onChangeText={ (text: any) => setSenha(text)}
+								onChangeText={(text: any) => setSenha(text)}
 								autoCapitalize='none'
 								/>
 							<HidePassword 
-								onPress={ () => setHidePassword(!hidePassword)}>
+								onPress={() => setHidePassword(!hidePassword)}>
 								{ hidePassword ?
 									<Icon name={"eye"} size={20} color="#FFF" />
 									:
@@ -60,7 +55,7 @@ export default function Login({navigation}: any) {
 							<Button 
 								buttonSize={'auto'}
 								labelSize={'small'}
-								onPress={() => {setChecked(!isChecked); console.log(isChecked)}}
+								onPress={() => {setChecked(!isChecked);}}
 								>
 								<Row>
 									<CheckboxExpo
@@ -74,7 +69,7 @@ export default function Login({navigation}: any) {
 							<Button
 								buttonSize={'auto'}
 								labelSize={'small'}
-								>
+							>
 								Esqueceu a senha
 							</Button>
 						</Row>
@@ -83,7 +78,7 @@ export default function Login({navigation}: any) {
 							buttonSize={'large'}
 							labelSize={'medium'} 
 							isPrimary
-							onPress={() => navigation.navigate('Home')}
+							onPress={() => {navigation.navigate('Home');}}
 						>
 							Entrar
 						</Button>
@@ -93,9 +88,17 @@ export default function Login({navigation}: any) {
 						<Button
 							buttonSize={'large'}
 							labelSize={'medium'} 
-							onPress={() => navigation.navigate('CadastroTransportadorStep1')}
+							onPress={() => {navigation.navigate('CadastroUsuarioStep1');}}
 						>
-							Cadastro
+							Cadastro Usuario
+						</Button>
+
+						<Button
+							buttonSize={'large'}
+							labelSize={'medium'} 
+							onPress={() => {navigation.navigate('CadastroTransportadorStep1');}}
+						>
+							Cadastro Transportador
 						</Button>
 
 					</Column>
@@ -104,34 +107,3 @@ export default function Login({navigation}: any) {
 		</Container>
 	);
 }
-
-const styles = StyleSheet.create({
-	image: {
-	  width: 300,
-	  height: 80,
-	  marginBottom: 40
-	},
-	btnEsqueceu:{
-	  height: 40,
-	  marginBottom: 2,
-	  marginLeft: 90
-	},
-	btnEntrar:{
-	  backgroundColor: '#FFF',
-	  width: '100%',
-	  height: 40,
-	  borderRadius: 50,
-	  alignItems: 'center',
-	  justifyContent: 'center',
-	  elevation: 4,
-	  shadowColor: '#52006A',
-	  //marginBottom: 12
-	},
-	textSeparator: {
-	  fontSize: 12,
-	  color: '#FFF',
-	  marginTop: 10,
-	  marginLeft: 9,
-	  //marginRight: 1,
-  }
-});

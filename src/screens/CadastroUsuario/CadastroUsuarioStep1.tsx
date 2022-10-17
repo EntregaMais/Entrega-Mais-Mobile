@@ -7,8 +7,7 @@ import Container from '../../componentes/Container';
 import { Column, HeaderText, HidePassword, Input, Row, Separator } from '../../styled';
 
 
-export default function CadastroTransportadorStep2({ route, navigation }: any) {
-	
+export default function CadastroUsuarioStep1({ route, navigation }: any) {
 
 	const [email, setEmail] = useState('');
 	const [senha, setSenha] = useState('');
@@ -38,13 +37,13 @@ export default function CadastroTransportadorStep2({ route, navigation }: any) {
 							/>
 						</Row>
 
-						<HeaderText>FINALIZAR CADASTRO TRANSPORTADOR</HeaderText>
+						<HeaderText>CADASTRO USUARIO</HeaderText>
 
 						<Input
 							placeholder="Email"
 							placeholderTextColor={'white'}
 							autoCorrect={false}
-							value={route.params.empresa}
+							value={email}
 							onChangeText={(text: any) => {setEmail(text);}}
 							autoCapitalize="none"
 						/>
@@ -103,7 +102,7 @@ export default function CadastroTransportadorStep2({ route, navigation }: any) {
 							labelSize={'medium'}
 							onPress={() => {navigation.navigate('Login')}}
 						>
-							Concluir
+							Cadastrar Usuário
 						</Button>
 					</Column>
 				</Row>
