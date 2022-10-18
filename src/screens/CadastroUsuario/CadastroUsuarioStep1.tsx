@@ -4,7 +4,11 @@ import { KeyboardAvoidingView, StyleSheet } from 'react-native';
 
 import Button from '../../componentes/Button';
 import Container from '../../componentes/Container';
+import { salvarUsuario } from '../../services/salvarUsuarioService';
 import { Column, HeaderText, HidePassword, Input, Row, Separator } from '../../styled';
+
+import axios from "axios";
+
 
 
 export default function CadastroUsuarioStep1({ route, navigation }: any) {
@@ -15,6 +19,64 @@ export default function CadastroUsuarioStep1({ route, navigation }: any) {
 
 	const [hidePassword, setHidePassword] = useState(true);
 	const [hidePassword2, setHidePassword2] = useState(true);
+
+
+	const salvarUsuario = async (email:string, password:string) => {
+		let headersList = {
+			"Content-Type": "application/json" 
+		   }
+		   
+		   let bodyContent = JSON.stringify({
+			   "email": email,
+			   "password": password
+		   });
+		   
+		   let reqOptions = {
+			 url: "http://localhost:8080/api/usuario/salvar",
+			 method: "POST",
+			 headers: headersList,
+			 data: bodyContent,
+		   }
+		   
+		   let response = await axios.request(reqOptions);
+		   console.log(response.data);
+	}
+
+	const testSalvarUsuario = async (email:string, password:string) => {
+
+		const bodyParameters = {
+			email: email,
+			password: password
+		};
+		
+		axios.post( 
+		  'http://localhost:8080/api/usuario/salvar',
+		  bodyParameters
+		).then(response => console.log(response.data));
+	}
+
+	const salvarUsuario2 = async (email:string, password:string) => {
+		var data = JSON.stringify({
+			"email": email,
+			"password": password
+		});
+		
+		var config = {
+			method: 'post',
+			url: 'http://localhost:8080/api/usuario/salvar',
+			headers: { 
+				'Content-Type': 'application/json'
+			},
+			data : data
+		};
+	
+		axios.request(config).then(function (response: { data: any; }) {
+			console.log(JSON.stringify(response.data));
+		})
+		.catch(function (error: any) {
+			console.log(error.message);
+		});
+	}
 
 	return (
 		<Container>
@@ -100,7 +162,7 @@ export default function CadastroUsuarioStep1({ route, navigation }: any) {
 							isPrimary
 							buttonSize={'large'}
 							labelSize={'medium'}
-							onPress={() => {navigation.navigate('Login')}}
+							onPress={() => {testSalvarUsuario(email,senha);}}
 						>
 							Cadastrar Usuário
 						</Button>
