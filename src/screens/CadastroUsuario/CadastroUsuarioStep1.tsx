@@ -50,9 +50,11 @@ export default function CadastroUsuarioStep1({ route, navigation }: any) {
 		};
 		
 		axios.post( 
-		  'http://localhost:8080/api/usuario/salvar',
+		  'http://10.0.2.2:8080/api/usuario/salvar',
 		  bodyParameters
-		).then(response => console.log(response.data));
+		).then(res => {
+        	console.log(res.data);
+    	}).catch(error => console.log(error));
 	}
 
 	const salvarUsuario2 = async (email:string, password:string) => {
