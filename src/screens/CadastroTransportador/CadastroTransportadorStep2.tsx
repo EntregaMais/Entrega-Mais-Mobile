@@ -38,13 +38,13 @@ export default function CadastroTransportadorStep2({ route, navigation }: any) {
 							/>
 						</Row>
 
-						<HeaderText>FINALIZAR CADASTRO TRANSPORTADOR</HeaderText>
+						<HeaderText>FINALIZAR CADASTRO</HeaderText>
 
 						<Input
 							placeholder="Email"
 							placeholderTextColor={'white'}
 							autoCorrect={false}
-							value={route.params.empresa}
+							value={email}
 							onChangeText={(text: any) => {setEmail(text);}}
 							autoCapitalize="none"
 						/>

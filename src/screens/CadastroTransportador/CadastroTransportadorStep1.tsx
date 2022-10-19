@@ -35,7 +35,7 @@ export default function CadastroTransportadorStep1({ navigation }: any) {
 							/>
 						</Row>
 
-						<HeaderText>CADASTRO TRANSPORTADOR</HeaderText>
+						<HeaderText>TRANSPORTADOR</HeaderText>
 
 						<Input
 							value={empresa}

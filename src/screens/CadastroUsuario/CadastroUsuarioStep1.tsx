@@ -1,6 +1,6 @@
 import { Ionicons as Icon } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, StyleSheet } from 'react-native';
+import { Alert, KeyboardAvoidingView, StyleSheet } from 'react-native';
 
 import Button from '../../componentes/Button';
 import Container from '../../componentes/Container';
@@ -20,29 +20,20 @@ export default function CadastroUsuarioStep1({ route, navigation }: any) {
 	const [hidePassword, setHidePassword] = useState(true);
 	const [hidePassword2, setHidePassword2] = useState(true);
 
+	const checkTextInput = () => {
+		if (!email.trim()) {
+		  alert('Por favor insira o email');
+		  return false;
+		}
+		if (!senha.trim()) {
+		  alert('Por favor insira a senha');
+		  return false;
+		}
+		//alert('Success');
+		return true
+	  };
 
-	const salvarUsuario = async (email:string, password:string) => {
-		let headersList = {
-			"Content-Type": "application/json" 
-		   }
-		   
-		   let bodyContent = JSON.stringify({
-			   "email": email,
-			   "password": password
-		   });
-		   
-		   let reqOptions = {
-			 url: "http://localhost:8080/api/usuario/salvar",
-			 method: "POST",
-			 headers: headersList,
-			 data: bodyContent,
-		   }
-		   
-		   let response = await axios.request(reqOptions);
-		   console.log(response.data);
-	}
-
-	const testSalvarUsuario = async (email:string, password:string) => {
+	const SalvarUsuario = async (email:string, password:string) => {
 
 		const bodyParameters = {
 			email: email,
@@ -50,35 +41,22 @@ export default function CadastroUsuarioStep1({ route, navigation }: any) {
 		};
 		
 		axios.post( 
-		  'http://10.0.2.2:8080/api/usuario/salvar',
+		  'http://192.168.1.5:8080/api/usuario/salvar',
 		  bodyParameters
 		).then(res => {
+			const titulo = (res.data.status) ? "Erro" : "Sucesso";
+			Alert.alert(titulo, "Usuário\n" + email + "\nCadastrado com sucesso!", [ {
+				text: "OK", onPress: () => {navigation.navigate('Login',{
+					email: email, senha: senha
+				})}
+			}]);
         	console.log(res.data);
-    	}).catch(error => console.log(error));
+    	})
+		.catch((error) => {
+			Alert.alert("Erro", "Erro ao tentar cadastrar usuário"); 
+		})
 	}
 
-	const salvarUsuario2 = async (email:string, password:string) => {
-		var data = JSON.stringify({
-			"email": email,
-			"password": password
-		});
-		
-		var config = {
-			method: 'post',
-			url: 'http://localhost:8080/api/usuario/salvar',
-			headers: { 
-				'Content-Type': 'application/json'
-			},
-			data : data
-		};
-	
-		axios.request(config).then(function (response: { data: any; }) {
-			console.log(JSON.stringify(response.data));
-		})
-		.catch(function (error: any) {
-			console.log(error.message);
-		});
-	}
 
 	return (
 		<Container>
@@ -164,7 +142,8 @@ export default function CadastroUsuarioStep1({ route, navigation }: any) {
 							isPrimary
 							buttonSize={'large'}
 							labelSize={'medium'}
-							onPress={() => {testSalvarUsuario(email,senha);}}
+							onPress={() => {checkTextInput() ?
+								SalvarUsuario(email,senha) : false;}}
 						>
 							Cadastrar Usuário
 						</Button>

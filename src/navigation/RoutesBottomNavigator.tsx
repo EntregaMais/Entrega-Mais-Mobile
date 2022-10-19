@@ -32,7 +32,7 @@ export default function TabNavigator() {
 				name="Inicio"
 				component={Home}
 				options={{
-					headerShown: false,
+					headerShown: true,
 					tabBarIcon: ({color, size}) => (<Feather name="home" color={color} size={size} />)
 				}}
 			/>
