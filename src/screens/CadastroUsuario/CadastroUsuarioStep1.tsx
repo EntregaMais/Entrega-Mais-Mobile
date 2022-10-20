@@ -26,7 +26,7 @@ export default function CadastroUsuarioStep1({ route, navigation }: any) {
 		  return false;
 		}
 		if (!senha.trim()) {
-		  alert('Por favor insira a senha');
+		  alert('Por favor insira uma senha');
 		  return false;
 		}
 		//alert('Success');

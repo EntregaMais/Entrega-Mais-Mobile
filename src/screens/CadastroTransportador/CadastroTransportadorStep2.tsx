@@ -1,6 +1,7 @@
 import { Ionicons as Icon } from '@expo/vector-icons';
+import axios from 'axios';
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, StyleSheet } from 'react-native';
+import { Alert, KeyboardAvoidingView, StyleSheet } from 'react-native';
 
 import Button from '../../componentes/Button';
 import Container from '../../componentes/Container';
@@ -9,13 +10,55 @@ import { Column, HeaderText, HidePassword, Input, Row, Separator } from '../../s
 
 export default function CadastroTransportadorStep2({ route, navigation }: any) {
 	
-
 	const [email, setEmail] = useState('');
 	const [senha, setSenha] = useState('');
 	const [ConfirmSenha, setSenhaConfirm] = useState('');
-
+	
 	const [hidePassword, setHidePassword] = useState(true);
 	const [hidePassword2, setHidePassword2] = useState(true);
+
+	const checkTextInput = () => {
+		if (!email.trim()) {
+		  alert('Por favor insira o email');
+		  return false;
+		}
+		if (!senha.trim()) {
+		  alert('Por favor insira uma senha');
+		  return false;
+		}
+		//alert('Success');
+		return true
+	  };
+	
+	const data = {
+		email: email,
+		password: senha,
+		nm_empresa: route.params?.empresa,
+		nm_resp: route.params?.nomeResponsavel,
+		cnpj: route.params?.cnpj,
+		telefone: route.params?.numero,
+		setor: route.params?.setor,
+		cobre_embarque: route.params?.taxaEmbarque,
+		pix: route.params?.pix
+	}
+
+	const salvarTransportador = () => {
+
+		axios.post('http://192.168.1.5:8181/api/transportadoras/salvar', data)
+			.then(res => {
+				const titulo = (res.data.status) ? "Erro" : "Sucesso";
+				Alert.alert(titulo, "Cadastro realizado com sucesso!", [ {
+					text: "OK", onPress: () => {navigation.navigate('Login',{
+						email: email, senha: senha
+					})}
+				}]);
+				console.log(res.data);
+			})
+			.catch((error) => {
+				Alert.alert("Erro", "Erro ao tentar cadastrar usuário");
+				console.log(error);
+			});
+	}
 
 	return (
 		<Container>
@@ -101,7 +144,8 @@ export default function CadastroTransportadorStep2({ route, navigation }: any) {
 							isPrimary
 							buttonSize={'large'}
 							labelSize={'medium'}
-							onPress={() => {navigation.navigate('Login')}}
+							onPress={() => {checkTextInput() ?
+								salvarTransportador() : false}}
 						>
 							Concluir
 						</Button>

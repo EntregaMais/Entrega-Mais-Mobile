@@ -11,9 +11,9 @@ export default function CadastroTransportadorStep1({ navigation }: any) {
 	const [empresa, setEmpresa] = useState('');
 	const [nomeResponsavel, setNomeResponsavel] = useState('');
 	const [cnpj, setCNPJ] = useState('');
+	const [numero, setNumero] = useState('');
 	const [setor, setSetor] = useState('');
-	const [vaga, setVaga] = useState('');
-	const [taxaEmbarque, setTaxaEmbarque] = useState('');
+	const [taxaEmbarque, setTaxaEmbarque] = useState(Number);
 	const [pix, setPix] = useState('');
 	
 	return (
@@ -59,18 +59,18 @@ export default function CadastroTransportadorStep1({ navigation }: any) {
 							onChangeText={(text: string) => {setCNPJ(text)}}
 						/>
 						<Input
+							value={numero}
+							placeholder="Número"
+							placeholderTextColor={'white'}
+							autoCorrect={false}
+							onChangeText={(text: string) => {setNumero(text)}}
+						/>
+						<Input
 							value={setor}
 							placeholder="Setor"
 							placeholderTextColor={'white'}
 							autoCorrect={false}
 							onChangeText={(text: string) => {setSetor(text)}}
-						/>
-						<Input
-							value={vaga}
-							placeholder="Vaga"
-							placeholderTextColor={'white'}
-							autoCorrect={false}
-							onChangeText={(text: string) => {setVaga(text)}}
 						/>
 
 						<Text>Cobra taxa de embarque?</Text>
@@ -81,7 +81,7 @@ export default function CadastroTransportadorStep1({ navigation }: any) {
 									isPrimary
 									buttonSize={'medium'}
 									labelSize={'small'}
-									onPress={() => {setTaxaEmbarque('Sim')}}
+									onPress={() => {setTaxaEmbarque(1)}}
 								>
 									Sim
 								</Button>
@@ -90,7 +90,7 @@ export default function CadastroTransportadorStep1({ navigation }: any) {
 								<Button
 									buttonSize={'medium'}
 									labelSize={'small'}
-									onPress={() => {setTaxaEmbarque('Não')}}
+									onPress={() => {setTaxaEmbarque(0)}}
 								>
 									Não
 								</Button>
@@ -113,8 +113,8 @@ export default function CadastroTransportadorStep1({ navigation }: any) {
 									empresa: empresa,
 									nomeResponsavel: nomeResponsavel,
 									cnpj: cnpj,
+									numero: numero,
 									setor: setor,
-									vaga: vaga,
 									taxaEmbarque: taxaEmbarque,
 									pix: pix
 								});
