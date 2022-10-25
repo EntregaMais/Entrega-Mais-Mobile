@@ -1,193 +1,115 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import 'react-native-gesture-handler';
-import { Button, color } from '@rneui/base';
-import Checkbox from 'expo-checkbox';
+
+import { Ionicons as Icon } from '@expo/vector-icons';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import AppLoading from 'expo-app-loading';
+import { useFonts } from 'expo-font';
 import React, { useState } from 'react';
-import { TextInput } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 
-const Separator = () => (
-  <View style={styles.separator} />
-);
+import Logo from './src/componentes/Logo';
+import TabNavigator from './src/navigation/RoutesBottomNavigator';
+import {
+    AdicionarPacoteStep1,
+    AdicionarPacoteStep2,
+    AdicionarPacoteStep3,
+} from './src/screens/AdicionarPacotes/AdicionarPacoteExport';
+import {
+    CadastroTransportadorStep1,
+    CadastroTransportadorStep2,
+} from './src/screens/CadastroTransportador/CadastroTransportadorExport';
+import { CadastroUsuarioStep1 } from './src/screens/CadastroUsuario/CadastroUsuarioExport';
 
-const Stack = createStackNavigator()
+import Login from './src/screens/Login';
 
-function HomeScreen({navigation}: any) {
-  const [isChecked, setChecked] = useState(false);
-  
-  return(
-    <SafeAreaView style={styles.container}>
-      <LinearGradient
-          colors={['rgba(31, 125, 188, 1)', 'transparent']}
-          style={styles.background}
-       />
-      <StatusBar style="auto" />
 
-      <KeyboardAvoidingView>
-        <View>
-          <Image 
-            resizeMode={'contain'}
-            style={styles.image}
-            source={require('./assets/logo_new.png')}
-          />
-        </View>
-        <View>
-          <TextInput
-            style={styles.input}
-            placeholder='Email'
-            placeholderTextColor={'white'}
-            autoCorrect={false}
-            onChangeText={()=> {}}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder='Senha'
-            placeholderTextColor={'white'}
-            autoCorrect={false}
-            onChangeText={()=> {}}
-          />
-          <View style={{ flexDirection: "row" }}>
-            <Checkbox 
-            style={styles.checkbox} 
-            value={isChecked} 
-            onValueChange={setChecked}
-            color={isChecked ? '#00BFFF' : undefined} 
-            />
-            <Text style={styles.textEsqueceu}>Lembrar senha</Text>
-            <TouchableOpacity style={styles.btnEsqueceu}>
-              <Text style={styles.textEsqueceu}>Esqueceu a senha?</Text>
-            </TouchableOpacity>
-          </View>
-
-          <TouchableOpacity style={styles.btnEntrar}>
-            <Text style={styles.textEntrar}>Entrar</Text>
-          </TouchableOpacity>
-        </View>        
-        <Separator />
-        <View>
-          <TouchableOpacity style={styles.btnCadastro} onPress={() => navigation.navigate('Cadastro')}>
-            <Text style={styles.textCadastro}>Cadastre-se</Text>
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>     
-       
-    </SafeAreaView>
-  );
-}
-
-function Form({navigation}: any) {
-  return(
-    <View style={styles.container}>
-      <LinearGradient
-          colors={['rgba(31, 125, 188, 1)', 'transparent']}
-          style={styles.background}
-       />
-      <StatusBar style="auto" />
-      <Image 
-        resizeMode={'contain'}
-        style={styles.image}
-        source={require('./assets/logo_new.png')}
-      />
-    </View>
-  );
-}
+const Stack = createStackNavigator();
 
 
 export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen}
-        options={{
-          headerTransparent: true,
-          headerShown: false
-        }} />
-        <Stack.Screen name='Cadastro' component={Form}
-        options={{
-          headerTransparent: true,
-          headerTitleAlign: 'center',
-          headerTitleStyle: {color: 'white'}
-        }} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+	let [fontsLoaded] = useFonts({
+		'Insanibu': require('./assets/fonts/Insanibu.ttf'),
+	});
+
+	if (!fontsLoaded) {
+		return <AppLoading />;
+	}
+
+	return (
+		<NavigationContainer>
+			<Stack.Navigator>
+				<Stack.Screen name="Login" component={Login}
+					options={{
+						headerTransparent: true,
+						headerShown: false
+					}}
+					/>
+				<Stack.Screen name='CadastroUsuarioStep1' component={CadastroUsuarioStep1}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name='CadastroTransportadorStep1' component={CadastroTransportadorStep1}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name='CadastroTransportadorStep2' component={CadastroTransportadorStep2}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name='Home' component={TabNavigator}
+					options={{
+						headerShown: false,
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerLeft: ()=> (
+							<TouchableOpacity style={{marginLeft: 10}}>
+								<Icon name="menu-sharp" size={35} color="#FFF"></Icon>
+							</TouchableOpacity>
+						),
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name="AdicionarPacoteStep1" component={AdicionarPacoteStep1}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name="AdicionarPacoteStep2" component={AdicionarPacoteStep2}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name="AdicionarPacoteStep3" component={AdicionarPacoteStep3}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+			</Stack.Navigator>
+		</NavigationContainer>
+	);
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    //background: 'linear-gradient(180deg, #1F7DBC 0%, #56CBF2 100%)',
-    //'rgba(86, 203, 242, 1)', 'rgba(86, 203, 242, 1)', 'transparent'
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(86, 203, 242, 1)'
-  },
-  image: {
-    width: 300,
-    height: 80,
-    marginBottom: 40
-  },
-  background: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    height: 300
-  },
-  input: {
-    color: '#FFF',
-    fontSize: 15,
-    borderBottomWidth: 1,
-    backgroundColor: 'transparent',
-    borderBottomColor: '#FFF',
-    marginBottom: 15,
-  },
-  btnEsqueceu:{
-    height: 40,
-    marginBottom: 10,
-    marginLeft: 90
-  },
-  textEsqueceu:{
-    color: '#FFF',
-    fontSize: 12
-  },
-  btnEntrar:{
-    backgroundColor: '#FFF',
-    width: '100%',
-    height: 40,
-    borderRadius: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textEntrar: {
-    color: '#00BFFF',
-  },
-  btnCadastro: {
-    backgroundColor: 'transparent',
-    width: '100%',
-    height: 40,
-    borderRadius: 50,
-    borderWidth: 1,
-    borderColor: '#FFF',
-    alignItems: 'center',
-    justifyContent: "center",
-  },
-  textCadastro: {
-    color: '#FFF'
-  },
-  separator: {
-    marginVertical: 20,
-    borderBottomColor: '#FFF',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  checkbox: {
-    borderColor: '#00BFFF',
-    backgroundColor: '#FFF',
-    marginRight: 5,
-    width: 16,
-    height: 16,
-  },
-});
+
