@@ -1,21 +1,28 @@
-import { Image, TouchableOpacity} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import 'react-native-gesture-handler';
-import React, { useState } from 'react';
-import { Ionicons as Icon} from '@expo/vector-icons';
+
+import { Ionicons as Icon } from '@expo/vector-icons';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
-import Login from './src/screens/Login';
+import React, { useState } from 'react';
+import { TouchableOpacity } from 'react-native';
+
 import Logo from './src/componentes/Logo';
 import TabNavigator from './src/navigation/RoutesBottomNavigator';
+import {
+    AdicionarPacoteStep1,
+    AdicionarPacoteStep2,
+    AdicionarPacoteStep3,
+} from './src/screens/AdicionarPacotes/AdicionarPacoteExport';
+import {
+    CadastroTransportadorStep1,
+    CadastroTransportadorStep2,
+} from './src/screens/CadastroTransportador/CadastroTransportadorExport';
+import { CadastroUsuarioStep1 } from './src/screens/CadastroUsuario/CadastroUsuarioExport';
 
-import {AdicionarPacoteStep1,
-			AdicionarPacoteStep2,
-				AdicionarPacoteStep3} from './src/screens/AdicionarPacotes/AdicionarPacoteExport';
+import Login from './src/screens/Login';
 
-import {CadastroTransportadorStep1,
-			CadastroTransportadorStep2} from './src/screens/CadastroTransportador/CadastroTransportadorExport';
 
 const Stack = createStackNavigator();
 
@@ -38,7 +45,14 @@ export default function App() {
 						headerShown: false
 					}}
 					/>
-
+				<Stack.Screen name='CadastroUsuarioStep1' component={CadastroUsuarioStep1}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
 				<Stack.Screen name='CadastroTransportadorStep1' component={CadastroTransportadorStep1}
 					options={{
 						headerTransparent: true,

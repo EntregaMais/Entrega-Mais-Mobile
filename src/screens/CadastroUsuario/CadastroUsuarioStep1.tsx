@@ -1,19 +1,22 @@
 import { Ionicons as Icon } from '@expo/vector-icons';
-import axios from 'axios';
 import React, { useState } from 'react';
 import { Alert, KeyboardAvoidingView, StyleSheet } from 'react-native';
 
 import Button from '../../componentes/Button';
 import Container from '../../componentes/Container';
+import { salvarUsuario } from '../../services/salvarUsuarioService';
 import { Column, HeaderText, HidePassword, Input, Row, Separator } from '../../styled';
 
+import axios from "axios";
 
-export default function CadastroTransportadorStep2({ route, navigation }: any) {
-	
+
+
+export default function CadastroUsuarioStep1({ route, navigation }: any) {
+
 	const [email, setEmail] = useState('');
 	const [senha, setSenha] = useState('');
 	const [ConfirmSenha, setSenhaConfirm] = useState('');
-	
+
 	const [hidePassword, setHidePassword] = useState(true);
 	const [hidePassword2, setHidePassword2] = useState(true);
 
@@ -29,36 +32,31 @@ export default function CadastroTransportadorStep2({ route, navigation }: any) {
 		//alert('Success');
 		return true
 	  };
-	
-	const data = {
-		email: email,
-		password: senha,
-		nm_empresa: route.params?.empresa,
-		nm_resp: route.params?.nomeResponsavel,
-		cnpj: route.params?.cnpj,
-		telefone: route.params?.numero,
-		setor: route.params?.setor,
-		cobre_embarque: route.params?.taxaEmbarque,
-		pix: route.params?.pix
+
+	const SalvarUsuario = async (email:string, password:string) => {
+
+		const bodyParameters = {
+			email: email,
+			password: password
+		};
+		
+		axios.post( 
+		  'http://192.168.1.5:8080/api/usuario/salvar',
+		  bodyParameters
+		).then(res => {
+			const titulo = (res.data.status) ? "Erro" : "Sucesso";
+			Alert.alert(titulo, "Usuário\n" + email + "\nCadastrado com sucesso!", [ {
+				text: "OK", onPress: () => {navigation.navigate('Login',{
+					email: email, senha: senha
+				})}
+			}]);
+        	console.log(res.data);
+    	})
+		.catch((error) => {
+			Alert.alert("Erro", "Erro ao tentar cadastrar usuário"); 
+		})
 	}
 
-	const salvarTransportador = () => {
-
-		axios.post('http://192.168.1.5:8181/api/transportadoras/salvar', data)
-			.then(res => {
-				const titulo = (res.data.status) ? "Erro" : "Sucesso";
-				Alert.alert(titulo, "Cadastro realizado com sucesso!", [ {
-					text: "OK", onPress: () => {navigation.navigate('Login',{
-						email: email, senha: senha
-					})}
-				}]);
-				console.log(res.data);
-			})
-			.catch((error) => {
-				Alert.alert("Erro", "Erro ao tentar cadastrar usuário");
-				console.log(error);
-			});
-	}
 
 	return (
 		<Container>
@@ -81,7 +79,7 @@ export default function CadastroTransportadorStep2({ route, navigation }: any) {
 							/>
 						</Row>
 
-						<HeaderText>FINALIZAR CADASTRO</HeaderText>
+						<HeaderText>CADASTRO USUARIO</HeaderText>
 
 						<Input
 							placeholder="Email"
@@ -145,9 +143,9 @@ export default function CadastroTransportadorStep2({ route, navigation }: any) {
 							buttonSize={'large'}
 							labelSize={'medium'}
 							onPress={() => {checkTextInput() ?
-								salvarTransportador() : false}}
+								SalvarUsuario(email,senha) : false;}}
 						>
-							Concluir
+							Cadastrar Usuário
 						</Button>
 					</Column>
 				</Row>

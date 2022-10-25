@@ -1,107 +1,125 @@
-import React, { useState, useRef, useEffect } from "react";
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Pressable, Animated} from 'react-native';
-import { ScrollView } from "react-native-gesture-handler";
-import { Ionicons as Icon} from '@expo/vector-icons';
-import ButtonEscolha from "../../componentes/ButtonEscolha";
-import NavegationHideOnScroll from "../../componentes/NavegationHideOnScroll";
+import { Ionicons as Icon } from '@expo/vector-icons';
+import React, { useState, useEffect } from 'react';
+import { KeyboardAvoidingView, StyleSheet } from 'react-native';
+
+import Button from '../../componentes/Button';
 import Container from '../../componentes/Container';
-import {Text, Input, HeaderText, Column, Row, Separator } from "../../styled";
-import Button from "../../componentes/Button";
+import { Column, HeaderText, Input, Row, Separator, Text } from '../../styled';
 
 
-export default function CadastroTransportadorStep1({navigation}: any) {
-
-
+export default function CadastroTransportadorStep1({ navigation }: any) {
 	const [empresa, setEmpresa] = useState('');
-	const [senha, setSenha] = useState('');
-
+	const [nomeResponsavel, setNomeResponsavel] = useState('');
+	const [cnpj, setCNPJ] = useState('');
+	const [numero, setNumero] = useState('');
+	const [setor, setSetor] = useState('');
+	const [taxaEmbarque, setTaxaEmbarque] = useState(Number);
+	const [pix, setPix] = useState('');
+	
 	return (
 		<Container>
 			<KeyboardAvoidingView>
 				<Row>
 					<Column alignItensCenter>
 						<Row justifyContentCenter>
-							<Icon style={styles.iconStep} name={"caret-down-circle"} size={15} color="#FFF" />
+							<Icon
+								name={'caret-down-circle'}
+								size={15}
+								color="#FFF"
+							/>
 							<Separator />
-							<Icon style={styles.iconStep} name={"radio-button-off-outline"} size={15} color="#dedede" />
+							<Icon
+								name={'radio-button-off-outline'}
+								size={15}
+								color="#dedede"
+							/>
 						</Row>
 
-						<HeaderText>Transportador</HeaderText>
+						<HeaderText>TRANSPORTADOR</HeaderText>
 
 						<Input
-							placeholder='Empresa'
-							placeholderTextColor={'white'}
-							autoCorrect={false}
 							value={empresa}
-							onChangeText={ (text: string) => setEmpresa(text)}
-						/>
-						<Input
-							placeholder='Nome do Responsável'
+							placeholder="Empresa"
 							placeholderTextColor={'white'}
 							autoCorrect={false}
-							//value={}
-							onChangeText={ (text: string) => (text)}
+							onChangeText={(text: string) => {setEmpresa(text)}}
 						/>
 						<Input
-							placeholder='CPF/CNPJ'
+							value={nomeResponsavel}
+							placeholder="Nome do Responsável"
 							placeholderTextColor={'white'}
 							autoCorrect={false}
-							//value={}
-							onChangeText={ (text: string) => (text)}
+							onChangeText={(text: string) => {setNomeResponsavel(text)}}
 						/>
 						<Input
-							placeholder='Setor'
+							value={cnpj}
+							placeholder="CNPJ"
 							placeholderTextColor={'white'}
 							autoCorrect={false}
-							//value={}
-							onChangeText={ (text: string) => (text)}
+							onChangeText={(text: string) => {setCNPJ(text)}}
 						/>
 						<Input
-							placeholder='Vaga'
+							value={numero}
+							placeholder="Número"
 							placeholderTextColor={'white'}
 							autoCorrect={false}
-							//value={}
-							onChangeText={ (text: string) => (text)}
+							onChangeText={(text: string) => {setNumero(text)}}
+						/>
+						<Input
+							value={setor}
+							placeholder="Setor"
+							placeholderTextColor={'white'}
+							autoCorrect={false}
+							onChangeText={(text: string) => {setSetor(text)}}
 						/>
 
 						<Text>Cobra taxa de embarque?</Text>
-						
+
 						<Row>
 							<Column>
-
-								<Button 
-									isPrimary 
+								<Button
+									isPrimary
 									buttonSize={'medium'}
-									labelSize={'small'} 
-									>
-										Sim
-
+									labelSize={'small'}
+									onPress={() => {setTaxaEmbarque(1)}}
+								>
+									Sim
 								</Button>
 							</Column>
 							<Column>
-								<Button 
+								<Button
 									buttonSize={'medium'}
-									labelSize={'small'} 
-									>
+									labelSize={'small'}
+									onPress={() => {setTaxaEmbarque(0)}}
+								>
 									Não
 								</Button>
 							</Column>
 						</Row>
 						<Input
-							placeholder='Chave do Pix'
+							value={pix}
+							placeholder="Chave do PIX"
 							placeholderTextColor={'white'}
 							autoCorrect={false}
-							//value={}
-							onChangeText={ (text: string) => (text)}
+							onChangeText={(text: string) => {setPix(text)}}
 						/>
 
-						<Button 
-							isPrimary 
+						<Button
+							isPrimary
 							buttonSize={'large'}
-							labelSize={'medium'} 
-							onPress={() => navigation.navigate('CadastroTransportadorStep2', {paramKey: empresa})}
-							>
+							labelSize={'medium'}
+							onPress={() => { 
+								navigation.navigate('CadastroTransportadorStep2', {
+									empresa: empresa,
+									nomeResponsavel: nomeResponsavel,
+									cnpj: cnpj,
+									numero: numero,
+									setor: setor,
+									taxaEmbarque: taxaEmbarque,
+									pix: pix
+								});
+							}}
+						>
 							Prosseguir
 						</Button>
 					</Column>
@@ -111,10 +129,3 @@ export default function CadastroTransportadorStep1({navigation}: any) {
 	);
 }
 
-const styles = StyleSheet.create({
-	iconStep: {
-		marginTop: 10,
-		marginLeft: 1,
-		marginRight: 1,
-	}
-});

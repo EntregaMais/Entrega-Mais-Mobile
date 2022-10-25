@@ -5,6 +5,8 @@ import AdicionarPacoteStep1 from "../screens/AdicionarPacotes/AdicionarPacoteSte
 import Feather from 'react-native-vector-icons/Feather';
 import LogoTitle from "../componentes/LogoTitle";
 import { TouchableOpacity } from "react-native";
+import { Ionicons as Icon } from '@expo/vector-icons';
+import PopupMenu from "../componentes/PopupMenu";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,6 +18,9 @@ export default function TabNavigator() {
 				headerTransparent: true,
 				headerTitleAlign: 'center',
 				headerTintColor: '#ffffff',
+				headerLeft: ()=> (
+					<PopupMenu children={undefined} />
+				),
 				tabBarInactiveTintColor: '#FFF',
 				tabBarStyle: {
 					//borderTopWidth: 0,
@@ -32,7 +37,7 @@ export default function TabNavigator() {
 				name="Inicio"
 				component={Home}
 				options={{
-					headerShown: false,
+					headerShown: true,
 					tabBarIcon: ({color, size}) => (<Feather name="home" color={color} size={size} />)
 				}}
 			/>
