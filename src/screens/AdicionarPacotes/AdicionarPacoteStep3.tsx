@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
-import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Pressable} from 'react-native';
+import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Pressable, Alert} from 'react-native';
 import { ScrollView } from "react-native-gesture-handler";
 import { Ionicons as Icon} from '@expo/vector-icons';
 import ButtonEscolha from "../../componentes/ButtonEscolha";
@@ -9,16 +9,66 @@ import NumericInput from 'react-native-numeric-input'
 import LinearGradientBackground from "../../componentes/LinearGradient";
 import { HeaderText, Input } from "../../styled";
 import Container from '../../componentes/Container';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 const Separator = () => (
 	<View style={styles.separator}>
 	</View>
 );
 
-export default function AdicionarPacoteStep3({navigation}: any) {
+export default function AdicionarPacoteStep3({navigation, route}: any) {
 
-	const [estadoSelecionado, setEstadoSelecionado] = useState();
-	const [cidadeSelecionado, setCidadeSelecionado] = useState();
+	const [tamanho, setTamanho] = useState('');
+	const [idPedido, setIdPedido] = useState('');
+
+	// const data = {
+	// 	fornecedor: route.params?.fornecedor,
+	// 	telefoneF: route.params?.telefoneF,
+	// 	observacao: route.params?.observacao
+	// }
+	// console.log(data);
+
+	const getData = async (idPedido: string) => {
+		try {
+		  	const value = await AsyncStorage.getItem(idPedido)
+			if(value !== null) {
+				console.log(value);
+				setIdPedido(value);
+		  	}
+		} catch(e) {
+		  // error reading value
+		}
+	} 
+	
+	useEffect(() => {
+        getData("idPedido");
+        
+    }, [idPedido]);
+
+	const salvarPacote = () => {
+
+		const body = {
+			cdPedido: idPedido,
+			fornecedor: route.params?.fornecedor,
+			telefoneFornecedor: route.params?.telefoneF,
+			tamanho: tamanho,
+			observacao: route.params?.observacao
+		}
+
+		axios.post('http://192.168.1.6:7750/api/pacote/salvar', body)
+			.then(res => {
+				const titulo = (res.data.status) ? "Erro" : "Sucesso";
+				Alert.alert(titulo, "Novo pacote cadastrado com sucesso!", [ {
+					text: "OK", onPress: () => {navigation.navigate('Home')}
+				}]);
+				console.log(res.data);
+			})
+			.catch((error) => {
+				Alert.alert("Erro", "Erro ao tentar cadastrar pacote");
+				console.log(error);
+			});
+	}
 
 	return (
 		<Container>
@@ -40,7 +90,7 @@ export default function AdicionarPacoteStep3({navigation}: any) {
 				<HeaderText > NOVO PACOTE </HeaderText>
 				<View>
 
-					<Text style={styles.textStyle}>Quantidade de Pacotes</Text>
+					{/* <Text style={styles.textStyle}>Quantidade de Pacotes</Text>
 
 					<View style={styles.contadorPacotes}>
 						<NumericInput
@@ -54,22 +104,22 @@ export default function AdicionarPacoteStep3({navigation}: any) {
 							borderColor={'#FFF'}
 							rightButtonBackgroundColor='#8CFCA4'
 							leftButtonBackgroundColor='#FF6961' />
-					</View>
+					</View> */}
 
 					<View style={{flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-evenly'}}>
-						<TouchableOpacity style={styles.bnt}>
+						<TouchableOpacity style={styles.bnt} onPress={() => setTamanho('PP')}>
 							<Text style={styles.textStyleBtn}>PP</Text>
 							<Text style={styles.textStyleBtn}>R$10</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.bnt}>
+						<TouchableOpacity style={styles.bnt} onPress={() => setTamanho('P')}>
 							<Text style={styles.textStyleBtn}>P</Text>
 							<Text style={styles.textStyleBtn}>R$15</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.bnt}>
+						<TouchableOpacity style={styles.bnt} onPress={() => setTamanho('M')}>
 							<Text style={styles.textStyleBtn}>M</Text>
 							<Text style={styles.textStyleBtn}>R$20</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.bnt}>
+						<TouchableOpacity style={styles.bnt} onPress={() => setTamanho('G')}>
 							<Text style={styles.textStyleBtn}>G</Text>
 							<Text style={styles.textStyleBtn}>R$30</Text>
 						</TouchableOpacity>
@@ -87,7 +137,7 @@ export default function AdicionarPacoteStep3({navigation}: any) {
 					</View >
 
 					<View style={{marginTop: 20}}>
-						<TouchableOpacity style={styles.btnProsseguir}  onPress={() => navigation.navigate('Home')}>
+						<TouchableOpacity style={styles.btnProsseguir}  onPress={() => salvarPacote()}>
 							<Text style={styles.textProsseguir}>Prosseguir <Icon name={"chevron-forward-outline"} size={14} color="#00BFFF" /></Text>
 						</TouchableOpacity>
 					</View>

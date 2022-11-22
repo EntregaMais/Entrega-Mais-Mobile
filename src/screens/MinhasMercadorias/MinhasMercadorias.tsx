@@ -9,18 +9,49 @@ import axios from "axios";
 
 export function MinhasMercadorias({navigation}: any) {
 
+    const [email, setEmail] = useState('');
+    const [idTransportadora, setIdTransportadora] = useState('');
+	
+	const getData = async (email:string) => {
+		try {
+		  	const value = await AsyncStorage.getItem(email)
+			if(value !== null) {
+				console.log(value);
+				setEmail(value);
+                navigation.navigate('AdicionarPacoteStep1',{email: email})
+		  	}
+		} catch(e) {
+		  // error reading value
+		}
+	}
+    
+    const getIdTransportadora = async (idTransportadora: string) => {
+		try {
+		  	const value = await AsyncStorage.getItem(idTransportadora)
+			if(value !== null) {
+				console.log(value);
+				setIdTransportadora(value);
+		  	}
+		} catch(e) {
+		  // error reading value
+		}
+	} 
+	
+	useEffect(() => {
+        getIdTransportadora("idTransportadora");
+        
+    }, [idTransportadora]);
+
     return(
         <Container>
             <KeyboardAvoidingView>
                 <Row>
-                    <Column alignItensCenter>
-
-                        
+                    <Column alignItensCenter>       
                     <Button
 							isPrimary
 							buttonSize={'large'}
 							labelSize={'medium'}
-							onPress={() => {navigation.navigate('AdicionarPacoteStep1')}}
+							onPress={() => {getData('email')}}
 						>
 							Novo pedido
 						</Button>

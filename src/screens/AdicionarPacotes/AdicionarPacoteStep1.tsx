@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
-import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Pressable} from 'react-native';
+import { StyleSheet, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Pressable} from 'react-native';
 import { ScrollView } from "react-native-gesture-handler";
 import { Ionicons as Icon} from '@expo/vector-icons';
 import ButtonEscolha from "../../componentes/ButtonEscolha";
@@ -10,8 +10,10 @@ import { estadosJSON } from '../../mocks/Estados';
 import { cidadesJSON} from '../../mocks/Cidades';
 import { color } from "@rneui/base";
 import LinearGradientBackground from "../../componentes/LinearGradient";
-import { HeaderText, Input } from "../../styled";
+import { HeaderText, Input, Text } from "../../styled";
 import Container from '../../componentes/Container';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 const Separator = () => (
 	<View style={styles.separator}>
@@ -22,6 +24,43 @@ export default function AdicionarPacoteStep1({navigation}: any) {
 
 	const [estadoSelecionado, setEstadoSelecionado] = useState();
 	const [cidadeSelecionado, setCidadeSelecionado] = useState();
+	const [email, setEmail] = useState('');
+	const [id, setId] = useState('');
+	const [fornecedor, setFornecedor] = useState('');
+	const [telefoneF, setTelefoneF] = useState('');
+	const [cliente, setCliente] = useState('');
+
+	const getData = async (email:string) => {
+		try {
+		  	const value = await AsyncStorage.getItem(email)
+			if(value !== null) {
+				console.log(value);
+				setEmail(value);
+		  	}
+		} catch(e) {
+		  // error reading value
+		}
+	}
+
+	const storeData = async (id:string) => {
+		try {
+		  await AsyncStorage.setItem('idTransportadora', id)
+		} catch (e) {
+		  // saving error
+		}
+	}
+
+	useEffect(() => {
+        getData("email");
+		axios.get(`http://192.168.1.6:7730/api/transportadoras/transportadoraPorEmail/${email}`
+        ).then(res => {
+            console.log(res.data.id);
+			setId(res.data.id);
+			storeData(JSON.stringify(res.data.id));
+        }).catch((error) => {
+			console.log(error); 
+		})
+    }, [email]);
 
 	return (
 		<Container>
@@ -48,33 +87,33 @@ export default function AdicionarPacoteStep1({navigation}: any) {
 						placeholder='Fornecedor'
 						placeholderTextColor={'white'}
 						autoCorrect={false}
-						//value={}
-						onChangeText={ (text: any) => (text)}
+						value={fornecedor}
+						onChangeText={ (text: any) => setFornecedor(text)}
 					/>
 					<Input
 						style={styles.input}
 						placeholder='Tel Fornecedor (DDD)'
 						placeholderTextColor={'white'}
 						autoCorrect={false}
-						//value={}
-						onChangeText={ (text: any) => (text)}
+						value={telefoneF}
+						onChangeText={ (text: any) => setTelefoneF(text)}
 					/>
 					<Input
 						style={styles.input}
-						placeholder='Cliente'
+						placeholder='Nome do Cliente'
 						placeholderTextColor={'white'}
 						autoCorrect={false}
-						//value={}
-						onChangeText={ (text: any) => (text)}
+						value={cliente}
+						onChangeText={ (text: any) => setCliente(text)}
 					/>
-					<Input
+					{/* <Input
 						style={styles.input}
 						placeholder='Tel Cliente (DDD)'
 						placeholderTextColor={'white'}
 						autoCorrect={false}
 						//value={}
 						onChangeText={ (text: any) => (text)}
-					/>
+					/> */}
 
 					<Text style={styles.textStyle}>ESTADO</Text>
 
@@ -110,7 +149,14 @@ export default function AdicionarPacoteStep1({navigation}: any) {
 					</View>
 
 					<View style={{margin: 5, marginTop: 15}}>
-						<TouchableOpacity style={styles.btnProsseguir}  onPress={() => navigation.navigate('AdicionarPacoteStep2')}>
+						<TouchableOpacity style={styles.btnProsseguir}  onPress={() => navigation.navigate('AdicionarPacoteStep2',{
+							id: id,
+							fornecedor: fornecedor,
+							telefoneF: telefoneF,
+							cliente: cliente,
+							estado: estadoSelecionado,
+							cidade: cidadeSelecionado
+						})}>
 							<Text style={styles.textProsseguir}>Prosseguir <Icon name={"chevron-forward-outline"} size={14} color="#00BFFF" /></Text>
 						</TouchableOpacity>
 					</View>
