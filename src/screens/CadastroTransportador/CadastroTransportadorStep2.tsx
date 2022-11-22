@@ -44,7 +44,7 @@ export default function CadastroTransportadorStep2({ route, navigation }: any) {
 
 	const salvarTransportador = () => {
 
-		axios.post('http://192.168.1.5:8181/api/transportadoras/salvar', data)
+		axios.post('http://192.168.1.6:7730/api/transportadoras/salvar', data)
 			.then(res => {
 				const titulo = (res.data.status) ? "Erro" : "Sucesso";
 				Alert.alert(titulo, "Cadastro realizado com sucesso!", [ {

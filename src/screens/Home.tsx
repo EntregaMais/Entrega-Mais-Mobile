@@ -7,7 +7,7 @@ import { FontAwesome5 as Icon} from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { color } from "@rneui/base";
 import LinearGradientBackground from "../componentes/LinearGradient";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Tab = createBottomTabNavigator();
 
 export default function Home({route}: any){
