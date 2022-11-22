@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Container from "../../componentes/Container";
-import { Alert, KeyboardAvoidingView, TouchableOpacity } from "react-native";
+import { Alert, KeyboardAvoidingView, TouchableOpacity, View } from "react-native";
 import { Text, Input, Row, Column, Separator } from '../../styled';
 import { Ionicons as Icon } from '@expo/vector-icons';
 import Button from '../../componentes/Button';
@@ -74,6 +74,7 @@ export default function Perfil({navigation}: any) {
                         <Icon name="person-circle-outline" size={40} color={"#FFF"} ></Icon>                   
                         <Text> Olá, {email}</Text>
                         <Separator/>
+                        <Text>Nome Responsável:</Text>
                         <Input
                             placeholder="Nome do Responsável"
 							placeholderTextColor={'white'}
@@ -82,6 +83,7 @@ export default function Perfil({navigation}: any) {
 							onChangeText={(text: any) => {setNomeResponsavel(text);}}
 							autoCapitalize="none"
                         />
+                        <Text>Número de telefone:</Text>
                         <Input
 							placeholder="Número"
 							placeholderTextColor={'white'}
@@ -89,6 +91,7 @@ export default function Perfil({navigation}: any) {
 							value={numero}
 							onChangeText={(text: string) => {setNumero(text)}}
 						/>
+                        <Text>Chave do PIX:</Text>
                         <Input
 							value={pix}
 							placeholder="Chave do PIX"

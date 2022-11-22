@@ -23,6 +23,7 @@ import { CadastroUsuarioStep1 } from './src/screens/CadastroUsuario/CadastroUsua
 
 import Login from './src/screens/Login';
 import Perfil from './src/screens/perfil/Perfil';
+import { MinhasMercadorias } from './src/screens/MinhasMercadorias/MinhasMercadorias';
 
 const Stack = createStackNavigator();
 
@@ -85,6 +86,15 @@ export default function App() {
 						// 		<Icon name="person-outline" size={35} color="#FFF"></Icon>
 						// 	</TouchableOpacity>
 						// ),
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+					
+				<Stack.Screen name="MinhasMercadorias" component={MinhasMercadorias}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
 						headerTitle: (props) => <Logo {...props} />
 					}}
 					/>

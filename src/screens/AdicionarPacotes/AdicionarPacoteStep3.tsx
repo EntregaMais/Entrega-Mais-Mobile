@@ -87,7 +87,7 @@ export default function AdicionarPacoteStep3({navigation}: any) {
 					</View >
 
 					<View style={{marginTop: 20}}>
-						<TouchableOpacity style={styles.btnProsseguir}  onPress={() => navigation.navigate('Login')}>
+						<TouchableOpacity style={styles.btnProsseguir}  onPress={() => navigation.navigate('Home')}>
 							<Text style={styles.textProsseguir}>Prosseguir <Icon name={"chevron-forward-outline"} size={14} color="#00BFFF" /></Text>
 						</TouchableOpacity>
 					</View>

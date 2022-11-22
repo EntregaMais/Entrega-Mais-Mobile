@@ -8,6 +8,7 @@ import { TouchableOpacity } from "react-native";
 import { Ionicons as Icon } from '@expo/vector-icons';
 import PopupMenu from "../componentes/PopupMenu";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { MinhasMercadorias } from "../screens/MinhasMercadorias/MinhasMercadorias";
 
 
 const Tab = createBottomTabNavigator();
@@ -64,8 +65,9 @@ export default function TabNavigator({navigation}: any) {
 			/>
 			<Tab.Screen 
 				name="Minhas Mercadorias"
-				component={AdicionarPacoteStep1} options={{
-				tabBarIcon: ({color, size}) => (<Feather name="package" color={color} size={size} />),
+				component={MinhasMercadorias} options={{
+					headerShown: true,
+					tabBarIcon: ({color, size}) => (<Feather name="package" color={color} size={size} />),
 				}}
 			/>
 		</Tab.Navigator>
