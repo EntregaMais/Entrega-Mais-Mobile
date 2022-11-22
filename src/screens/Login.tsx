@@ -6,7 +6,7 @@ import Button from '../componentes/Button';
 import Container from '../componentes/Container';
 import Logo from '../componentes/Logo';
 import { CheckboxExpo, Column, HidePassword, Input, Label, Row, Separator } from '../styled';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios";
 
 
@@ -30,6 +30,25 @@ export default function Login({route, navigation}: any) {
 		return true
 	  };
 
+	const getData = async (email:string) => {
+		try {
+		  	const value = await AsyncStorage.getItem(email)
+			if(value !== null) {
+				// value previously stored
+		  	}
+		} catch(e) {
+		  // error reading value
+		}
+	}  
+
+	const storeData = async (email:string) => {
+		try {
+		  await AsyncStorage.setItem('email', email)
+		} catch (e) {
+		  // saving error
+		}
+	}
+
 	const login = async (email:string, password:string) => {
 
 		const bodyParameters = {
@@ -38,14 +57,15 @@ export default function Login({route, navigation}: any) {
 		};		
 		
 		axios.post( 
-		  'http://192.168.1.5:8080/login',
+		  'http://192.168.1.6:7720/api/usuario/login',
 		  bodyParameters
 		).then(response => {
 			if(response.status == 200){
+				storeData(email);
+				const token = JSON.stringify(response.data).split(" ")
+				console.log(token[1]);
 				navigation.navigate('Home');
 			}
-			const token = JSON.stringify(response.data).split(" ")
-			console.log(token[1]);
 		})
 		.catch((error) => {
 			Alert.alert("Erro", "Email ou senha incorretos.");

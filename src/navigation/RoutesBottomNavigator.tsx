@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "../screens/Home";
 import AdicionarPacoteStep1 from "../screens/AdicionarPacotes/AdicionarPacoteStep1";
@@ -7,10 +7,27 @@ import LogoTitle from "../componentes/LogoTitle";
 import { TouchableOpacity } from "react-native";
 import { Ionicons as Icon } from '@expo/vector-icons';
 import PopupMenu from "../componentes/PopupMenu";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { MinhasMercadorias } from "../screens/MinhasMercadorias/MinhasMercadorias";
+
 
 const Tab = createBottomTabNavigator();
 
-export default function TabNavigator() {
+export default function TabNavigator({navigation}: any) {
+
+	const [email, setEmail] = useState('');
+	
+	const getData = async (email:string) => {
+		try {
+		  	const value = await AsyncStorage.getItem(email)
+			if(value !== null) {
+				console.log(value);
+				navigation.navigate('Perfil',{email: email})
+		  	}
+		} catch(e) {
+		  // error reading value
+		}
+	}  
 
 	return (
 		<Tab.Navigator 
@@ -20,6 +37,11 @@ export default function TabNavigator() {
 				headerTintColor: '#ffffff',
 				headerLeft: ()=> (
 					<PopupMenu children={undefined} />
+				),
+				headerRight: ()=> (
+					<TouchableOpacity style={{marginRight: 10}} onPress={() => {getData('email')}}>
+						<Icon name="person-circle-outline" size={35} color="#FFF"></Icon>
+					</TouchableOpacity>
 				),
 				tabBarInactiveTintColor: '#FFF',
 				tabBarStyle: {
@@ -43,8 +65,9 @@ export default function TabNavigator() {
 			/>
 			<Tab.Screen 
 				name="Minhas Mercadorias"
-				component={AdicionarPacoteStep1} options={{
-				tabBarIcon: ({color, size}) => (<Feather name="package" color={color} size={size} />),
+				component={MinhasMercadorias} options={{
+					headerShown: true,
+					tabBarIcon: ({color, size}) => (<Feather name="package" color={color} size={size} />),
 				}}
 			/>
 		</Tab.Navigator>

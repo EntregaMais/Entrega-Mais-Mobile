@@ -41,7 +41,7 @@ export default function CadastroUsuarioStep1({ route, navigation }: any) {
 		};
 		
 		axios.post( 
-		  'http://192.168.1.5:8080/api/usuario/salvar',
+		  'http://192.168.1.6:7720/api/usuario/salvar',
 		  bodyParameters
 		).then(res => {
 			const titulo = (res.data.status) ? "Erro" : "Sucesso";
