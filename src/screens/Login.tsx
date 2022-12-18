@@ -9,12 +9,10 @@ import { CheckboxExpo, Column, HidePassword, Input, Label, Row, Separator } from
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios";
 
-import { REACT_APP_DEV_MODE, REACT_APP_PROD_MODE } from '@env';
+import { REACT_APP_ENV_MODE } from '@env';
 
 export default function Login({route, navigation}: any) {
-	const url = process.env.NODE_ENV === 'development'
-				? REACT_APP_DEV_MODE
-				: REACT_APP_PROD_MODE;
+	const url = REACT_APP_ENV_MODE;
 
 	console.log(url)
 
