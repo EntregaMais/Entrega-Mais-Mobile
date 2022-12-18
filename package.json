@@ -1,7 +1,7 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-	"start": "npm run start:dev:john",
+	"start": "expo start",
     "start:dev:john": "cp .env.dev.john .env && expo start -c",
     "start:dev:diego": "cp .env.dev.diego .env && expo start -c",
 	"start:prod": "cp .env.prod .env && expo start -c",
