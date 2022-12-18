@@ -1,23 +1,95 @@
 import React, { useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
-import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Pressable} from 'react-native';
+import { Alert, StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Pressable} from 'react-native';
 import { ScrollView } from "react-native-gesture-handler";
 import { Ionicons as Icon} from '@expo/vector-icons';
 import ButtonEscolha from "../../componentes/ButtonEscolha";
 import NumericInput from 'react-native-numeric-input'
-import { HeaderText, Input } from "../../styled";
+import { HeaderText, Input, Row, Column} from "../../styled";
+import Button from '../../componentes/Button';
 import Container from '../../componentes/Container';
+import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Separator = () => (
 	<View style={styles.separator}>
 	</View>
 );
 
-export default function AdicionarPacoteStep2({navigation}: any) {
+export default function AdicionarPacoteStep2({navigation, route}: any) {
 
-	const [estadoSelecionado, setEstadoSelecionado] = useState();
-	const [cidadeSelecionado, setCidadeSelecionado] = useState();
+	const [obs, setObs] = useState('');
+	const [pagaTaxa, setPagaTaxa] = useState('');
+	const [pagouFrete, setPagouFrete] = useState(Number);
+	const [fornecedor, setFornecedor] = useState(route.params?.fornecedor);
+	const [telefoneF, setTelefoneF] = useState(route.params?.telefoneF);
+	const [cliente, setCliente] = useState(route.params?.cliente);
+
+
+
+	// const data = {
+	// 	idTranportadora: route.params?.id,
+	// 	fornecedor: route.params?.fornecedor,
+	// 	cliente: route.params?.cliente,
+	// 	telefoneF: route.params?.telefoneF,
+	// 	estado: route.params?.estado,
+	// 	cidade: route.params?.cidade
+	// }
+	// console.log(data);
+
+	const storeData = async (id:string) => {
+		try {
+		  await AsyncStorage.setItem('idPedido', id)
+		} catch (e) {
+		  // saving error
+		}
+	}
+	
+	const salvarPedido = () => {
+
+		const body = {
+			frete: "100",
+			idTransportadora: route.params?.id,
+			valorTotal: "100",
+			nmCliente: cliente,
+			estado: route.params?.estado,
+			cidade: route.params?.cidade,
+			observacao: obs,
+			fornPagouFrete: pagouFrete,
+			quemPagaTaxa: pagaTaxa		
+		}
+
+		axios.post('http://192.168.1.6:7740/api/pedido/salvar', body)
+			.then(res => {
+				const titulo = (res.data.status) ? "Erro" : "Sucesso";
+				Alert.alert(titulo, "Pedido realizado com sucesso!", [ {
+					text: "OK", onPress: () => {navigation.navigate('AdicionarPacoteStep3',{
+						fornecedor: fornecedor,
+						telefoneF: telefoneF,
+						observacao: obs
+					} )}
+				}]);
+				console.log(res.data);
+				storeData(JSON.stringify(res.data.id));
+			})
+			.catch((error) => {
+				Alert.alert("Erro", "Erro ao tentar cadastrar pedido");
+				console.log(error);
+			});
+	}
+
+	var [ isPress, setIsPress ] = useState(false);
+
+	var touchProps = {
+		activeOpacity: 1,
+		underlayColor: 'gray',                               // <-- "backgroundColor" will be always overwritten by "underlayColor"
+		style: isPress ? styles.btnPress : styles.btnTaxa, // <-- but you can still apply other style changes
+		onHideUnderlay: () => setIsPress(true),
+		onShowUnderlay: () => setIsPress(false),
+		onPress: () => setPagaTaxa("Fornecedor"),                 // <-- "onPress" is apparently required
+	};
+
 
 	return (
 		<Container>
@@ -35,37 +107,56 @@ export default function AdicionarPacoteStep2({navigation}: any) {
 					<Separator />
 					<Icon style={styles.iconStep} name={"radio-button-off-outline"} size={15} color="#dcdedc" />
 				</View>
-
 				<HeaderText> NOVO PEDIDO </HeaderText>
 				<View >
 
 					<Text style={styles.textStyle}>Quem paga a taxa?</Text>
 					<View style={{flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-evenly'}}>
-						<TouchableOpacity style={styles.btnTaxa}>
+						<TouchableHighlight {...touchProps}>
 							<Text style={styles.textTaxa}>Fornecedor</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={styles.btnTaxa}>
+						</TouchableHighlight>
+						<TouchableOpacity style={styles.btnTaxa} onPress={() => setPagaTaxa("Cliente")}>
 							<Text style={styles.textTaxa}>Cliente</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.btnTaxa}>
+						<TouchableOpacity style={styles.btnTaxa} onPress={() => setPagaTaxa("Nao paga")}>
 							<Text style={styles.textTaxa}>Não Paga</Text>
 						</TouchableOpacity>
 					</View >
 
 					<Text style={styles.textStyle}>Fornecedor pagou frete?</Text>
-					<ButtonEscolha />
-
+					<Separator></Separator>
+					<Row>
+							<Column>
+								<Button
+									isPrimary
+									buttonSize={'medium'}
+									labelSize={'small'}
+									onPress={() => {setPagouFrete(1)}}
+								>
+									Sim
+								</Button>
+							</Column>
+							<Column>
+								<Button
+									buttonSize={'medium'}
+									labelSize={'small'}
+									onPress={() => {setPagouFrete(0)}}
+								>
+									Não
+								</Button>
+							</Column>
+					</Row>
 					<Input
 						style={styles.input}
 						placeholder='Observações'
 						placeholderTextColor={'white'}
 						autoCorrect={false}
-						//value={}
-						onChangeText={ (text: any) => (text)}
+						value={obs}
+						onChangeText={ (text: any) => setObs(text)}
 					/>
 
 					<View>
-						<TouchableOpacity style={styles.btnProsseguir}  onPress={() => navigation.navigate('AdicionarPacoteStep3')}>
+						<TouchableOpacity style={styles.btnProsseguir}  onPress={() => salvarPedido()}>
 							<Text style={styles.textProsseguir}>Prosseguir <Icon name={"chevron-forward-outline"} size={14} color="#00BFFF" /></Text>
 						</TouchableOpacity>
 					</View>
@@ -202,6 +293,18 @@ const styles = StyleSheet.create({
 		//elevation: 1,
 		shadowColor: '#52006A',
 		*/
+	},
+	btnPress:{
+		backgroundColor: 'transparent',
+		borderRadius: 50,
+		borderWidth: 1,
+		borderColor: '#FFF',
+		alignItems: 'center',
+		justifyContent: 'space-evenly',
+		shadowColor: '#52006A',
+		minWidth: '25%',
+		minHeight: 30,
+		marginVertical: 20,
 	},
 	textTaxa: {
 		fontWeight: 'bold',
