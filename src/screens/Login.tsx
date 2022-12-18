@@ -9,8 +9,15 @@ import { CheckboxExpo, Column, HidePassword, Input, Label, Row, Separator } from
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios";
 
+import { REACT_APP_ENV_MODE } from '@env';
 
 export default function Login({route, navigation}: any) {
+	const url = REACT_APP_ENV_MODE;
+
+	console.log(url)
+
+	const environment = process.env.NODE_ENV
+	console.log(environment)
 
 	const [email, setEmail] = useState('');
 	const [senha, setSenha] = useState('');
@@ -57,7 +64,7 @@ export default function Login({route, navigation}: any) {
 		};		
 		
 		axios.post( 
-		  'http://192.168.1.6:7720/api/usuario/login',
+		  'http://'+REACT_APP_ENV_MODE+':7720/api/usuario/login',
 		  bodyParameters
 		).then(response => {
 			if(response.status == 200){

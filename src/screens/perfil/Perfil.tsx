@@ -8,6 +8,8 @@ import { Ionicons as Icon } from '@expo/vector-icons';
 import Button from '../../componentes/Button';
 import axios from "axios";
 
+import { REACT_APP_ENV_MODE } from '@env';
+
 export default function Perfil({navigation}: any) {
 
     const [email, setEmail] = useState('');
@@ -30,7 +32,7 @@ export default function Perfil({navigation}: any) {
 
     useEffect(() => {
         getData("email");
-        axios.get(`http://192.168.1.6:7730/api/transportadoras/transportadoraPorEmail/${email}`
+        axios.get('http://'+REACT_APP_ENV_MODE+':7730/api/transportadora/transportadoraPorEmail/${email}'
         ).then(res => {
             console.log(res.data);
             setNomeResponsavel(res.data.nm_resp)

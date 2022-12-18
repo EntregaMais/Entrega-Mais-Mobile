@@ -6,6 +6,7 @@ import Button from '../../componentes/Button';
 import Container from '../../componentes/Container';
 import { Column, HeaderText, Input, Row, Separator, Text } from '../../styled';
 
+import { REACT_APP_ENV_MODE } from '@env';
 
 export default function CadastroTransportadorStep1({ navigation }: any) {
 	const [empresa, setEmpresa] = useState('');
