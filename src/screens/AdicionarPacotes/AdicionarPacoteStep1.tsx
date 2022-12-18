@@ -15,6 +15,8 @@ import Container from '../../componentes/Container';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
+import { REACT_APP_ENV_MODE } from '@env';
+
 const Separator = () => (
 	<View style={styles.separator}>
 	</View>
@@ -52,7 +54,7 @@ export default function AdicionarPacoteStep1({navigation}: any) {
 
 	useEffect(() => {
         getData("email");
-		axios.get(`http://192.168.1.6:7730/api/transportadoras/transportadoraPorEmail/${email}`
+		axios.get('http://'+REACT_APP_ENV_MODE+':7730/api/transportadora/transportadoraPorEmail/${email}'
         ).then(res => {
             console.log(res.data.id);
 			setId(res.data.id);

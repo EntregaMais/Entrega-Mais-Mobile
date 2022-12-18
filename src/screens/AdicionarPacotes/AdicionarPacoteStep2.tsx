@@ -17,6 +17,8 @@ const Separator = () => (
 	</View>
 );
 
+import { REACT_APP_ENV_MODE } from '@env';
+
 export default function AdicionarPacoteStep2({navigation, route}: any) {
 
 	const [obs, setObs] = useState('');
@@ -60,7 +62,7 @@ export default function AdicionarPacoteStep2({navigation, route}: any) {
 			quemPagaTaxa: pagaTaxa		
 		}
 
-		axios.post('http://192.168.1.6:7740/api/pedido/salvar', body)
+		axios.post('http://'+REACT_APP_ENV_MODE+':7740/api/pedido/salvar', body)
 			.then(res => {
 				const titulo = (res.data.status) ? "Erro" : "Sucesso";
 				Alert.alert(titulo, "Pedido realizado com sucesso!", [ {

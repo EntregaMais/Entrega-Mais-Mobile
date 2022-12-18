@@ -9,7 +9,7 @@ import { Column, HeaderText, HidePassword, Input, Row, Separator } from '../../s
 
 import axios from "axios";
 
-
+import { REACT_APP_ENV_MODE } from '@env';
 
 export default function CadastroUsuarioStep1({ route, navigation }: any) {
 
@@ -41,7 +41,7 @@ export default function CadastroUsuarioStep1({ route, navigation }: any) {
 		};
 		
 		axios.post( 
-		  'http://192.168.1.6:7720/api/usuario/salvar',
+		  'http://'+REACT_APP_ENV_MODE+':7720/api/usuario/salvar',
 		  bodyParameters
 		).then(res => {
 			const titulo = (res.data.status) ? "Erro" : "Sucesso";

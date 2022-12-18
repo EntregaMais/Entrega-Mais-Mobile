@@ -1,9 +1,10 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-	"start": "expo start",
-    "start:dev": "cp .env.dev .env.local && npm start",
-	"start:prod": "cp .env.prod .env.local && npm start",
+	"start": "npm run start:dev:john",
+    "start:dev:john": "cp .env.dev.john .env && expo start -c",
+    "start:dev:diego": "cp .env.dev.diego .env && expo start -c",
+	"start:prod": "cp .env.prod .env && expo start -c",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",

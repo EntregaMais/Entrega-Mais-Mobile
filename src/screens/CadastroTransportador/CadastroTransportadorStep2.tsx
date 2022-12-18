@@ -7,6 +7,7 @@ import Button from '../../componentes/Button';
 import Container from '../../componentes/Container';
 import { Column, HeaderText, HidePassword, Input, Row, Separator } from '../../styled';
 
+import { REACT_APP_ENV_MODE } from '@env';
 
 export default function CadastroTransportadorStep2({ route, navigation }: any) {
 	
@@ -44,7 +45,7 @@ export default function CadastroTransportadorStep2({ route, navigation }: any) {
 
 	const salvarTransportador = () => {
 
-		axios.post('http://192.168.1.6:7730/api/transportadoras/salvar', data)
+		axios.post('http://'+REACT_APP_ENV_MODE+':7730/api/transportadora/salvar', data)
 			.then(res => {
 				const titulo = (res.data.status) ? "Erro" : "Sucesso";
 				Alert.alert(titulo, "Cadastro realizado com sucesso!", [ {

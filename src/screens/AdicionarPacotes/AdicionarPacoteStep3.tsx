@@ -17,6 +17,8 @@ const Separator = () => (
 	</View>
 );
 
+import { REACT_APP_ENV_MODE } from '@env';
+
 export default function AdicionarPacoteStep3({navigation, route}: any) {
 
 	const [tamanho, setTamanho] = useState('');
@@ -56,7 +58,7 @@ export default function AdicionarPacoteStep3({navigation, route}: any) {
 			observacao: route.params?.observacao
 		}
 
-		axios.post('http://192.168.1.6:7750/api/pacote/salvar', body)
+		axios.post('http://'+REACT_APP_ENV_MODE+':7750/api/pacote/salvar', body)
 			.then(res => {
 				const titulo = (res.data.status) ? "Erro" : "Sucesso";
 				Alert.alert(titulo, "Novo pacote cadastrado com sucesso!", [ {

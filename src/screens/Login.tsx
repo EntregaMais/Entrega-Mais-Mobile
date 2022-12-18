@@ -64,7 +64,7 @@ export default function Login({route, navigation}: any) {
 		};		
 		
 		axios.post( 
-		  'http://192.168.1.6:7720/api/usuario/login',
+		  'http://'+REACT_APP_ENV_MODE+':7720/api/usuario/login',
 		  bodyParameters
 		).then(response => {
 			if(response.status == 200){
