@@ -9,8 +9,17 @@ import { CheckboxExpo, Column, HidePassword, Input, Label, Row, Separator } from
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios";
 
+import { REACT_APP_DEV_MODE, REACT_APP_PROD_MODE } from '@env';
 
 export default function Login({route, navigation}: any) {
+	const url = process.env.NODE_ENV === 'development'
+				? REACT_APP_DEV_MODE
+				: REACT_APP_PROD_MODE;
+
+	console.log(url)
+
+	const environment = process.env.NODE_ENV
+	console.log(environment)
 
 	const [email, setEmail] = useState('');
 	const [senha, setSenha] = useState('');
