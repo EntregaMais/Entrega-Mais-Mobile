@@ -28,7 +28,9 @@ export default function AdicionarPacoteStep1({navigation}: any) {
 	const [id, setId] = useState('');
 	const [fornecedor, setFornecedor] = useState('');
 	const [telefoneF, setTelefoneF] = useState('');
+	const [telefoneC, setTelefoneC] = useState('');
 	const [cliente, setCliente] = useState('');
+	const [emailCli, setEmailCli] = useState('');
 
 	const getData = async (email:string) => {
 		try {
@@ -52,7 +54,7 @@ export default function AdicionarPacoteStep1({navigation}: any) {
 
 	useEffect(() => {
         getData("email");
-		axios.get(`http://192.168.1.6:7730/api/transportadoras/transportadoraPorEmail/${email}`
+		axios.get(`http://entregamais.brazilsouth.cloudapp.azure.com:7730/api/transportadora/transportadoraPorEmail/${email}`
         ).then(res => {
             console.log(res.data.id);
 			setId(res.data.id);
@@ -71,7 +73,7 @@ export default function AdicionarPacoteStep1({navigation}: any) {
 					justifyContent: "center"
 				}}>
 
-				<View style={{ flexDirection: "row", marginTop: 50}}>
+				<View style={{ flexDirection: "row", marginTop: 30}}>
 					<Icon style={styles.iconStep} name={"caret-down-circle"} size={15} color="#FFF" />
 					<Separator />
 					<Icon style={styles.iconStep} name={"radio-button-off-outline"} size={15} color="#dcdedc" />
@@ -106,14 +108,23 @@ export default function AdicionarPacoteStep1({navigation}: any) {
 						value={cliente}
 						onChangeText={ (text: any) => setCliente(text)}
 					/>
-					{/* <Input
+					<Input
 						style={styles.input}
 						placeholder='Tel Cliente (DDD)'
 						placeholderTextColor={'white'}
 						autoCorrect={false}
-						//value={}
-						onChangeText={ (text: any) => (text)}
-					/> */}
+						value={telefoneC}
+						onChangeText={ (text: any) => setTelefoneC(text)}
+					/>
+					<Input
+						style={styles.input}
+						placeholder="Email do Cliente"
+						placeholderTextColor={'white'}
+						autoCorrect={false}
+						value={emailCli}
+						onChangeText={(text: any) => {setEmailCli(text);}}
+						autoCapitalize="none"
+					/>
 
 					<Text style={styles.textStyle}>ESTADO</Text>
 
@@ -154,6 +165,8 @@ export default function AdicionarPacoteStep1({navigation}: any) {
 							fornecedor: fornecedor,
 							telefoneF: telefoneF,
 							cliente: cliente,
+							telefoneC: telefoneC,
+							emailCli: emailCli,
 							estado: estadoSelecionado,
 							cidade: cidadeSelecionado
 						})}>
@@ -177,7 +190,7 @@ const styles = StyleSheet.create({
 	  left: 0,
 	  right: 0,
 	  top: 0,
-	  height: 300
+	  height: 300,
 	},
 	textHeader: {
 		color: '#FFF',

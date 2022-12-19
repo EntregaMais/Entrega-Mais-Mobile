@@ -51,7 +51,7 @@ export const DefaultContainer = styled.SafeAreaView`
 	align-items: center;
 	justify-content: center;
 	background-color: #56cbf2;
-	padding: 10%;
+	padding: 0 10% 0 10%;
 	`;
 
 // ============================================================= Default Values //
