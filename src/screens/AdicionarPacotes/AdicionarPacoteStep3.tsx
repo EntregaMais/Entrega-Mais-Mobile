@@ -57,7 +57,7 @@ export default function AdicionarPacoteStep3({navigation, route}: any) {
 			observacao: obs
 		}
 
-		axios.post('http://entregamais.brazilsouth.cloudapp.azure.com:7750/api/pacote/salvar', body)
+		axios.post('http://192.168.0.102:7750/api/pacote/salvar', body)
 			.then(res => {
 				const titulo = (res.data.status) ? "Erro" : "Sucesso";
 				Alert.alert(titulo, "Novo pacote cadastrado com sucesso!", [ {

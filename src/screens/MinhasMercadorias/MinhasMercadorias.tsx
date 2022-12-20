@@ -21,38 +21,34 @@ export function MinhasMercadorias({navigation, route}: any) {
 			if(value !== null) {
 				console.log(value);
 				setEmail(value);
-                navigation.navigate('AdicionarPacoteStep1',{email: email})
+				navigation.navigate('CadastroDespachanteStep1',{
+					email: value,
+				});
 		  	}
 		} catch(e) {
 		  // error reading value
 		}
 	}
-    
-    const getIdTransportadora = async (idTransportadora: string) => {
+
+	const storeData = async (id:string) => {
 		try {
-		  	const value = await AsyncStorage.getItem(idTransportadora)
-			if(value !== null) {
-				console.log(value);
-				setIdTransportadora(value);
-		  	}
-		} catch(e) {
-		  // error reading value
+		  await AsyncStorage.setItem('idTransportadora', id)
+		} catch (e) {
+		  // saving error
 		}
-	} 
-	
-	
-	useEffect(() => {
-        getIdTransportadora("idTransportadora");
+	}
 
-        axios.get(`http://entregamais.brazilsouth.cloudapp.azure.com:7740/api/pedido/pedidosPorIdTransportadora/${idTransportadora}`
-        ).then(res => {
-            console.log(res.data);
-			setData(res.data);
-        }).catch((error) => {
-			console.log(error); 
-		})
-
-    }, [idTransportadora]);
+	// useEffect(() => {
+    //     getData("email");
+	// 	axios.get(`http://192.168.0.102:7730/api/transportadora/transportadoraPorEmail/${email}`
+    //     ).then(res => {
+    //         console.log(res.data.id);
+	// 		setIdTransportadora(res.data.id);
+	// 		storeData(JSON.stringify(res.data.id));
+    //     }).catch((error) => {
+	// 		console.log(error); 
+	// 	})
+    // }, [email]);
 
     return(
         <Container>
@@ -78,6 +74,33 @@ export function MinhasMercadorias({navigation, route}: any) {
 					onPress={() => {getData('email')}}
 				>
 					Novo pedido
+			</Button>
+			<Separator/>
+			<Button
+					isPrimary
+					buttonSize={'large'}
+					labelSize={'medium'}
+					onPress={() => {getData('email')}}
+				>
+					Novo Despachante
+			</Button>
+			<Separator/>
+			<Button
+					isPrimary
+					buttonSize={'large'}
+					labelSize={'medium'}
+					onPress={() => {getData('email')}}
+				>
+					Novo Trajeto
+			</Button>
+			<Separator/>
+			<Button
+					isPrimary
+					buttonSize={'large'}
+					labelSize={'medium'}
+					onPress={() => {getData('email')}}
+				>
+					Novo Veiculo
 			</Button>
         </Container>
     );

@@ -20,7 +20,7 @@ export default function CadastroTrajetoStep1({ navigation }: any) {
 			idtransportadora: idtransportadora,
 		}
 
-		axios.post('http://entregamais.brazilsouth.cloudapp.azure.com:3000/trajetos', body)
+		axios.post('http://192.168.0.102:3000/trajetos', body)
 			.then(res => {
 				console.log(body);
 				const titulo = (res.data.status) ? "Erro" : "Sucesso";

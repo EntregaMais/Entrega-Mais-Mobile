@@ -58,7 +58,7 @@ export default function AdicionarPacoteStep2({navigation, route}: any) {
 			idDespachante: 1
 		}
 
-		axios.post('http://entregamais.brazilsouth.cloudapp.azure.com:7740/api/pedido/salvar', body)
+		axios.post('http://192.168.0.102:7740/api/pedido/salvar', body)
 			.then(res => {
 				const titulo = (res.data.status) ? "Erro" : "Sucesso";
 				Alert.alert(titulo, "Pedido realizado com sucesso!", [ {

@@ -7,9 +7,24 @@ import Container from '../../componentes/Container';
 import { Column, HeaderText, Input, Row, Separator, Text } from '../../styled';
 import axios from "axios";
 
-export default function CadastroDespachanteStep1({ navigation }: any) {
+export default function CadastroDespachanteStep1({ navigation, route }: any) {
 	const [nmdespachante, setNmDespachante] = useState('');
 	const [idtransportadora, setIdTransportadora] = useState('');
+	const [email, setEmail] = useState('');
+
+	console.log(route.params?.email)
+
+	useEffect(() => {
+        setEmail(route.params?.email);
+		axios.get(`http://192.168.0.102:7730/api/transportadora/transportadoraPorEmail/${email}`
+        ).then(res => {
+            console.log(res.data.id);
+			setIdTransportadora(res.data.id);
+        }).catch((error) => {
+			console.log(error); 
+		})
+    }, []);
+	
 
 	const salvarDespachante = () => {
 
@@ -18,7 +33,7 @@ export default function CadastroDespachanteStep1({ navigation }: any) {
 			idtransportadora: idtransportadora,
 		}
 
-		axios.post('http://entregamais.brazilsouth.cloudapp.azure.com:3000/despachantes', body)
+		axios.post('http://192.168.0.102:3000/despachantes', body)
 			.then(res => {
 				console.log(body);
 				const titulo = (res.data.status) ? "Erro" : "Sucesso";
@@ -61,13 +76,13 @@ export default function CadastroDespachanteStep1({ navigation }: any) {
 							autoCorrect={false}
 							onChangeText={(text: string) => {setNmDespachante(text)}}
 						/>
-						<Input
+						{/* <Input
 							value={idtransportadora}
 							placeholder="Codigo da Transportadora"
 							placeholderTextColor={'white'}
 							autoCorrect={false}
 							onChangeText={(text: string) => {setIdTransportadora(text)}}
-						/>
+						/> */}
 
 						<Button
 							isPrimary
