@@ -43,21 +43,27 @@ export default function CadastroTransportadorStep2({ route, navigation }: any) {
 	}
 
 	const salvarTransportador = () => {
-
-		axios.post('http://192.168.0.102:7730/api/transportadora/salvar', data)
-			.then(res => {
-				const titulo = (res.data.status) ? "Erro" : "Sucesso";
-				Alert.alert(titulo, "Cadastro realizado com sucesso!", [ {
-					text: "OK", onPress: () => {navigation.navigate('Login',{
-						email: email, senha: senha
-					})}
-				}]);
-				console.log(res.data);
-			})
-			.catch((error) => {
-				Alert.alert("Erro", "Erro ao tentar cadastrar usuário");
-				console.log(error);
-			});
+		axios.get('http://192.168.0.102:7730/api/transportadora/ok', {timeout: 10000})
+			.then(response => {
+				if(response.status == 200){
+					axios.post('http://192.168.0.102:7730/api/transportadora/salvar', data)
+						.then(res => {
+							const titulo = (res.data.status) ? "Erro" : "Sucesso";
+							Alert.alert(titulo, "Cadastro realizado com sucesso!", [ {
+								text: "OK", onPress: () => {navigation.navigate('Login',{
+									email: email, senha: senha
+								})}
+							}]);
+							console.log(res.data);
+						})
+						.catch((error) => {
+							Alert.alert("Erro", "Erro ao tentar cadastrar usuário");
+							console.log(error);
+						});
+				}
+		}).catch((error) => {
+			Alert.alert("Erro", "Nossos servidores estão fora do ar - Transportador:Step2");
+		});
 	}
 
 	return (

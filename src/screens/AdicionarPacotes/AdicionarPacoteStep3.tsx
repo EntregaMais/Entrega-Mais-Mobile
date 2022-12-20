@@ -74,7 +74,7 @@ export default function AdicionarPacoteStep3({navigation, route}: any) {
 			}
 		}).catch((error) => {
 			console.log('eitaa');
-			Alert.alert("Erro", "Nossos servidores estão fora do ar. Usuario:login");
+			Alert.alert("Erro", "Nossos servidores estão fora do ar - Pacote:Step3");
 		});
 	}
 

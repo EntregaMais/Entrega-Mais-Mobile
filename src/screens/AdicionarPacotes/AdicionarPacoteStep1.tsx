@@ -68,7 +68,7 @@ export default function AdicionarPacoteStep1({navigation}: any) {
 		}
 		}).catch((error) => {
 			console.log('eitaa');
-			Alert.alert("Erro", "Nossos servidores estão fora do ar. AdicionarPacote:Step1");
+			Alert.alert("Erro", "Nossos servidores estão fora do ar - Transportadora:Pacote:Step1");
 		});
     }, [email]);
 

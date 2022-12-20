@@ -26,7 +26,7 @@ export default function CadastroDespachanteStep1({ navigation, route }: any) {
 			}
 		}).catch((error) => {
 			console.log('eitaa');
-			Alert.alert("Erro", "Nossos servidores estão fora do ar. Usuario:login");
+			Alert.alert("Erro", "Nossos servidores estão fora do ar - Transportadora:Despachante:Step1");
 		});
     }, []);
 	
@@ -38,7 +38,7 @@ export default function CadastroDespachanteStep1({ navigation, route }: any) {
 			idtransportadora: idtransportadora,
 		}
 
-		axios.get('http://192.168.0.102:3000/despachantes/ok', {timeout: 10000})
+		axios.get('http://192.168.0.102:3000/despachante/ok', {timeout: 10000})
 			.then(response => {
 			if(response.status == 200){
 				axios.post('http://192.168.0.102:3000/despachantes', body)
@@ -57,7 +57,7 @@ export default function CadastroDespachanteStep1({ navigation, route }: any) {
 				}
 			}).catch((error) => {
 				console.log('eitaa');
-				Alert.alert("Erro", "Nossos servidores estão fora do ar. Usuario:login");
+				Alert.alert("Erro", "Nossos servidores estão fora do ar - Despachante:Step1");
 			});
 	}
 

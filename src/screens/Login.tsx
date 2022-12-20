@@ -76,7 +76,7 @@ export default function Login({route, navigation}: any) {
 					}
 			}).catch((error) => {
 				console.log('eitaa');
-				Alert.alert("Erro", "Nossos servidores estão fora do ar. Usuario:login");
+				Alert.alert("Erro", "Nossos servidores estão fora do ar - Usuario:login");
 			});
 		
 
