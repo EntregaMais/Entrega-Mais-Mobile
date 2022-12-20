@@ -15,44 +15,28 @@ export function MinhasMercadorias({navigation, route}: any) {
 	const [data, setData] = useState();
 
 
-	const getData = async (email:string) => {
+	const getData = async (email:string, navigate_to:string) => {
 		try {
 		  	const value = await AsyncStorage.getItem(email)
 			if(value !== null) {
 				console.log(value);
 				setEmail(value);
-                navigation.navigate('AdicionarPacoteStep1',{email: email})
+				navigation.navigate(navigate_to,{
+					email: value,
+				});
 		  	}
 		} catch(e) {
 		  // error reading value
 		}
 	}
-    
-    const getIdTransportadora = async (idTransportadora: string) => {
+
+	const storeData = async (id:string) => {
 		try {
-		  	const value = await AsyncStorage.getItem(idTransportadora)
-			if(value !== null) {
-				console.log(value);
-				setIdTransportadora(value);
-		  	}
-		} catch(e) {
-		  // error reading value
+		  await AsyncStorage.setItem('idTransportadora', id)
+		} catch (e) {
+		  // saving error
 		}
-	} 
-	
-	
-	useEffect(() => {
-        getIdTransportadora("idTransportadora");
-
-        axios.get(`http://entregamais.brazilsouth.cloudapp.azure.com:7740/api/pedido/pedidosPorIdTransportadora/${idTransportadora}`
-        ).then(res => {
-            console.log(res.data);
-			setData(res.data);
-        }).catch((error) => {
-			console.log(error); 
-		})
-
-    }, [idTransportadora]);
+	}
 
     return(
         <Container>
@@ -75,9 +59,36 @@ export function MinhasMercadorias({navigation, route}: any) {
 					isPrimary
 					buttonSize={'large'}
 					labelSize={'medium'}
-					onPress={() => {getData('email')}}
+					onPress={() => {getData('email','AdicionarPacoteStep1')}}
 				>
 					Novo pedido
+			</Button>
+			<Separator/>
+			<Button
+					isPrimary
+					buttonSize={'large'}
+					labelSize={'medium'}
+					onPress={() => {getData('email','CadastroDespachanteStep1')}}
+				>
+					Novo Despachante
+			</Button>
+			<Separator/>
+			<Button
+					isPrimary
+					buttonSize={'large'}
+					labelSize={'medium'}
+					onPress={() => {getData('email','CadastroTrajetoStep1')}}
+				>
+					Novo Trajeto
+			</Button>
+			<Separator/>
+			<Button
+					isPrimary
+					buttonSize={'large'}
+					labelSize={'medium'}
+					onPress={() => {getData('email','CadastroVeiculoStep1')}}
+				>
+					Novo Veiculo
 			</Button>
         </Container>
     );

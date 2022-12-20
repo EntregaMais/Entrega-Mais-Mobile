@@ -58,21 +58,29 @@ export default function AdicionarPacoteStep2({navigation, route}: any) {
 			idDespachante: 1
 		}
 
-		axios.post('http://entregamais.brazilsouth.cloudapp.azure.com:7740/api/pedido/salvar', body)
-			.then(res => {
-				const titulo = (res.data.status) ? "Erro" : "Sucesso";
-				Alert.alert(titulo, "Pedido realizado com sucesso!", [ {
-					text: "OK", onPress: () => {navigation.navigate('AdicionarPacoteStep3',{
-						fornecedor: fornecedor,
-						telefoneF: telefoneF,
-					} )}
-				}]);
-				console.log(res.data);
-				storeData(JSON.stringify(res.data.id));
-			})
-			.catch((error) => {
-				Alert.alert("Erro", "Erro ao tentar cadastrar pedido");
-				console.log(error);
+		axios.get('http://192.168.0.102:7740/api/pedido/ok', {timeout: 10000})
+			.then(response => {
+				if(response.status == 200){
+				axios.post('http://192.168.0.102:7740/api/pedido/salvar', body)
+					.then(res => {
+						const titulo = (res.data.status) ? "Erro" : "Sucesso";
+						Alert.alert(titulo, "Pedido realizado com sucesso!", [ {
+							text: "OK", onPress: () => {navigation.navigate('AdicionarPacoteStep3',{
+								fornecedor: fornecedor,
+								telefoneF: telefoneF,
+							} )}
+						}]);
+						console.log(res.data);
+						storeData(JSON.stringify(res.data.id));
+					})
+					.catch((error) => {
+						Alert.alert("Erro", "Erro ao tentar cadastrar pedido");
+						console.log(error);
+					});
+				}
+			}).catch((error) => {
+				console.log('eitaa');
+				Alert.alert("Erro", "Nossos servidores estão fora do ar - Pedido:Step2");
 			});
 	}
 

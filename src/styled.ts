@@ -11,15 +11,28 @@ import Checkbox, { CheckboxProps } from 'expo-checkbox';
 
 // Interfaces ----------------------------//
 interface TouchableOpacityProps extends ReactNative.TouchableOpacityProps {
-	isPrimary: boolean;
-	isDisabled: boolean;
+	isPrimary?: boolean
+	isDisabled?: boolean
+	buttonSize?: string
 };
 
 interface ViewProps extends ReactNative.ViewProps {
-	alignItensCenter: boolean
-	justifyContentCenter: boolean
-	justifyContentSpaceBetween: boolean
-	wrap: boolean
+	alignItensCenter?: boolean
+	justifyContentCenter?: boolean
+	justifyContentSpaceBetween?: boolean
+	wrap?: boolean
+};
+
+interface TextInputProps extends ReactNative.TextInputProps {
+	isPrimary?: boolean
+	isDisabled?: boolean
+};
+
+interface TextProps extends ReactNative.TextProps {
+	isPrimary?: boolean
+	isDisabled?: boolean
+	size?: string
+	labelSize?: string
 };
 
 // Default Values ==============================================================//
@@ -73,19 +86,19 @@ export const Flex = styled.View<ViewProps>`
 	}
 `;
 
-export const Row = styled(Flex)<ReactNative.View>`
+export const Row = styled(Flex)<ViewProps>`
 	flex-direction: row;
 	width: 100%;
 `;
 
 
-export const Column = styled(Flex)<ReactNative.View>`
+export const Column = styled(Flex)<ViewProps>`
   flex-direction: column;
   flex-basis: 100%;
   flex: 1;
 `;
 
-export const Separator = styled(Row)<ReactNative.View>`
+export const Separator = styled(Row)<ViewProps>`
 	width: 150px;
 	border-bottom-color: #FFF;
 	margin: 6% 0 6% 0;
@@ -93,7 +106,7 @@ export const Separator = styled(Row)<ReactNative.View>`
 `;
 
 
-export const Input = styled(DefaultTextInput)<ReactNative.TextInput>`
+export const Input = styled(DefaultTextInput)<TextInputProps>`
 	width: 100%;
 	background-color: 'transparent';
 	border-bottom-width: 1px;
@@ -102,7 +115,7 @@ export const Input = styled(DefaultTextInput)<ReactNative.TextInput>`
 	padding: 2.5%;
 `;
 
-export const Text = styled(DefaultText)<ReactNative.Text>`
+export const Text = styled(DefaultText)<TextProps>`
 	color: ${(props) => (props.isPrimary ? '#00BFFF' : '#FFF')};
 	${(props) => {
 		switch (props.size) {
@@ -125,7 +138,7 @@ export const CheckboxExpo = styled(Checkbox)<CheckboxProps>`
 	height: 16px;
 `;
 
-export const ButtonContainer = styled(DefaultTouchableOpacity)<ReactNative.TouchableOpacity>`
+export const ButtonContainer = styled(DefaultTouchableOpacity)<TouchableOpacityProps>`
 	margin-bottom: 2.5%;
 	${(props) => {
 		switch (props.buttonSize) {
@@ -145,7 +158,7 @@ export const ButtonContainer = styled(DefaultTouchableOpacity)<ReactNative.Touch
 	}
 `;
 
-export const Label = styled(Text)<ReactNative.Text>`
+export const Label = styled(Text)<TextProps>`
 	${(props) => {
 		switch (props.labelSize) {
 			case 'large': 
@@ -169,10 +182,10 @@ export const LoginForm = styled(Input)<GestureHandler.TextInput>`
 `;
 
 
-export const HeaderText = styled(HeaderTextFont)<ReactNative.Text>`
+export const HeaderText = styled(HeaderTextFont)<TextProps>`
 `;
 
-export const HeaderTextTemplate = styled(DefaultText)<ReactNative.Text>`
+export const HeaderTextTemplate = styled(DefaultText)<TextProps>`
 	color: #FFF;
 	font-size: 25px;
 	margin-bottom: 35px;
