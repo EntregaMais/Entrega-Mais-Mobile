@@ -154,13 +154,13 @@ export default function Login({route, navigation}: any) {
 
 						<Separator/>
 
-						<Button
+						{/* <Button
 							buttonSize={'large'}
 							labelSize={'medium'} 
 							onPress={() => {navigation.navigate('CadastroUsuarioStep1');}}
 						>
 							Cadastro Usuario
-						</Button>
+						</Button> */}
 
 						<Button
 							buttonSize={'large'}
