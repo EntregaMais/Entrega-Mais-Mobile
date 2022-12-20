@@ -8,81 +8,61 @@ import Button from '../../componentes/Button';
 import axios from "axios";
 import { ScrollView } from "react-native-gesture-handler";
 
-export function MinhasMercadorias({navigation, route}: any) {
-
-    const [email, setEmail] = useState('');
-    const [idTransportadora, setIdTransportadora] = useState('');
-	const [data, setData] = useState();
+export default function Listagem({navigation, route}: any) {
+	const [porta, setPorta] = useState('');
+	const [contexto, setContext] = useState('');
 
 
-	const getData = async (email:string, navigate_to:string) => {
+	const getData = async (navigate_to:string, port:string, context:string, id?:string) => {
 		try {
-		  	const value = await AsyncStorage.getItem(email)
-			if(value !== null) {
-				console.log(value);
-				setEmail(value);
-				navigation.navigate(navigate_to,{
-					email: value,
-				});
-		  	}
+			setPorta(port)
+			setContext(context);
+			navigation.navigate(navigate_to,{
+				port: port,
+				context: context,
+				id: id
+			});
 		} catch(e) {
 		  // error reading value
 		}
 	}
 
-	const storeData = async (id:string) => {
-		try {
-		  await AsyncStorage.setItem('idTransportadora', id)
-		} catch (e) {
-		  // saving error
-		}
-	}
-
-    return(
-        <Container>
+	return(
+		<Container>
 			<Button
 					isPrimary
 					buttonSize={'large'}
 					labelSize={'medium'}
-					onPress={() => {getData('email','Listagem')}}
+					onPress={() => {getData('ListagemList','7740','/api/pedido/pedidosPorIdTransportadora/')}}
 				>
-					Listagem
+					Listagem Pedido
 			</Button>
 			<Separator/>
 			<Button
 					isPrimary
 					buttonSize={'large'}
 					labelSize={'medium'}
-					onPress={() => {getData('email','AdicionarPacoteStep1')}}
+					onPress={() => {getData('ListagemList','3000','/despachantes')}}
 				>
-					Novo pedido
+					Listagem Despachante
 			</Button>
 			<Separator/>
 			<Button
 					isPrimary
 					buttonSize={'large'}
 					labelSize={'medium'}
-					onPress={() => {getData('email','CadastroDespachanteStep1')}}
+					onPress={() => {getData('ListagemList','3000','/trajetos')}}
 				>
-					Novo Despachante
+					Listagem Trajeto
 			</Button>
 			<Separator/>
 			<Button
 					isPrimary
 					buttonSize={'large'}
 					labelSize={'medium'}
-					onPress={() => {getData('email','CadastroTrajetoStep1')}}
+					onPress={() => {getData('ListagemList','3000','/veiculos')}}
 				>
-					Novo Trajeto
-			</Button>
-			<Separator/>
-			<Button
-					isPrimary
-					buttonSize={'large'}
-					labelSize={'medium'}
-					onPress={() => {getData('email','CadastroVeiculoStep1')}}
-				>
-					Novo Veiculo
+					Listagem Veiculo
 			</Button>
         </Container>
     );

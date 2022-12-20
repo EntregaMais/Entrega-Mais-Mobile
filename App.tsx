@@ -26,6 +26,8 @@ import { CadastroTrajetoStep1 } from './src/screens/CadastroTrajeto/CadastroTraj
 import { CadastroCidadeStep1 } from './src/screens/CadastroTrajeto/CadastroCidade/CadastroCidadeExport';
 import { CadastroVeiculoStep1 } from './src/screens/CadastroVeiculo/CadastroVeiculoExport';
 
+import ListagemList from './src/screens/MinhasMercadorias/ListagemList';
+import Listagem from './src/screens/MinhasMercadorias/Listagem';
 import Login from './src/screens/Login';
 import Perfil from './src/screens/perfil/Perfil';
 import { MinhasMercadorias } from './src/screens/MinhasMercadorias/MinhasMercadorias';
@@ -152,6 +154,22 @@ export default function App() {
 					}}
 					/>
 				<Stack.Screen name="CadastroVeiculoStep1" component={CadastroVeiculoStep1}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name="Listagem" component={Listagem}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name="ListagemList" component={ListagemList}
 					options={{
 						headerTransparent: true,
 						headerTitleAlign: 'center',
