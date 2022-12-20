@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, TextInput, Pressable} from 'react-native';
@@ -8,14 +8,65 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { color } from "@rneui/base";
 import LinearGradientBackground from "../componentes/LinearGradient";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios";
 const Tab = createBottomTabNavigator();
 
 export default function Home({route}: any){
 
+	const [idTransportadora, setIdTransportadora] = useState('');
+	const [email, setEmail] = useState('');
+
+	const getData = async (email:string) => {
+		try {
+		  	const value = await AsyncStorage.getItem(email)
+			if(value !== null) {
+				setEmail(value);
+				console.log(value);
+		  	}
+		} catch(e) {
+		  // error reading value
+		}
+	} 
+
+	// const getIdTransportadora = async (idTransportadora: string) => {
+	// 	try {
+	// 	  	const value = await AsyncStorage.getItem(idTransportadora)
+	// 		if(value !== null) {
+	// 			setIdTransportadora(value);
+	// 			console.log(value);
+	// 	  	}
+	// 	} catch(e) {
+	// 	  // error reading value
+	// 	}
+	// } 
+
+	const storeData = async (id:string) => {
+		try {
+		  await AsyncStorage.setItem('idTransportadora', id)
+		} catch (e) {
+		  // saving error
+		}
+	}
+
+	useEffect(() => {
+        //getIdTransportadora("idTransportadora");
+		getData("email");
+
+		axios.get(`http://entregamais.brazilsouth.cloudapp.azure.com:7730/api/transportadora/transportadoraPorEmail/${email}`
+        ).then(res => {
+            console.log(res.data.id);
+			setIdTransportadora(res.data.id);
+			storeData(JSON.stringify(res.data.id));
+        }).catch((error) => {
+			console.log(error); 
+		})
+
+    }, [email,idTransportadora]);
+
 	return (
 		<SafeAreaView style={styles.container}>
 			<LinearGradientBackground/>
-			{/* <Text style={{fontSize: 15, color: '#FFF', marginBottom: 10}}>Bem Vindo {route.params.paramKey}</Text> */}
+			<Text style={{fontSize: 10, color: '#FFF', marginBottom: 10}}>{idTransportadora}, {email}</Text>
 			<View style={{flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-evenly'}}>
 
 				<TouchableOpacity style={styles.bnt}>

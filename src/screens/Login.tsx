@@ -29,17 +29,7 @@ export default function Login({route, navigation}: any) {
 		//alert('Success');
 		return true
 	  };
-
-	const getData = async (email:string) => {
-		try {
-		  	const value = await AsyncStorage.getItem(email)
-			if(value !== null) {
-				// value previously stored
-		  	}
-		} catch(e) {
-		  // error reading value
-		}
-	}  
+ 
 
 	const storeData = async (email:string) => {
 		try {

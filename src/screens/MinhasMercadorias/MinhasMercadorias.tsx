@@ -14,7 +14,6 @@ export function MinhasMercadorias({navigation, route}: any) {
     const [idTransportadora, setIdTransportadora] = useState('');
 	const [data, setData] = useState();
 
-
 	const getData = async (email:string) => {
 		try {
 		  	const value = await AsyncStorage.getItem(email)
@@ -58,6 +57,7 @@ export function MinhasMercadorias({navigation, route}: any) {
         <Container>
 			<Row>
 				<View>
+					<Text>{idTransportadora}</Text>
 					<FlatList 
 						data={data}
 						keyExtractor={(item) => item.id}
@@ -70,7 +70,7 @@ export function MinhasMercadorias({navigation, route}: any) {
 					/>
 				</View>
 			</Row>
-			<Separator/>
+			{/* <Separator/> */}
 			<Button
 					isPrimary
 					buttonSize={'large'}
