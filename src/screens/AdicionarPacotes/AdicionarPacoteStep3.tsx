@@ -56,19 +56,26 @@ export default function AdicionarPacoteStep3({navigation, route}: any) {
 			tamanho: tamanho,
 			observacao: obs
 		}
-
-		axios.post('http://192.168.0.102:7750/api/pacote/salvar', body)
-			.then(res => {
-				const titulo = (res.data.status) ? "Erro" : "Sucesso";
-				Alert.alert(titulo, "Novo pacote cadastrado com sucesso!", [ {
-					text: "OK", onPress: () => {navigation.navigate('Home'), {obs: obs}}
-				}]);
-				console.log(res.data);
-			})
-			.catch((error) => {
-				Alert.alert("Erro", "Erro ao tentar cadastrar pacote");
-				console.log(error);
-			});
+		axios.get('http://192.168.0.102:7750/api/pacote/ok', {timeout: 10000})
+			.then(response => {
+			if(response.status == 200){
+				axios.post('http://192.168.0.102:7750/api/pacote/salvar', body)
+					.then(res => {
+						const titulo = (res.data.status) ? "Erro" : "Sucesso";
+						Alert.alert(titulo, "Novo pacote cadastrado com sucesso!", [ {
+							text: "OK", onPress: () => {navigation.navigate('Home'), {obs: obs}}
+						}]);
+						console.log(res.data);
+					})
+					.catch((error) => {
+						Alert.alert("Erro", "Erro ao tentar cadastrar pacote");
+						console.log(error);
+					});
+			}
+		}).catch((error) => {
+			console.log('eitaa');
+			Alert.alert("Erro", "Nossos servidores estão fora do ar. Usuario:login");
+		});
 	}
 
 	return (

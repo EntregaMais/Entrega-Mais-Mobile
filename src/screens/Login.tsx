@@ -54,22 +54,32 @@ export default function Login({route, navigation}: any) {
 		const bodyParameters = {
 			email: email,
 			password: password
-		};		
+		};
+
+		axios.get('http://192.168.0.102:7720/api/usuario/ok', {timeout: 10000})
+			.then(response => {
+					if(response.status == 200){
+						axios.post( 
+							'http://192.168.0.102:7720/api/usuario/login',
+							bodyParameters
+						  ).then(response => {
+							  if(response.status == 200){
+								  storeData(email);
+								  const token = JSON.stringify(response.data).split(" ")
+								  console.log(token[1]);
+								  navigation.navigate('Home');
+							  }
+						  })
+						  .catch((error) => {
+							  Alert.alert("Erro", "Email ou senha incorretos.");
+						  });
+					}
+			}).catch((error) => {
+				console.log('eitaa');
+				Alert.alert("Erro", "Nossos servidores estão fora do ar. Usuario:login");
+			});
 		
-		axios.post( 
-		  'http://192.168.0.102:7720/api/usuario/login',
-		  bodyParameters
-		).then(response => {
-			if(response.status == 200){
-				storeData(email);
-				const token = JSON.stringify(response.data).split(" ")
-				console.log(token[1]);
-				navigation.navigate('Home');
-			}
-		})
-		.catch((error) => {
-			Alert.alert("Erro", "Email ou senha incorretos.");
-		});
+
 	};
 
 	return (

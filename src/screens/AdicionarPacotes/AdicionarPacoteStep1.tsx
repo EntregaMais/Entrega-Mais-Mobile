@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
-import { StyleSheet, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, Alert } from 'react-native';
 import { ScrollView } from "react-native-gesture-handler";
 import { Ionicons as Icon} from '@expo/vector-icons';
 import ButtonEscolha from "../../componentes/ButtonEscolha";
@@ -54,14 +54,22 @@ export default function AdicionarPacoteStep1({navigation}: any) {
 
 	useEffect(() => {
         getData("email");
-		axios.get(`http://192.168.0.102:7730/api/transportadora/transportadoraPorEmail/${email}`
-        ).then(res => {
-            console.log(res.data.id);
-			setId(res.data.id);
-			storeData(JSON.stringify(res.data.id));
-        }).catch((error) => {
-			console.log(error); 
-		})
+		axios.get('http://192.168.0.102:7730/api/transportadora/ok', {timeout: 10000})
+		.then(response => {
+				if(response.status == 200){
+			axios.get(`http://192.168.0.102:7730/api/transportadora/transportadoraPorEmail/${email}`
+			).then(res => {
+				console.log(res.data.id);
+				setId(res.data.id);
+				storeData(JSON.stringify(res.data.id));
+			}).catch((error) => {
+				console.log(error); 
+			})
+		}
+		}).catch((error) => {
+			console.log('eitaa');
+			Alert.alert("Erro", "Nossos servidores estão fora do ar. AdicionarPacote:Step1");
+		});
     }, [email]);
 
 	return (

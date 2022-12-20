@@ -13,13 +13,21 @@ export default function CadastroDespachanteStep1({ navigation, route }: any) {
 	
 	useEffect(() => {
 		console.log(route.params?.email)
-		axios.get(`http://192.168.0.102:7730/api/transportadora/transportadoraPorEmail/${route.params?.email}`
-        ).then(res => {
-            console.log(res.data.id);
-			setIdTransportadora(res.data.id);
-        }).catch((error) => {
-			console.log(error); 
-		})
+		axios.get('http://192.168.0.102:7730/api/transportadora/ok', {timeout: 10000})
+			.then(response => {
+			if(response.status == 200){
+				axios.get(`http://192.168.0.102:7730/api/transportadora/transportadoraPorEmail/${route.params?.email}`
+				).then(res => {
+					console.log(res.data.id);
+					setIdTransportadora(res.data.id);
+				}).catch((error) => {
+					console.log(error); 
+				})
+			}
+		}).catch((error) => {
+			console.log('eitaa');
+			Alert.alert("Erro", "Nossos servidores estão fora do ar. Usuario:login");
+		});
     }, []);
 	
 
@@ -30,18 +38,26 @@ export default function CadastroDespachanteStep1({ navigation, route }: any) {
 			idtransportadora: idtransportadora,
 		}
 
-		axios.post('http://192.168.0.102:3000/despachantes', body)
-			.then(res => {
-				console.log(body);
-				const titulo = (res.data.status) ? "Erro" : "Sucesso";
-				Alert.alert(titulo, "Cadastro realizado com sucesso!", [ {
-					text: "OK", onPress: () => {navigation.navigate('MinhasMercadorias',{})}
-				}]);
-				console.log(res.data);
-			})
-			.catch((error) => {
-				Alert.alert("Erro", "Erro ao tentar cadastrar despachante");
-				console.log(error);
+		axios.get('http://192.168.0.102:3000/despachantes/ok', {timeout: 10000})
+			.then(response => {
+			if(response.status == 200){
+				axios.post('http://192.168.0.102:3000/despachantes', body)
+					.then(res => {
+						console.log(body);
+						const titulo = (res.data.status) ? "Erro" : "Sucesso";
+						Alert.alert(titulo, "Cadastro realizado com sucesso!", [ {
+							text: "OK", onPress: () => {navigation.navigate('MinhasMercadorias',{})}
+						}]);
+						console.log(res.data);
+					})
+					.catch((error) => {
+						Alert.alert("Erro", "Erro ao tentar cadastrar despachante");
+						console.log(error);
+					});
+				}
+			}).catch((error) => {
+				console.log('eitaa');
+				Alert.alert("Erro", "Nossos servidores estão fora do ar. Usuario:login");
 			});
 	}
 
