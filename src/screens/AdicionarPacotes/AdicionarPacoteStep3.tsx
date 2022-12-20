@@ -21,6 +21,7 @@ export default function AdicionarPacoteStep3({navigation, route}: any) {
 
 	const [tamanho, setTamanho] = useState('');
 	const [idPedido, setIdPedido] = useState('');
+	const [obs, setObs] = useState('');
 
 	// const data = {
 	// 	fornecedor: route.params?.fornecedor,
@@ -53,21 +54,28 @@ export default function AdicionarPacoteStep3({navigation, route}: any) {
 			fornecedor: route.params?.fornecedor,
 			telefoneFornecedor: route.params?.telefoneF,
 			tamanho: tamanho,
-			observacao: route.params?.observacao
+			observacao: obs
 		}
-
-		axios.post('http://192.168.1.6:7750/api/pacote/salvar', body)
-			.then(res => {
-				const titulo = (res.data.status) ? "Erro" : "Sucesso";
-				Alert.alert(titulo, "Novo pacote cadastrado com sucesso!", [ {
-					text: "OK", onPress: () => {navigation.navigate('Home')}
-				}]);
-				console.log(res.data);
-			})
-			.catch((error) => {
-				Alert.alert("Erro", "Erro ao tentar cadastrar pacote");
-				console.log(error);
-			});
+		axios.get('http://192.168.0.102:7750/api/pacote/ok', {timeout: 10000})
+			.then(response => {
+			if(response.status == 200){
+				axios.post('http://192.168.0.102:7750/api/pacote/salvar', body)
+					.then(res => {
+						const titulo = (res.data.status) ? "Erro" : "Sucesso";
+						Alert.alert(titulo, "Novo pacote cadastrado com sucesso!", [ {
+							text: "OK", onPress: () => {navigation.navigate('Home'), {obs: obs}}
+						}]);
+						console.log(res.data);
+					})
+					.catch((error) => {
+						Alert.alert("Erro", "Erro ao tentar cadastrar pacote");
+						console.log(error);
+					});
+			}
+		}).catch((error) => {
+			console.log('eitaa');
+			Alert.alert("Erro", "Nossos servidores estão fora do ar - Pacote:Step3");
+		});
 	}
 
 	return (
@@ -90,9 +98,9 @@ export default function AdicionarPacoteStep3({navigation, route}: any) {
 				<HeaderText > NOVO PACOTE </HeaderText>
 				<View>
 
-					{/* <Text style={styles.textStyle}>Quantidade de Pacotes</Text>
+					<Text style={styles.textStyle}>Tamanho de Pacotes: </Text>
 
-					<View style={styles.contadorPacotes}>
+					{/* <View style={styles.contadorPacotes}>
 						<NumericInput
 							rounded
 							minValue={0}
@@ -135,6 +143,14 @@ export default function AdicionarPacoteStep3({navigation, route}: any) {
 							<Text style={styles.textStyleBtn}>VALOR</Text>
 						</TouchableOpacity>
 					</View >
+					<Input
+						style={styles.input}
+						placeholder='Observações:'
+						placeholderTextColor={'white'}
+						autoCorrect={false}
+						value={obs}
+						onChangeText={ (text: any) => setObs(text)}
+						/>
 
 					<View style={{marginTop: 20}}>
 						<TouchableOpacity style={styles.btnProsseguir}  onPress={() => salvarPacote()}>
@@ -148,12 +164,6 @@ export default function AdicionarPacoteStep3({navigation, route}: any) {
 }
 
 const styles = StyleSheet.create({
-	container: {
-	  flex: 1,
-	  alignItems: 'center',
-	  justifyContent: 'center',
-	  backgroundColor: 'rgba(86, 203, 242, 1)'
-	},
 	contadorPacotes: {
 		color: '#FFF', fontSize: 30,
 	  flexDirection: "row",
@@ -164,18 +174,6 @@ const styles = StyleSheet.create({
 	contadorStyle:{
 		color: '#FFF',
 	},
-	image: {
-	  width: 200,
-	  height: 80,
-	  marginBottom: 40
-	},
-	background: {
-	  position: 'absolute',
-	  left: 0,
-	  right: 0,
-	  top: 0,
-	  height: 300
-	},
 	textHeader: {
 		color: '#FFF',
 		fontSize: 25,
@@ -184,8 +182,10 @@ const styles = StyleSheet.create({
 	},
 	textStyle: {
 		color: '#FFF',
-		fontSize: 15,
+		fontSize: 17,
 		fontWeight: 'bold',
+		marginBottom: 10,
+		textAlign: "center"
 	},
 	picker: {
 		color: '#FFF',
@@ -199,10 +199,6 @@ const styles = StyleSheet.create({
 		fontSize: 15,
 		fontWeight: 'bold',
 	},
-	inputContainer: {
-		flexDirection: 'row',
-		//alignItems: 'center'
-	},
 	input: {
 		color: '#FFF',
 		fontWeight: 'bold',
@@ -211,6 +207,7 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 1,
 		backgroundColor: 'transparent',
 		borderBottomColor: '#FFF',
+		marginTop: 30,
 		marginBottom: 30,
 		padding: 2,
 	},

@@ -39,22 +39,27 @@ export default function CadastroUsuarioStep1({ route, navigation }: any) {
 			email: email,
 			password: password
 		};
-		
-		axios.post( 
-		  'http://192.168.1.6:7720/api/usuario/salvar',
-		  bodyParameters
-		).then(res => {
-			const titulo = (res.data.status) ? "Erro" : "Sucesso";
-			Alert.alert(titulo, "Usuário\n" + email + "\nCadastrado com sucesso!", [ {
-				text: "OK", onPress: () => {navigation.navigate('Login',{
-					email: email, senha: senha
-				})}
-			}]);
-        	console.log(res.data);
-    	})
-		.catch((error) => {
-			Alert.alert("Erro", "Erro ao tentar cadastrar usuário"); 
-		})
+		axios.get('http://192.168.0.102:7720/api/usuario/ok', {timeout: 10000})
+		.then(response => {
+			if(response.status == 200){
+				axios.post('http://192.168.1.6:7720/api/usuario/salvar', bodyParameters)
+				.then(res => {
+					const titulo = (res.data.status) ? "Erro" : "Sucesso";
+					Alert.alert(titulo, "Usuário\n" + email + "\nCadastrado com sucesso!", [ {
+						text: "OK", onPress: () => {navigation.navigate('Login',{
+							email: email, senha: senha
+						})}
+					}]);
+					console.log(res.data);
+				})
+				.catch((error) => {
+					Alert.alert("Erro", "Erro ao tentar cadastrar usuário"); 
+				})
+			}
+		}).catch((error) => {
+			console.log('eitaa');
+			Alert.alert("Erro", "Nossos servidores estão fora do ar. Usuario:Step1");
+		});
 	}
 
 
@@ -89,7 +94,7 @@ export default function CadastroUsuarioStep1({ route, navigation }: any) {
 							onChangeText={(text: any) => {setEmail(text);}}
 							autoCapitalize="none"
 						/>
-						<Row nowrap>
+						<Row wrap={false}>
 							<Input
 								placeholder="Senha"
 								secureTextEntry={hidePassword}
@@ -113,7 +118,7 @@ export default function CadastroUsuarioStep1({ route, navigation }: any) {
 								)}
 							</HidePassword>
 						</Row>
-						<Row nowrap>
+						<Row wrap={false}>
 							<Input
 								placeholder="Confirmar Senha"
 								secureTextEntry={hidePassword2}

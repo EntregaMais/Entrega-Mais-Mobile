@@ -30,16 +30,24 @@ export default function Perfil({navigation}: any) {
 
     useEffect(() => {
         getData("email");
-        axios.get(`http://192.168.1.6:7730/api/transportadoras/transportadoraPorEmail/${email}`
-        ).then(res => {
-            console.log(res.data);
-            setNomeResponsavel(res.data.nm_resp)
-            setNumero(res.data.telefone);
-            setPix(res.data.pix);
-            setTaxaEmbarque(res.data.cobre_embarque);
-        }).catch((error) => {
-			console.log(error); 
-		})
+		axios.get('http://192.168.0.102:7730/api/transportadora/ok', {timeout: 10000})
+		.then(response => {
+			if(response.status == 200){
+				axios.get(`http://192.168.0.102:7730/api/transportadora/transportadoraPorEmail/${email}`
+				).then(res => {
+					console.log(res.data);
+					setNomeResponsavel(res.data.nm_resp)
+					setNumero(res.data.telefone);
+					setPix(res.data.pix);
+					setTaxaEmbarque(res.data.cobre_embarque);
+				}).catch((error) => {
+					console.log(error); 
+				})
+			}
+		}).catch((error) => {
+			console.log('eitaa');
+			Alert.alert("Erro", "Nossos servidores estão fora do ar. Transportadora:PorEmail");
+		});
     
     }, [email]);
 
@@ -51,19 +59,26 @@ export default function Perfil({navigation}: any) {
             pix: pix,
             cobre_embarque: taxaEmbarque
         };
-        
-		axios.post(`http://192.168.1.6:7730/api/transportadoras/transportadoraEdicao/${email}`, data)
-			.then(res => {
-				const titulo = (res.data.status) ? "Erro" : "Sucesso";
-				Alert.alert(titulo, "Dados atualizados com sucesso!", [ {
-					text: "OK", onPress: () => {navigation.navigate('Home')}
-				}]);
-				console.log(res.data);
-			})
-			.catch((error) => {
-				Alert.alert("Erro", "Erro ao atualizar dados");
-				console.log(error);
-			});
+
+		axios.get('http://192.168.0.102:7730/api/transportadora/ok', {timeout: 10000})
+		.then(response => {
+			if(response.status == 200){
+				axios.post(`http://192.168.0.102:7730/api/transportadora/transportadoraEdicao/${email}`, data)
+					.then(res => {
+						const titulo = (res.data.status) ? "Erro" : "Sucesso";
+						Alert.alert(titulo, "Dados atualizados com sucesso!", [ {
+							text: "OK", onPress: () => {navigation.navigate('Home')}
+						}]);
+						console.log(res.data);
+					})
+					.catch((error) => {
+						Alert.alert("Erro", "Erro ao atualizar dados");
+						console.log(error);
+					});
+			}
+		}).catch((error) => {
+			Alert.alert("Erro", "Nossos servidores estão fora do ar. Transportadora:Edicao");
+		});
 	}
 
     return(

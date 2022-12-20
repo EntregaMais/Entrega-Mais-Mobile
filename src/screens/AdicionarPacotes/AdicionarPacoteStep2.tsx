@@ -9,6 +9,9 @@ import NumericInput from 'react-native-numeric-input'
 import { HeaderText, Input, Row, Column} from "../../styled";
 import Button from '../../componentes/Button';
 import Container from '../../componentes/Container';
+import { statusJSON } from '../../mocks/statusPedido';
+import { pagamentosJSON } from '../../mocks/Pagamentos';
+import { Picker } from '@react-native-picker/picker';
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -19,24 +22,15 @@ const Separator = () => (
 
 export default function AdicionarPacoteStep2({navigation, route}: any) {
 
-	const [obs, setObs] = useState('');
 	const [pagaTaxa, setPagaTaxa] = useState('');
 	const [pagouFrete, setPagouFrete] = useState(Number);
 	const [fornecedor, setFornecedor] = useState(route.params?.fornecedor);
 	const [telefoneF, setTelefoneF] = useState(route.params?.telefoneF);
 	const [cliente, setCliente] = useState(route.params?.cliente);
-
-
-
-	// const data = {
-	// 	idTranportadora: route.params?.id,
-	// 	fornecedor: route.params?.fornecedor,
-	// 	cliente: route.params?.cliente,
-	// 	telefoneF: route.params?.telefoneF,
-	// 	estado: route.params?.estado,
-	// 	cidade: route.params?.cidade
-	// }
-	// console.log(data);
+	const [telefoneC, setTelefoneC] = useState(route.params?.telefoneC);
+	const [emailCli, setEmailCli] = useState(route.params?.emailCli);
+	const [statusSelecionado, setStatusSelecionado] = useState();
+	const [pagamentoSelecionado, setPagamentoSelecionado] = useState();
 
 	const storeData = async (id:string) => {
 		try {
@@ -49,33 +43,44 @@ export default function AdicionarPacoteStep2({navigation, route}: any) {
 	const salvarPedido = () => {
 
 		const body = {
-			frete: "100",
+			frete: 100,
 			idTransportadora: route.params?.id,
-			valorTotal: "100",
-			nmCliente: cliente,
+			valorTotal: 100,
 			estado: route.params?.estado,
 			cidade: route.params?.cidade,
-			observacao: obs,
 			fornPagouFrete: pagouFrete,
-			quemPagaTaxa: pagaTaxa		
+			quemPagaTaxa: pagaTaxa,		
+			nmCliente: cliente,
+			telefoneCli: telefoneC,
+			formaPag: pagamentoSelecionado,
+			status: statusSelecionado,
+			idVeiculo: 1,
+			idDespachante: 1
 		}
 
-		axios.post('http://192.168.1.6:7740/api/pedido/salvar', body)
-			.then(res => {
-				const titulo = (res.data.status) ? "Erro" : "Sucesso";
-				Alert.alert(titulo, "Pedido realizado com sucesso!", [ {
-					text: "OK", onPress: () => {navigation.navigate('AdicionarPacoteStep3',{
-						fornecedor: fornecedor,
-						telefoneF: telefoneF,
-						observacao: obs
-					} )}
-				}]);
-				console.log(res.data);
-				storeData(JSON.stringify(res.data.id));
-			})
-			.catch((error) => {
-				Alert.alert("Erro", "Erro ao tentar cadastrar pedido");
-				console.log(error);
+		axios.get('http://192.168.0.102:7740/api/pedido/ok', {timeout: 10000})
+			.then(response => {
+				if(response.status == 200){
+				axios.post('http://192.168.0.102:7740/api/pedido/salvar', body)
+					.then(res => {
+						const titulo = (res.data.status) ? "Erro" : "Sucesso";
+						Alert.alert(titulo, "Pedido realizado com sucesso!", [ {
+							text: "OK", onPress: () => {navigation.navigate('AdicionarPacoteStep3',{
+								fornecedor: fornecedor,
+								telefoneF: telefoneF,
+							} )}
+						}]);
+						console.log(res.data);
+						storeData(JSON.stringify(res.data.id));
+					})
+					.catch((error) => {
+						Alert.alert("Erro", "Erro ao tentar cadastrar pedido");
+						console.log(error);
+					});
+				}
+			}).catch((error) => {
+				console.log('eitaa');
+				Alert.alert("Erro", "Nossos servidores estão fora do ar - Pedido:Step2");
 			});
 	}
 
@@ -103,7 +108,7 @@ export default function AdicionarPacoteStep2({navigation, route}: any) {
 				<View style={{ flexDirection: "row", marginTop: 50}}>
 					<Icon style={styles.iconStep} name={"checkmark-circle"} size={15} color="#ffff00" />
 					<Separator />
-					<Icon style={styles.iconStep} name={"caret-down-circle"} size={15} color="#dcdedc" />
+					<Icon style={styles.iconStep} name={"caret-down-circle"} size={15} color="#FFF" />
 					<Separator />
 					<Icon style={styles.iconStep} name={"radio-button-off-outline"} size={15} color="#dcdedc" />
 				</View>
@@ -146,14 +151,41 @@ export default function AdicionarPacoteStep2({navigation, route}: any) {
 								</Button>
 							</Column>
 					</Row>
-					<Input
-						style={styles.input}
-						placeholder='Observações'
-						placeholderTextColor={'white'}
-						autoCorrect={false}
-						value={obs}
-						onChangeText={ (text: any) => setObs(text)}
-					/>
+					<Separator></Separator>
+
+					<Text style={styles.textStyle}>Forma de pagamento:</Text>
+
+					<View style={styles.pickerBorder}>
+						<Picker
+							selectedValue={pagamentoSelecionado}
+							style={styles.Picker}
+							onValueChange={(itemValue, itemIndex) =>
+								setPagamentoSelecionado(itemValue)
+							}>
+							{pagamentosJSON.map((pag) => {
+								return (
+									<Picker.Item style={styles.pickeItem} label={pag.Tipo} value={pag.Tipo} key={pag.ID}/>
+								);
+							})}
+						</Picker>
+					</View>
+
+					<Text style={styles.textStyle}>Status do pedido:</Text>
+
+					<View style={styles.pickerBorder}>
+						<Picker
+							selectedValue={statusSelecionado}
+							style={styles.Picker}
+							onValueChange={(itemValue, itemIndex) =>
+								setStatusSelecionado(itemValue)
+							}>
+							{statusJSON.map((status) => {
+								return (
+									<Picker.Item style={styles.pickeItem} label={status.Status} value={status.Status} key={status.ID}/>
+								);
+							})}
+						</Picker>
+					</View>
 
 					<View>
 						<TouchableOpacity style={styles.btnProsseguir}  onPress={() => salvarPedido()}>
@@ -310,5 +342,24 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold',
 		color: '#00BFFF',
 		padding: 10
+	},
+	Picker: {
+		color: '#FFF',
+		fontSize: 15,
+		fontWeight: 'bold',
+		backgroundColor: 'rgba(86, 203, 242, 1)',
+	},
+	pickerBorder: {
+		borderRadius: 0,
+		borderBottomWidth: 2,
+		borderColor: '#FFF',
+		marginBottom: 10,
+		width: 300
+	},
+	pickeItem: {
+		color: '#FFF',
+		backgroundColor: 'rgba(86, 203, 242, 1)',
+		fontSize: 15,
+		fontWeight: 'bold',
 	},
 });

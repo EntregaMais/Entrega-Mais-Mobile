@@ -21,6 +21,13 @@ import {
 } from './src/screens/CadastroTransportador/CadastroTransportadorExport';
 import { CadastroUsuarioStep1 } from './src/screens/CadastroUsuario/CadastroUsuarioExport';
 
+import { CadastroDespachanteStep1 } from './src/screens/CadastroDespachante/CadastroDespachanteExport';
+import { CadastroTrajetoStep1 } from './src/screens/CadastroTrajeto/CadastroTrajetoExport';
+import { CadastroCidadeStep1 } from './src/screens/CadastroTrajeto/CadastroCidade/CadastroCidadeExport';
+import { CadastroVeiculoStep1 } from './src/screens/CadastroVeiculo/CadastroVeiculoExport';
+
+import ListagemList from './src/screens/MinhasMercadorias/ListagemList';
+import Listagem from './src/screens/MinhasMercadorias/Listagem';
 import Login from './src/screens/Login';
 import Perfil from './src/screens/perfil/Perfil';
 import { MinhasMercadorias } from './src/screens/MinhasMercadorias/MinhasMercadorias';
@@ -115,6 +122,54 @@ export default function App() {
 					}}
 					/>
 				<Stack.Screen name="AdicionarPacoteStep3" component={AdicionarPacoteStep3}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name="CadastroDespachanteStep1" component={CadastroDespachanteStep1}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name="CadastroTrajetoStep1" component={CadastroTrajetoStep1}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name="CadastroCidadeStep1" component={CadastroCidadeStep1}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name="CadastroVeiculoStep1" component={CadastroVeiculoStep1}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name="Listagem" component={Listagem}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name="ListagemList" component={ListagemList}
 					options={{
 						headerTransparent: true,
 						headerTitleAlign: 'center',
