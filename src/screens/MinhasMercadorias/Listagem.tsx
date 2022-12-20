@@ -33,7 +33,7 @@ export default function Listagem({navigation, route}: any) {
 					isPrimary
 					buttonSize={'large'}
 					labelSize={'medium'}
-					onPress={() => {getData('ListagemList','7740','/api/pedido/pedidosPorIdTransportadora/')}}
+					onPress={() => {getData('ListagemList','7740','/api/pedido/pedidosPorIdTransportadora/', '1')}}
 				>
 					Listagem Pedido
 			</Button>

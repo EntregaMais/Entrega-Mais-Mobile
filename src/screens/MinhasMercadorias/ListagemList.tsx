@@ -33,18 +33,19 @@ export default function ListagemList({navigation, route}: any) {
 
 								{ item.nmdespachante === undefined ? <View></View> : <Text style={styles.text} >Despachante: {item.nmdespachante}</Text>}
 
-								{ item.nmtrajeto === undefined ? <View></View> : <Text style={styles.text} >Nome Trajeto: {item.nmtrajeto}</Text>}
-								{ item.dstrajeto === undefined ? <View></View> : <Text style={styles.text} >Desc Trajeto: {item.dstrajeto}</Text>}
+								{ item.nmtrajeto === undefined ? <View></View> : <Text style={styles.text} >Trajeto: {item.nmtrajeto}</Text>}
+								{ item.dstrajeto === undefined ? <View></View> : <Text style={styles.text} >Descrição: {item.dstrajeto}</Text>}
 
 								{ item.dstrajeto === undefined ? <View></View> : <Text style={styles.text} >Placa: {item.placa}</Text>}
-								{ item.dstrajeto === undefined ? <View></View> : <Text style={styles.text} >Id Rota: {item.idrota}</Text>}
+								{ item.dstrajeto === undefined ? <View></View> : <Text style={styles.text} >Ident. Rota: {item.idrota}</Text>}
 
-								{ item.dstrajeto === undefined ? <View></View> : <Text style={styles.text} >Id Rota: {item.nmCliente}</Text>}
-								{ item.dstrajeto === undefined ? <View></View> : <Text style={styles.text} >Id Rota: {item.frete}</Text>}
-								{ item.dstrajeto === undefined ? <View></View> : <Text style={styles.text} >Id Rota: {item.cidade}</Text>}
-								{ item.dstrajeto === undefined ? <View></View> : <Text style={styles.text} >Id Rota: {item.valorTotal}</Text>}
-
-
+								{ item.nmCliente === undefined ? <View></View> : <Text style={styles.text} >Nome CLiente: {item.nmCliente}</Text>}
+								{ item.cidade === undefined ? <View></View> : <Text style={styles.text} >Cidade: {item.cidade}</Text>}
+								{ item.estado === undefined ? <View></View> : <Text style={styles.text} >Estado: {item.estado}</Text>}
+								{ item.formaPag === undefined ? <View></View> : <Text style={styles.text} >forma Pag: {item.formaPag}</Text>}
+								{ item.status === undefined ? <View></View> : <Text style={styles.text} >Status: {item.status}</Text>}
+								{ item.quemPagaTaxa === undefined ? <View></View> : <Text style={styles.text} >Pag Taxa: {item.quemPagaTaxa}</Text>}
+								{ item.frete === undefined ? <View></View> : <Text style={styles.text} >Frete: {item.frete}</Text>}
 
 								{ item.idtransportadora === undefined ? <View></View> : <Text style={styles.text} >Iden. Transp: {item.idtransportadora}</Text>}
 							</View>	
