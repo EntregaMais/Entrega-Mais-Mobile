@@ -86,7 +86,7 @@ export default function Login({route, navigation}: any) {
 							onChangeText={(text: any) => setEmail(text)}
 							autoCapitalize="none"
 							/>
-						<Row nowrap>
+						<Row wrap={false}>
 							<Input
 								placeholder='Senha'
 								secureTextEntry={hidePassword}

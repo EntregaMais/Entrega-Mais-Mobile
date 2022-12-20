@@ -89,7 +89,7 @@ export default function CadastroUsuarioStep1({ route, navigation }: any) {
 							onChangeText={(text: any) => {setEmail(text);}}
 							autoCapitalize="none"
 						/>
-						<Row nowrap>
+						<Row wrap={false}>
 							<Input
 								placeholder="Senha"
 								secureTextEntry={hidePassword}
@@ -113,7 +113,7 @@ export default function CadastroUsuarioStep1({ route, navigation }: any) {
 								)}
 							</HidePassword>
 						</Row>
-						<Row nowrap>
+						<Row wrap={false}>
 							<Input
 								placeholder="Confirmar Senha"
 								secureTextEntry={hidePassword2}
