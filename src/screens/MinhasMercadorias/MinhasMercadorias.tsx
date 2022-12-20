@@ -15,13 +15,13 @@ export function MinhasMercadorias({navigation, route}: any) {
 	const [data, setData] = useState();
 
 
-	const getData = async (email:string) => {
+	const getData = async (email:string, navigate_to:string) => {
 		try {
 		  	const value = await AsyncStorage.getItem(email)
 			if(value !== null) {
 				console.log(value);
 				setEmail(value);
-				navigation.navigate('CadastroDespachanteStep1',{
+				navigation.navigate(navigate_to,{
 					email: value,
 				});
 		  	}
@@ -37,18 +37,6 @@ export function MinhasMercadorias({navigation, route}: any) {
 		  // saving error
 		}
 	}
-
-	// useEffect(() => {
-    //     getData("email");
-	// 	axios.get(`http://192.168.0.102:7730/api/transportadora/transportadoraPorEmail/${email}`
-    //     ).then(res => {
-    //         console.log(res.data.id);
-	// 		setIdTransportadora(res.data.id);
-	// 		storeData(JSON.stringify(res.data.id));
-    //     }).catch((error) => {
-	// 		console.log(error); 
-	// 	})
-    // }, [email]);
 
     return(
         <Container>
@@ -71,7 +59,7 @@ export function MinhasMercadorias({navigation, route}: any) {
 					isPrimary
 					buttonSize={'large'}
 					labelSize={'medium'}
-					onPress={() => {getData('email')}}
+					onPress={() => {getData('email','AdicionarPacoteStep1')}}
 				>
 					Novo pedido
 			</Button>
@@ -80,7 +68,7 @@ export function MinhasMercadorias({navigation, route}: any) {
 					isPrimary
 					buttonSize={'large'}
 					labelSize={'medium'}
-					onPress={() => {getData('email')}}
+					onPress={() => {getData('email','CadastroDespachanteStep1')}}
 				>
 					Novo Despachante
 			</Button>
@@ -89,7 +77,7 @@ export function MinhasMercadorias({navigation, route}: any) {
 					isPrimary
 					buttonSize={'large'}
 					labelSize={'medium'}
-					onPress={() => {getData('email')}}
+					onPress={() => {getData('email','CadastroTrajetoStep1')}}
 				>
 					Novo Trajeto
 			</Button>
@@ -98,7 +86,7 @@ export function MinhasMercadorias({navigation, route}: any) {
 					isPrimary
 					buttonSize={'large'}
 					labelSize={'medium'}
-					onPress={() => {getData('email')}}
+					onPress={() => {getData('email','CadastroVeiculoStep1')}}
 				>
 					Novo Veiculo
 			</Button>

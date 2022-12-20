@@ -12,20 +12,16 @@ export default function CadastroCidadeStep1({ navigation, route}: any) {
 	const [idapi, setIdApi] = useState('');
 	const [nmcidade, setNmCidade] = useState('');
 	const [idtrajeto, setIdTrajeto] = useState('');
-	const [trajeto, setTrajeto] = useState('');
-	const [references, setReferences] = useState('');
 
 	const salvarCidade = () => {
 
 		const body = {
 			idapi: idapi,
 			nmcidade: nmcidade,
-			idtrajeto: idtrajeto,
-			trajeto: trajeto,
-			references: references
+			idtrajeto: idtrajeto
 		}
-
-		axios.post('http://192.168.0.102:3000/cidades', body)
+										 // é cidadess mesmo não ta errado
+		axios.post('http://192.168.0.102:3000/cidadess', body) 
 			.then(res => {
 				console.log(body);
 				const titulo = (res.data.status) ? "Erro" : "Sucesso";
@@ -78,24 +74,10 @@ export default function CadastroCidadeStep1({ navigation, route}: any) {
 						/>
 						<Input
 							value={idtrajeto}
-							placeholder="Codigo da Transportadora"
+							placeholder="Descrição do Cidade"
 							placeholderTextColor={'white'}
 							autoCorrect={false}
 							onChangeText={(text: string) => {setIdTrajeto(text)}}
-						/>
-						<Input
-							value={trajeto}
-							placeholder="Transportadora"
-							placeholderTextColor={'white'}
-							autoCorrect={false}
-							onChangeText={(text: string) => {setTrajeto(text)}}
-						/>
-						<Input
-							value={references}
-							placeholder="References"
-							placeholderTextColor={'white'}
-							autoCorrect={false}
-							onChangeText={(text: string) => {setReferences(text)}}
 						/>
 
 						<Button

@@ -7,10 +7,22 @@ import Container from '../../componentes/Container';
 import { Column, HeaderText, Input, Row, Separator, Text } from '../../styled';
 import axios from "axios";
 
-export default function CadastroTrajetoStep1({ navigation }: any) {
+export default function CadastroTrajetoStep1({ navigation, route }: any) {
 	const [nmtrajeto, setNmTrajeto] = useState('');
 	const [dstrajeto, setDsTrajeto] = useState('');
 	const [idtransportadora, setIdTransportadora] = useState('');
+
+	useEffect(() => {
+		console.log(route.params?.email)
+		axios.get(`http://192.168.0.102:7730/api/transportadora/transportadoraPorEmail/${route.params?.email}`
+        ).then(res => {
+            console.log(res.data.id);
+			setIdTransportadora(res.data.id);
+        }).catch((error) => {
+			console.log(error); 
+		})
+    }, []);
+
 
 	const salvarTrajeto = () => {
 
@@ -74,13 +86,13 @@ export default function CadastroTrajetoStep1({ navigation }: any) {
 							autoCorrect={false}
 							onChangeText={(text: string) => {setDsTrajeto(text)}}
 						/>
-						<Input
+						{/* <Input
 							value={idtransportadora}
 							placeholder="Codigo da Transportadora"
 							placeholderTextColor={'white'}
 							autoCorrect={false}
 							onChangeText={(text: string) => {setIdTransportadora(text)}}
-						/>
+						/> */}
 
 						<Button
 							isPrimary

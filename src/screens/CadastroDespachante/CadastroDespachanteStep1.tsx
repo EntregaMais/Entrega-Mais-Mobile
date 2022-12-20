@@ -10,13 +10,10 @@ import axios from "axios";
 export default function CadastroDespachanteStep1({ navigation, route }: any) {
 	const [nmdespachante, setNmDespachante] = useState('');
 	const [idtransportadora, setIdTransportadora] = useState('');
-	const [email, setEmail] = useState('');
-
-	console.log(route.params?.email)
-
+	
 	useEffect(() => {
-        setEmail(route.params?.email);
-		axios.get(`http://192.168.0.102:7730/api/transportadora/transportadoraPorEmail/${email}`
+		console.log(route.params?.email)
+		axios.get(`http://192.168.0.102:7730/api/transportadora/transportadoraPorEmail/${route.params?.email}`
         ).then(res => {
             console.log(res.data.id);
 			setIdTransportadora(res.data.id);

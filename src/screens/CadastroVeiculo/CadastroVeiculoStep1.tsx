@@ -7,10 +7,21 @@ import Container from '../../componentes/Container';
 import { Column, HeaderText, Input, Row, Separator, Text } from '../../styled';
 import axios from "axios";
 
-export default function CadastroVeiculoStep1({ navigation }: any) {
+export default function CadastroVeiculoStep1({ navigation, route }: any) {
 	const [placa, setPlaca] = useState('');
 	const [idrota, setIdRota] = useState('');
 	const [idtransportadora, setIdTransportadora] = useState('');
+
+	useEffect(() => {
+		console.log(route.params?.email)
+		axios.get(`http://192.168.0.102:7730/api/transportadora/transportadoraPorEmail/${route.params?.email}`
+        ).then(res => {
+            console.log(res.data.id);
+			setIdTransportadora(res.data.id);
+        }).catch((error) => {
+			console.log(error); 
+		})
+    }, []);
 
 	const salvarVeiculo = () => {
 
@@ -69,13 +80,6 @@ export default function CadastroVeiculoStep1({ navigation }: any) {
 							placeholderTextColor={'white'}
 							autoCorrect={false}
 							onChangeText={(text: string) => {setIdRota(text)}}
-						/>
-						<Input
-							value={idtransportadora}
-							placeholder="Codigo da Transportadora"
-							placeholderTextColor={'white'}
-							autoCorrect={false}
-							onChangeText={(text: string) => {setIdTransportadora(text)}}
 						/>
 
 						<Button
