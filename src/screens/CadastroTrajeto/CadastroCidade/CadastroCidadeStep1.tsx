@@ -12,6 +12,20 @@ export default function CadastroCidadeStep1({ navigation, route}: any) {
 	const [idapi, setIdApi] = useState('');
 	const [nmcidade, setNmCidade] = useState('');
 	const [idtrajeto, setIdTrajeto] = useState('');
+	const [trajetos, setTrajetos] = useState([])
+
+
+	useEffect(() => {
+		console.log(route.params?.idtransportadora)
+		axios.get(`http://192.168.0.102:3000/trajetos/idtransportadora/${route.params?.idtransportadora}`
+        ).then(res => {
+            console.log(res.data[0].id);
+			setIdTrajeto(res.data[0].id);
+			setTrajetos(res.data);
+        }).catch((error) => {
+			console.log(error); 
+		})
+    }, []);
 
 	const salvarCidade = () => {
 
@@ -21,7 +35,7 @@ export default function CadastroCidadeStep1({ navigation, route}: any) {
 			idtrajeto: idtrajeto
 		}
 										 // é cidadess mesmo não ta errado
-		axios.post('http://192.168.0.102:3000/cidadess', body) 
+		axios.post('http://192.168.0.102:3000/polis', body) 
 			.then(res => {
 				console.log(body);
 				const titulo = (res.data.status) ? "Erro" : "Sucesso";
@@ -71,13 +85,6 @@ export default function CadastroCidadeStep1({ navigation, route}: any) {
 							placeholderTextColor={'white'}
 							autoCorrect={false}
 							onChangeText={(text: string) => {setNmCidade(text)}}
-						/>
-						<Input
-							value={idtrajeto}
-							placeholder="Descrição do Cidade"
-							placeholderTextColor={'white'}
-							autoCorrect={false}
-							onChangeText={(text: string) => {setIdTrajeto(text)}}
 						/>
 
 						<Button
