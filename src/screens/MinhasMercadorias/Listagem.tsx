@@ -12,6 +12,24 @@ export default function Listagem({navigation, route}: any) {
 	const [porta, setPorta] = useState('');
 	const [contexto, setContext] = useState('');
 
+	const [idtransportadora, setIdTransportadora] = useState('');
+
+	const getTransp = async () => {
+		try {
+		  	const value = await AsyncStorage.getItem('idTransportadora')
+			if(value !== null) {
+				setIdTransportadora(value);
+				console.log(value);
+		  	}
+		} catch(e) {
+		  // error reading value
+		}
+	}
+
+	useEffect(() => {
+		getTransp();
+
+    }, [idtransportadora]);
 
 	const getData = async (navigate_to:string, port:string, context:string, id?:string) => {
 		try {
@@ -33,7 +51,7 @@ export default function Listagem({navigation, route}: any) {
 					isPrimary
 					buttonSize={'large'}
 					labelSize={'medium'}
-					onPress={() => {getData('ListagemList','7740','/api/pedido/pedidosPorIdTransportadora/', '1')}}
+					onPress={() => {getData('ListagemList','7740','/api/pedido/pedidosPorIdTransportadora/', idtransportadora)}}
 				>
 					Listagem Pedido
 			</Button>

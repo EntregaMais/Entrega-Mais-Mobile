@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, TextInput, Pressable} from 'react-native';
@@ -8,9 +8,50 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { color } from "@rneui/base";
 import LinearGradientBackground from "../componentes/LinearGradient";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios";
+
+
 const Tab = createBottomTabNavigator();
 
 export default function Home({route}: any){
+
+	const [idTransportadora, setIdTransportadora] = useState('');
+	const [email, setEmail] = useState('');
+
+	const getData = async (email:string) => {
+		try {
+		  	const value = await AsyncStorage.getItem(email)
+			if(value !== null) {
+				setEmail(value);
+				console.log(value);
+		  	}
+		} catch(e) {
+		  // error reading value
+		}
+	}
+
+	const storeData = async (id:string) => {
+		try {
+		  await AsyncStorage.setItem('idTransportadora', id)
+		} catch (e) {
+		  // saving error
+		}
+	}
+
+	useEffect(() => {
+        //getIdTransportadora("idTransportadora");
+		getData("email");
+
+		axios.get(`http://192.168.0.102:7730/api/transportadora/transportadoraPorEmail/${email}`
+        ).then(res => {
+            console.log(res.data.id);
+			setIdTransportadora(res.data.id);
+			storeData(JSON.stringify(res.data.id));
+        }).catch((error) => {
+			console.log(error); 
+		})
+
+    }, [email,idTransportadora]);
 
 	return (
 		<SafeAreaView style={styles.container}>
