@@ -1,8 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Modal, SafeAreaView, TouchableOpacity, View, StyleSheet, Animated, Easing } from 'react-native';
 import { Ionicons as Icon } from '@expo/vector-icons';
 import { Text } from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type PopupProps = {
 	children: React.ReactNode;
@@ -11,15 +12,32 @@ type PopupProps = {
 export default function PopupMenu(props: PopupProps) {
 
     const [visible, setVisible] = useState(false);
+    const [email, setEmail] = useState('');
     const scale = useRef(new Animated.Value(0)).current;
 
     const navigation = useNavigation();
+
+    const getData = async (email:string) => {
+		try {
+		  	const value = await AsyncStorage.getItem(email)
+			if(value !== null) {
+				setEmail(value);
+		  	}
+		} catch(e) {
+		  // error reading value
+		}
+	}
+
+    useEffect(() => {
+        getData("email");
+        
+    }, [email]);
 
     const options = [
         {
             title: 'Usuário',
             icon: "person-outline",
-            action: () => alert('Usuário'),
+            action: () => alert(email),
         },
         {
             title: 'Sair',

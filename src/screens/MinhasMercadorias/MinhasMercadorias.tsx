@@ -18,7 +18,6 @@ export function MinhasMercadorias({navigation, route}: any) {
 		try {
 		  	const value = await AsyncStorage.getItem(email)
 			if(value !== null) {
-				console.log(value);
 				setEmail(value);
                 navigation.navigate('AdicionarPacoteStep1',{email: email})
 		  	}
@@ -85,7 +84,7 @@ export function MinhasMercadorias({navigation, route}: any) {
 
 const styles = StyleSheet.create({
 	item: {
-	  width: 300,
+	  width: 285,
 	  padding: 20,
 	  marginVertical: 8,
 	  borderColor: '#FFF',
