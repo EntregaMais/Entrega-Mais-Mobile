@@ -56,11 +56,11 @@ export default function Login({route, navigation}: any) {
 			password: password
 		};
 
-		axios.get('http://192.168.0.102:7720/api/usuario/ok', {timeout: 10000})
+		axios.get('http://entregamais.brazilsouth.cloudapp.azure.com:7720/api/usuario/ok', {timeout: 10000})
 			.then(response => {
 					if(response.status == 200){
 						axios.post( 
-							'http://192.168.0.102:7720/api/usuario/login',
+							'http://entregamais.brazilsouth.cloudapp.azure.com:7720/api/usuario/login',
 							bodyParameters
 						  ).then(response => {
 							  if(response.status == 200){

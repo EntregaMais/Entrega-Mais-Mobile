@@ -18,10 +18,10 @@ export default function CadastroCidadeStep1({ navigation, route}: any) {
 	useEffect(() => {
 		console.log(route.params?.idtransportadora)
 		
-		axios.get('http://192.168.0.102:3000/trajeto/ok', {timeout: 10000})
+		axios.get('http://ruby.brazilsouth.cloudapp.azure.com:3000/trajeto/ok', {timeout: 10000})
 			.then(response => {
 				if(response.status == 200){
-					axios.get(`http://192.168.0.102:3000/trajetos/idtransportadora/${route.params?.idtransportadora}`
+					axios.get(`http://ruby.brazilsouth.cloudapp.azure.com:3000/trajetos/idtransportadora/${route.params?.idtransportadora}`
 					).then(res => {
 						console.log(res.data[0].id);
 						setIdTrajeto(res.data[0].id);
@@ -43,10 +43,10 @@ export default function CadastroCidadeStep1({ navigation, route}: any) {
 			nmcidade: nmcidade,
 			idtrajeto: idtrajeto
 		}
-		axios.get('http://192.168.0.102:3000/poli/ok', {timeout: 10000})
+		axios.get('http://ruby.brazilsouth.cloudapp.azure.com:3000/poli/ok', {timeout: 10000})
 			.then(response => {
 				if(response.status == 200){
-					axios.post('http://192.168.0.102:3000/polis', body) 
+					axios.post('http://ruby.brazilsouth.cloudapp.azure.com:3000/polis', body) 
 						.then(res => {
 							console.log(body);
 							const titulo = (res.data.status) ? "Erro" : "Sucesso";

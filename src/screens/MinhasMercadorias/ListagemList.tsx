@@ -10,8 +10,8 @@ export default function ListagemList({navigation, route}: any) {
 	const [data, setData] = useState();
 
 	useEffect(() => {
-		console.log(`http://192.168.0.102:${route.params?.port}${route.params?.context}${route.params?.id === undefined ? '' : route.params?.id}`)
-		axios.get(`http://192.168.0.102:${route.params?.port}${route.params?.context}${route.params?.id === undefined ? '' : route.params?.id}`
+		console.log(`http://entregamais.brazilsouth.cloudapp.azure.com:${route.params?.port}${route.params?.context}${route.params?.id === undefined ? '' : route.params?.id}`)
+		axios.get(`http://entregamais.brazilsouth.cloudapp.azure.com:${route.params?.port}${route.params?.context}${route.params?.id === undefined ? '' : route.params?.id}`
 		).then(res => {
 			console.log(res.data);
 			setData(res.data);

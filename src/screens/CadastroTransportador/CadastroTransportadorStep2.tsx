@@ -43,10 +43,10 @@ export default function CadastroTransportadorStep2({ route, navigation }: any) {
 	}
 
 	const salvarTransportador = () => {
-		axios.get('http://192.168.0.102:7730/api/transportadora/ok', {timeout: 10000})
+		axios.get('http://entregamais.brazilsouth.cloudapp.azure.com:7730/api/transportadora/ok', {timeout: 10000})
 			.then(response => {
 				if(response.status == 200){
-					axios.post('http://192.168.0.102:7730/api/transportadora/salvar', data)
+					axios.post('http://entregamais.brazilsouth.cloudapp.azure.com:7730/api/transportadora/salvar', data)
 						.then(res => {
 							const titulo = (res.data.status) ? "Erro" : "Sucesso";
 							Alert.alert(titulo, "Cadastro realizado com sucesso!", [ {

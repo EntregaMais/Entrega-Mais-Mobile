@@ -30,10 +30,10 @@ export default function Perfil({navigation}: any) {
 
     useEffect(() => {
         getData("email");
-		axios.get('http://192.168.0.102:7730/api/transportadora/ok', {timeout: 10000})
+		axios.get('http://entregamais.brazilsouth.cloudapp.azure.com:7730/api/transportadora/ok', {timeout: 10000})
 		.then(response => {
 			if(response.status == 200){
-				axios.get(`http://192.168.0.102:7730/api/transportadora/transportadoraPorEmail/${email}`
+				axios.get(`http://entregamais.brazilsouth.cloudapp.azure.com:7730/api/transportadora/transportadoraPorEmail/${email}`
 				).then(res => {
 					console.log(res.data);
 					setNomeResponsavel(res.data.nm_resp)
@@ -60,10 +60,10 @@ export default function Perfil({navigation}: any) {
             cobre_embarque: taxaEmbarque
         };
 
-		axios.get('http://192.168.0.102:7730/api/transportadora/ok', {timeout: 10000})
+		axios.get('http://entregamais.brazilsouth.cloudapp.azure.com:7730/api/transportadora/ok', {timeout: 10000})
 		.then(response => {
 			if(response.status == 200){
-				axios.post(`http://192.168.0.102:7730/api/transportadora/transportadoraEdicao/${email}`, data)
+				axios.post(`http://entregamais.brazilsouth.cloudapp.azure.com:7730/api/transportadora/transportadoraEdicao/${email}`, data)
 					.then(res => {
 						const titulo = (res.data.status) ? "Erro" : "Sucesso";
 						Alert.alert(titulo, "Dados atualizados com sucesso!", [ {

@@ -42,7 +42,7 @@ export default function Home({route}: any){
         //getIdTransportadora("idTransportadora");
 		getData("email");
 
-		axios.get(`http://192.168.0.102:7730/api/transportadora/transportadoraPorEmail/${email}`
+		axios.get(`http://entregamais.brazilsouth.cloudapp.azure.com:7730/api/transportadora/transportadoraPorEmail/${email}`
         ).then(res => {
             console.log(res.data.id);
 			setIdTransportadora(res.data.id);
