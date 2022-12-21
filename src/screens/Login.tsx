@@ -6,7 +6,7 @@ import Button from '../componentes/Button';
 import Container from '../componentes/Container';
 import Logo from '../componentes/Logo';
 import { CheckboxExpo, Column, HidePassword, Input, Label, Row, Separator } from '../styled';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios";
 
 
@@ -30,26 +30,56 @@ export default function Login({route, navigation}: any) {
 		return true
 	  };
 
+	const getData = async (email:string) => {
+		try {
+		  	const value = await AsyncStorage.getItem(email)
+			if(value !== null) {
+				// value previously stored
+		  	}
+		} catch(e) {
+		  // error reading value
+		}
+	}  
+
+	const storeData = async (email:string) => {
+		try {
+		  await AsyncStorage.setItem('email', email)
+		} catch (e) {
+		  // saving error
+		}
+	}
+
 	const login = async (email:string, password:string) => {
 
 		const bodyParameters = {
 			email: email,
 			password: password
-		};		
+		};
+
+		axios.get('http://entregamais.brazilsouth.cloudapp.azure.com:7720/api/usuario/ok', {timeout: 10000})
+			.then(response => {
+					if(response.status == 200){
+						axios.post( 
+							'http://entregamais.brazilsouth.cloudapp.azure.com:7720/api/usuario/login',
+							bodyParameters
+						  ).then(response => {
+							  if(response.status == 200){
+								  storeData(email);
+								  const token = JSON.stringify(response.data).split(" ")
+								  console.log(token[1]);
+								  navigation.navigate('Home');
+							  }
+						  })
+						  .catch((error) => {
+							  Alert.alert("Erro", "Email ou senha incorretos.");
+						  });
+					}
+			}).catch((error) => {
+				console.log('eitaa');
+				Alert.alert("Erro", "Nossos servidores estão fora do ar - Usuario:login");
+			});
 		
-		axios.post( 
-		  'http://192.168.1.5:8080/login',
-		  bodyParameters
-		).then(response => {
-			if(response.status == 200){
-				navigation.navigate('Home');
-			}
-			const token = JSON.stringify(response.data).split(" ")
-			console.log(token[1]);
-		})
-		.catch((error) => {
-			Alert.alert("Erro", "Email ou senha incorretos.");
-		});
+
 	};
 
 	return (
@@ -66,7 +96,7 @@ export default function Login({route, navigation}: any) {
 							onChangeText={(text: any) => setEmail(text)}
 							autoCapitalize="none"
 							/>
-						<Row nowrap>
+						<Row wrap={false}>
 							<Input
 								placeholder='Senha'
 								secureTextEntry={hidePassword}
@@ -124,13 +154,13 @@ export default function Login({route, navigation}: any) {
 
 						<Separator/>
 
-						<Button
+						{/* <Button
 							buttonSize={'large'}
 							labelSize={'medium'} 
 							onPress={() => {navigation.navigate('CadastroUsuarioStep1');}}
 						>
 							Cadastro Usuario
-						</Button>
+						</Button> */}
 
 						<Button
 							buttonSize={'large'}

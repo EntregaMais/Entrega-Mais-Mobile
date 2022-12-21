@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
-import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Pressable} from 'react-native';
+import { StyleSheet, Text, View, Image, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, Pressable, Alert} from 'react-native';
 import { ScrollView } from "react-native-gesture-handler";
 import { Ionicons as Icon} from '@expo/vector-icons';
 import ButtonEscolha from "../../componentes/ButtonEscolha";
@@ -9,16 +9,74 @@ import NumericInput from 'react-native-numeric-input'
 import LinearGradientBackground from "../../componentes/LinearGradient";
 import { HeaderText, Input } from "../../styled";
 import Container from '../../componentes/Container';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 const Separator = () => (
 	<View style={styles.separator}>
 	</View>
 );
 
-export default function AdicionarPacoteStep3({navigation}: any) {
+export default function AdicionarPacoteStep3({navigation, route}: any) {
 
-	const [estadoSelecionado, setEstadoSelecionado] = useState();
-	const [cidadeSelecionado, setCidadeSelecionado] = useState();
+	const [tamanho, setTamanho] = useState('');
+	const [idPedido, setIdPedido] = useState('');
+	const [obs, setObs] = useState('');
+
+	// const data = {
+	// 	fornecedor: route.params?.fornecedor,
+	// 	telefoneF: route.params?.telefoneF,
+	// 	observacao: route.params?.observacao
+	// }
+	// console.log(data);
+
+	const getData = async (idPedido: string) => {
+		try {
+		  	const value = await AsyncStorage.getItem(idPedido)
+			if(value !== null) {
+				console.log(value);
+				setIdPedido(value);
+		  	}
+		} catch(e) {
+		  // error reading value
+		}
+	} 
+	
+	useEffect(() => {
+        getData("idPedido");
+        
+    }, [idPedido]);
+
+	const salvarPacote = () => {
+
+		const body = {
+			cdPedido: idPedido,
+			fornecedor: route.params?.fornecedor,
+			telefoneFornecedor: route.params?.telefoneF,
+			tamanho: tamanho,
+			observacao: obs
+		}
+		axios.get('http://entregamais.brazilsouth.cloudapp.azure.com:7750/api/pacote/ok', {timeout: 10000})
+			.then(response => {
+			if(response.status == 200){
+				axios.post('http://entregamais.brazilsouth.cloudapp.azure.com:7750/api/pacote/salvar', body)
+					.then(res => {
+						const titulo = (res.data.status) ? "Erro" : "Sucesso";
+						Alert.alert(titulo, "Novo pacote cadastrado com sucesso!", [ {
+							text: "OK", onPress: () => {navigation.navigate('Home'), {obs: obs}}
+						}]);
+						console.log(res.data);
+					})
+					.catch((error) => {
+						Alert.alert("Erro", "Erro ao tentar cadastrar pacote");
+						console.log(error);
+					});
+			}
+		}).catch((error) => {
+			console.log('eitaa');
+			Alert.alert("Erro", "Nossos servidores estão fora do ar - Pacote:Step3");
+		});
+	}
 
 	return (
 		<Container>
@@ -40,9 +98,9 @@ export default function AdicionarPacoteStep3({navigation}: any) {
 				<HeaderText > NOVO PACOTE </HeaderText>
 				<View>
 
-					<Text style={styles.textStyle}>Quantidade de Pacotes</Text>
+					<Text style={styles.textStyle}>Tamanho de Pacotes: </Text>
 
-					<View style={styles.contadorPacotes}>
+					{/* <View style={styles.contadorPacotes}>
 						<NumericInput
 							rounded
 							minValue={0}
@@ -54,22 +112,22 @@ export default function AdicionarPacoteStep3({navigation}: any) {
 							borderColor={'#FFF'}
 							rightButtonBackgroundColor='#8CFCA4'
 							leftButtonBackgroundColor='#FF6961' />
-					</View>
+					</View> */}
 
 					<View style={{flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-evenly'}}>
-						<TouchableOpacity style={styles.bnt}>
+						<TouchableOpacity style={styles.bnt} onPress={() => setTamanho('PP')}>
 							<Text style={styles.textStyleBtn}>PP</Text>
 							<Text style={styles.textStyleBtn}>R$10</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.bnt}>
+						<TouchableOpacity style={styles.bnt} onPress={() => setTamanho('P')}>
 							<Text style={styles.textStyleBtn}>P</Text>
 							<Text style={styles.textStyleBtn}>R$15</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.bnt}>
+						<TouchableOpacity style={styles.bnt} onPress={() => setTamanho('M')}>
 							<Text style={styles.textStyleBtn}>M</Text>
 							<Text style={styles.textStyleBtn}>R$20</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.bnt}>
+						<TouchableOpacity style={styles.bnt} onPress={() => setTamanho('G')}>
 							<Text style={styles.textStyleBtn}>G</Text>
 							<Text style={styles.textStyleBtn}>R$30</Text>
 						</TouchableOpacity>
@@ -85,9 +143,17 @@ export default function AdicionarPacoteStep3({navigation}: any) {
 							<Text style={styles.textStyleBtn}>VALOR</Text>
 						</TouchableOpacity>
 					</View >
+					<Input
+						style={styles.input}
+						placeholder='Observações:'
+						placeholderTextColor={'white'}
+						autoCorrect={false}
+						value={obs}
+						onChangeText={ (text: any) => setObs(text)}
+						/>
 
 					<View style={{marginTop: 20}}>
-						<TouchableOpacity style={styles.btnProsseguir}  onPress={() => navigation.navigate('Login')}>
+						<TouchableOpacity style={styles.btnProsseguir}  onPress={() => salvarPacote()}>
 							<Text style={styles.textProsseguir}>Prosseguir <Icon name={"chevron-forward-outline"} size={14} color="#00BFFF" /></Text>
 						</TouchableOpacity>
 					</View>
@@ -98,12 +164,6 @@ export default function AdicionarPacoteStep3({navigation}: any) {
 }
 
 const styles = StyleSheet.create({
-	container: {
-	  flex: 1,
-	  alignItems: 'center',
-	  justifyContent: 'center',
-	  backgroundColor: 'rgba(86, 203, 242, 1)'
-	},
 	contadorPacotes: {
 		color: '#FFF', fontSize: 30,
 	  flexDirection: "row",
@@ -114,18 +174,6 @@ const styles = StyleSheet.create({
 	contadorStyle:{
 		color: '#FFF',
 	},
-	image: {
-	  width: 200,
-	  height: 80,
-	  marginBottom: 40
-	},
-	background: {
-	  position: 'absolute',
-	  left: 0,
-	  right: 0,
-	  top: 0,
-	  height: 300
-	},
 	textHeader: {
 		color: '#FFF',
 		fontSize: 25,
@@ -134,8 +182,10 @@ const styles = StyleSheet.create({
 	},
 	textStyle: {
 		color: '#FFF',
-		fontSize: 15,
+		fontSize: 17,
 		fontWeight: 'bold',
+		marginBottom: 10,
+		textAlign: "center"
 	},
 	picker: {
 		color: '#FFF',
@@ -149,10 +199,6 @@ const styles = StyleSheet.create({
 		fontSize: 15,
 		fontWeight: 'bold',
 	},
-	inputContainer: {
-		flexDirection: 'row',
-		//alignItems: 'center'
-	},
 	input: {
 		color: '#FFF',
 		fontWeight: 'bold',
@@ -161,6 +207,7 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 1,
 		backgroundColor: 'transparent',
 		borderBottomColor: '#FFF',
+		marginTop: 30,
 		marginBottom: 30,
 		padding: 2,
 	},

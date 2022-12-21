@@ -21,8 +21,16 @@ import {
 } from './src/screens/CadastroTransportador/CadastroTransportadorExport';
 import { CadastroUsuarioStep1 } from './src/screens/CadastroUsuario/CadastroUsuarioExport';
 
-import Login from './src/screens/Login';
+import { CadastroDespachanteStep1 } from './src/screens/CadastroDespachante/CadastroDespachanteExport';
+import { CadastroTrajetoStep1 } from './src/screens/CadastroTrajeto/CadastroTrajetoExport';
+import { CadastroCidadeStep1 } from './src/screens/CadastroTrajeto/CadastroCidade/CadastroCidadeExport';
+import { CadastroVeiculoStep1 } from './src/screens/CadastroVeiculo/CadastroVeiculoExport';
 
+import ListagemList from './src/screens/MinhasMercadorias/ListagemList';
+import Listagem from './src/screens/MinhasMercadorias/Listagem';
+import Login from './src/screens/Login';
+import Perfil from './src/screens/perfil/Perfil';
+import { MinhasMercadorias } from './src/screens/MinhasMercadorias/MinhasMercadorias';
 
 const Stack = createStackNavigator();
 
@@ -80,6 +88,20 @@ export default function App() {
 								<Icon name="menu-sharp" size={35} color="#FFF"></Icon>
 							</TouchableOpacity>
 						),
+						// headerRight: ()=> (
+						// 	<TouchableOpacity style={{marginRight: 10}}>
+						// 		<Icon name="person-outline" size={35} color="#FFF"></Icon>
+						// 	</TouchableOpacity>
+						// ),
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+					
+				<Stack.Screen name="MinhasMercadorias" component={MinhasMercadorias}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
 						headerTitle: (props) => <Logo {...props} />
 					}}
 					/>
@@ -107,6 +129,62 @@ export default function App() {
 						headerTitle: (props) => <Logo {...props} />
 					}}
 					/>
+				<Stack.Screen name="CadastroDespachanteStep1" component={CadastroDespachanteStep1}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name="CadastroTrajetoStep1" component={CadastroTrajetoStep1}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name="CadastroCidadeStep1" component={CadastroCidadeStep1}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name="CadastroVeiculoStep1" component={CadastroVeiculoStep1}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name="Listagem" component={Listagem}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name="ListagemList" component={ListagemList}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>
+				<Stack.Screen name="Perfil" component={Perfil}
+					options={{
+						headerTransparent: true,
+						headerTitleAlign: 'center',
+						headerTintColor: '#ffffff',
+						headerTitle: (props) => <Logo {...props} />
+					}}
+					/>	
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
